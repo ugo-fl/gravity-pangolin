@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.block.Block;
+import fr.gravity.pangolin.entity.Pangolin;
 
 public class Controller {
 

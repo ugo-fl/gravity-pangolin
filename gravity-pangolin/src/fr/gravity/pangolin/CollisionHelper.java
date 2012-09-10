@@ -3,6 +3,7 @@ package fr.gravity.pangolin;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.block.Block;
+import fr.gravity.pangolin.entity.Pangolin;
 import fr.gravity.pangolin.util.Numbers;
 
 public class CollisionHelper {

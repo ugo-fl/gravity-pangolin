@@ -9,16 +9,16 @@ import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.block.Block;
-import fr.gravity.pangolin.block.GravityChanger;
+import fr.gravity.pangolin.block.ExitBlock;
+import fr.gravity.pangolin.block.GravityChangerBlock;
 import fr.gravity.pangolin.block.BranchBlock;
 import fr.gravity.pangolin.block.BranchBlock.BranchFramePos;
+import fr.gravity.pangolin.entity.Pangolin;
 import fr.gravity.pangolin.exception.InvalidMapException;
 
 public class PangolinWorld {
 
-	// public enum Gravity {
-	// UP, DOWN, LEFT, RIGHT
-	// }
+	private static PangolinWorld instance;
 
 	enum GravityAxis {
 		X_AXIS, Y_AXIS
@@ -44,8 +44,15 @@ public class PangolinWorld {
 
 	private Gravity gravity = new Gravity(Side.DOWN);
 
-	public PangolinWorld(FileHandle pangolinMap) throws InvalidMapException {
+	public static PangolinWorld getInstance() {
+		if (instance == null)
+			instance = new PangolinWorld();
+		return instance;
+	}
+
+	public void init(FileHandle pangolinMap) throws InvalidMapException {
 		background = new Background();
+		Block exitBlock = null;
 		try {
 			BufferedReader bufferedReader = new BufferedReader(pangolinMap.reader());
 			int y = 0;
@@ -66,7 +73,10 @@ public class PangolinWorld {
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(new Vector2(x, y));
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-						blocks.add(new GravityChanger(new Vector2(x, y), gravity, Side.DOWN, Side.RIGHT));
+						blocks.add(new GravityChangerBlock(new Vector2(x, y), gravity, Side.DOWN, Side.RIGHT));
+					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
+						blocks.add((exitBlock = new ExitBlock(new Vector2(x, y), 0)));
+					}
 				}
 				y++;
 			}
@@ -77,6 +87,8 @@ public class PangolinWorld {
 		}
 		if (pangolin == null)
 			throw new InvalidMapException("No start point found in map '" + pangolinMap.name());
+		else if (exitBlock == null)
+			throw new InvalidMapException("No finish point found in map '" + pangolinMap.name());
 		// CollisionHelper singleton initialization
 		CollisionHelper.getInstance(pangolin, blocks);
 	}
@@ -99,10 +111,6 @@ public class PangolinWorld {
 
 	public Gravity getGravity() {
 		return gravity;
-	}
-
-	public void setGravity(Gravity gravity) {
-		this.gravity = gravity;
 	}
 
 	public Background getBackground() {

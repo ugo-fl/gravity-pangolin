@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.Gravity.Side;
 
-public class GravityChanger extends Block {
+public class GravityChangerBlock extends Block {
 
 	public static float WIDTH = 0.5F;
 	public static float HEIGHT = 0.5F;
@@ -26,7 +26,7 @@ public class GravityChanger extends Block {
 
 	private TextureRegion textureRegion;
 
-	public GravityChanger(Vector2 pos, Gravity gravity, Side s1, Side s2) {
+	public GravityChangerBlock(Vector2 pos, Gravity gravity, Side s1, Side s2) {
 		super(pos);
 		this.gravity = gravity;
 		this.s1 = s1;
@@ -59,16 +59,10 @@ public class GravityChanger extends Block {
 	@Override
 	public TextureRegion getTextureRegion() {
 		if (textureRegion == null) {
-			Texture gravityChangerTexture = new Texture(
-					Gdx.files.internal("images/gravity_changer.png"));
+			Texture gravityChangerTexture = new Texture(Gdx.files.internal("images/gravity_changer.png"));
 			textureRegion = new TextureRegion(gravityChangerTexture);
 		}
 		return textureRegion;
-	}
-
-	@Override
-	public Rectangle getTextureBounds() {
-		return bounds;
 	}
 
 }

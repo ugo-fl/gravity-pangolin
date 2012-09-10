@@ -31,10 +31,13 @@ public abstract class Block {
 		bounds.height = height;
 	}
 
+	public Rectangle getTextureBounds() {
+		return bounds;
+	}
+	
 	/* This method must return true if the Block is solid (means that the Pangolin will stop its movement on collision) */
 	public abstract boolean collides();
 	
 	public abstract TextureRegion getTextureRegion();
 	
-	public abstract Rectangle getTextureBounds();
 }

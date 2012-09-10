@@ -9,7 +9,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 
 import fr.gravity.pangolin.block.Block;
-import fr.gravity.pangolin.block.GravityChanger;
+import fr.gravity.pangolin.block.ExitBlock;
+import fr.gravity.pangolin.block.GravityChangerBlock;
+import fr.gravity.pangolin.entity.Pangolin;
+import fr.gravity.pangolin.exception.InvalidMapException;
 
 public class WorldRenderer {
 
@@ -64,15 +67,28 @@ public class WorldRenderer {
 	private void draw() {
 		/* DRAW BACKGROUND */
 		spriteBatch.draw(background.getTextureRegion(), 0, 0, width, height);
-		/* DRAW PANGOLIN */
-		spriteBatch.draw(pangolin.getCurrentFrame(), pangolin.getPosition().x, pangolin.getPosition().y,
-				Pangolin.WIDTH, Pangolin.HEIGHT);
 		/* DRAW BLOCKS */
+		Block exitBlock = null;
 		for (Block block : world.getBlocks()) {
-			spriteBatch.draw(block.getTextureRegion(), block.getPosition().x + block.getTextureBounds().x,
-					block.getPosition().y + block.getTextureBounds().y, block.getTextureBounds().getWidth(), block
-							.getTextureBounds().getHeight());
+			if (block instanceof ExitBlock) {
+				exitBlock = block;
+				continue;
+			}
+			drawBlock(block);
 		}
+		drawBlock(exitBlock);
+		/* DRAW PANGOLIN */
+		
+		pangolin.draw(spriteBatch);
+		
+//		spriteBatch.draw(pangolin.getCurrentFrame(), pangolin.getPosition().x, pangolin.getPosition().y, Pangolin.WIDTH,
+//				Pangolin.HEIGHT);
+	}
+
+	private void drawBlock(Block block) {
+		spriteBatch.draw(block.getTextureRegion(), block.getPosition().x + block.getTextureBounds().x,
+				block.getPosition().y + block.getTextureBounds().y, block.getTextureBounds().getWidth(), block
+						.getTextureBounds().getHeight());
 	}
 
 	private void drawDebug() {
@@ -99,7 +115,7 @@ public class WorldRenderer {
 	}
 
 	private Color getBlockColor(Block block) {
-		if (block instanceof GravityChanger)
+		if (block instanceof GravityChangerBlock)
 			return new Color(0, 0, 1, 1);
 		return new Color(1, 0, 0, 1);
 	}

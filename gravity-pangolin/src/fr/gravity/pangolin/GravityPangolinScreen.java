@@ -19,8 +19,9 @@ public class GravityPangolinScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 		try {
-			world = new PangolinWorld(Gdx.files.internal("data/map1.pm"));
-			worldRenderer = new WorldRenderer(world, true);
+			world = PangolinWorld.getInstance();
+			world.init(Gdx.files.internal("data/map1.pm"));
+			worldRenderer = new WorldRenderer(world, false);
 			controller = new Controller(world);
 			Gdx.input.setInputProcessor(this);
 		} catch (InvalidMapException e) {

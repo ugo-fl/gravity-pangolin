@@ -2,11 +2,11 @@
                     
     XXX           
            XXX      
-                    
+        O           
       X             
               X     
                     
-           O        
+                    
      S              
      XXXXX          
                 F   
