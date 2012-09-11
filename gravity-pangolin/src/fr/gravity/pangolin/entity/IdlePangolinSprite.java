@@ -1,10 +1,5 @@
 package fr.gravity.pangolin.entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import fr.gravity.pangolin.entity.Pangolin.Direction;
 
 public class IdlePangolinSprite extends PangolinSprite {
 
