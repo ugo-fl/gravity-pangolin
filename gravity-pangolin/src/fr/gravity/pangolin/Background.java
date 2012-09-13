@@ -1,22 +1,12 @@
 package fr.gravity.pangolin;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import fr.gravity.pangolin.TextureLoader.TextureId;
+import fr.gravity.pangolin.entity.EntityGraphic;
 
-public class Background {
+public class Background extends EntityGraphic {
 
-	private TextureRegion textureRegion;
-	
 	public Background() {
-		Texture backgroundTexture = new Texture(
-				Gdx.files.internal("images/background.png"));
-		textureRegion = new TextureRegion(backgroundTexture);
-		textureRegion.flip(false, true);
-	}
-
-	public TextureRegion getTextureRegion() {
-		return textureRegion;
+		init(TextureLoader.getInstance().getTextureRegions(TextureId.BACKGROUND)[0], 0, 0);
 	}
 
 }

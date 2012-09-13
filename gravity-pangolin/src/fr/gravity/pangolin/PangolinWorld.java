@@ -9,11 +9,12 @@ import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.Pangolin;
 import fr.gravity.pangolin.entity.block.BranchBlock;
-import fr.gravity.pangolin.entity.block.BranchBlock.BranchFramePos;
+import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePos;
 import fr.gravity.pangolin.entity.block.ExitBlock;
+import fr.gravity.pangolin.entity.block.ExitBlock.ExitSide;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
+import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.exception.InvalidMapException;
 import fr.gravity.pangolin.util.GameUtil;
 
@@ -40,7 +41,7 @@ public class PangolinWorld {
 	private Array<Entity> entities = new Array<Entity>();
 
 	/** Our player controlled hero **/
-	private Pangolin pangolin = new Pangolin();
+	private Pangolin pangolin;
 
 	private Background background;
 
@@ -68,7 +69,7 @@ public class PangolinWorld {
 	public static PangolinWorld getInstance() {
 		try {
 			if (instance == null)
-				throw new InvalidMapException("The Pangolin World has not been initiated yet.");
+				throw new NullPointerException("The Pangolin World has not been initiated yet.");
 		} catch (InvalidMapException e) {
 			e.printStackTrace();
 		}
@@ -122,11 +123,11 @@ public class PangolinWorld {
 
 						entities.add(new BranchBlock(x, y, branchFramePos));
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
-						pangolin.setPosition(x, y);
+						pangolin = new Pangolin(x, y);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-						entities.add(new GravityChangerBlock(new Vector2(x, y), gravity, Side.DOWN, Side.RIGHT));
+						entities.add(new GravityChangerBlock(x, y, gravity, Side.DOWN, Side.RIGHT));
 					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
-						entities.add((exitBlock = new ExitBlock(new Vector2(x, y), 0)));
+						entities.add((exitBlock = new ExitBlock(x, y, ExitSide.EXIT_DOWN)));
 					}
 				}
 				y++;
@@ -140,8 +141,6 @@ public class PangolinWorld {
 			throw new InvalidMapException("No start point found in map.");
 		else if (exitBlock == null)
 			throw new InvalidMapException("No finish point found in map.");
-		// CollisionHelper singleton initialization
-		CollisionHelper.getInstance(pangolin, entities);
 	}
 
 	public Array<Entity> getBlocks() {

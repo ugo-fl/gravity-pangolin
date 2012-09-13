@@ -1,39 +1,21 @@
 package fr.gravity.pangolin.entity.block;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 import fr.gravity.pangolin.TextureLoader;
 import fr.gravity.pangolin.TextureLoader.TextureId;
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePos;
 
-public class BranchBlock extends Entity implements Block {
+public class BranchBlock extends Entity {
 
-//	public static float WIDTH = 1F;
-//	public static float HEIGHT = 0.3F;
-
-	private TextureRegion textureRegion;
 	private BranchFramePos branchFramePos;
-
-	public enum BranchFramePos {
-		START, MIDDLE, END
-	}
-
+	
 	public BranchBlock(float x, float y, BranchFramePos branchFramePos) {
 		this.branchFramePos = branchFramePos;
-		loadTexture();
-		init(textureRegion, x, y);
-//		setSize(WIDTH, HEIGHT);
-	}
-
-	private void loadTexture() {
-		TextureRegion[] textureRegions = TextureLoader.getInstance().getTextureRegions(TextureId.BRANCH);
-		int index = 0;
-		if (branchFramePos == BranchFramePos.MIDDLE)
-			index = 1;
-		else if (branchFramePos == BranchFramePos.END)
-			index = 2;
-		textureRegion = textureRegions[index];
+		entityGraphic = new BranchBlockGraphic(x, y, branchFramePos);
 	}
 
 	@Override
@@ -42,8 +24,8 @@ public class BranchBlock extends Entity implements Block {
 	}
 
 	@Override
-	public TextureRegion getTextureRegion() {
-		return textureRegion;
+	public void draw(SpriteBatch spriteBatch) {
+		entityGraphic.draw(spriteBatch);
 	}
 
 	@Override
@@ -59,5 +41,5 @@ public class BranchBlock extends Entity implements Block {
 		}
 		return new Rectangle(gapX, 0, 1F + gapWidth, 1.3F);
 	}
-
+	
 }

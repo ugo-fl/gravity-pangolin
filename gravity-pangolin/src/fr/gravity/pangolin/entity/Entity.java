@@ -1,30 +1,24 @@
 package fr.gravity.pangolin.entity;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
-import fr.gravity.pangolin.ScreenAbstract;
-import fr.gravity.pangolin.util.GameUtil;
+public abstract class Entity {
 
-public abstract class Entity extends Sprite {
-
-	public void init(TextureRegion frame, float x, float y) {
-		ScreenAbstract screen = GameUtil.getScreen();
-		
-		setTexture(frame.getTexture());
-		setSize(getWidth() / screen.getPpuX(), getHeight() / screen.getPpuY());
-		setX(x);
-		setY(y);
-//		setPosition(-screen.getWidth() / 2 + x, -screen.getHeight() / 2 + y);
+	protected EntityGraphic entityGraphic;
+	
+	public Rectangle getBoundingRectangle() {
+		return entityGraphic.getBoundingRectangle();
 	}
 	
-	public void setX(float x) {
-		super.setX(GameUtil.projectCoordinateX(x));
+	public float getX() {
+		return entityGraphic.getX();
 	}
 	
-	public void setY(float y) {
-		super.setY(GameUtil.projectCoordinateY(y));
+	public float getY() {
+		return entityGraphic.getY();
 	}
 	
 	public abstract boolean collides();
+	public abstract void draw(SpriteBatch spriteBatch);
 }

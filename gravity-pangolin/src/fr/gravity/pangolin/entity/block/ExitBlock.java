@@ -1,31 +1,17 @@
 package fr.gravity.pangolin.entity.block;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import fr.gravity.pangolin.entity.Entity;
 
-public class ExitBlock extends Entity implements Block {
+public class ExitBlock extends Entity {
 
-	public static int EXIT_DOWN = 0;
-	public static int EXIT_LEFT = 1;
-	public static int EXIT_UP = 2;
-	public static int EXIT_RIGHT = 3;
-
-	public static float WIDTH = 1F;
-	public static float HEIGHT = 0.3F;
+	public enum ExitSide {
+		EXIT_DOWN, EXIT_LEFT, EXIT_UP, EXIT_RIGHT
+	}
 	
-	private int exitSide = EXIT_DOWN;
-
-	private TextureRegion textureRegion;
-
-	public ExitBlock(Vector2 pos, int exitSide) {
-		this.exitSide = exitSide;
-		
-		getBoundingRectangle().setY(getBoundingRectangle().y + 0.8F);
-		setSize(WIDTH, HEIGHT);
+	public ExitBlock(float x, float y, ExitSide exitSide) {
+		entityGraphic = new ExitBlockGraphic(x, y, exitSide);
 	}
 
 	@Override
@@ -34,12 +20,8 @@ public class ExitBlock extends Entity implements Block {
 	}
 
 	@Override
-	public TextureRegion getTextureRegion() {
-		if (textureRegion == null) {
-			Texture gravityChangerTexture = new Texture(Gdx.files.internal("images/exit.png"));
-			textureRegion = new TextureRegion(gravityChangerTexture);
-		}
-		return textureRegion;
+	public void draw(SpriteBatch spriteBatch) {
+		entityGraphic.draw(spriteBatch);
 	}
 
 }

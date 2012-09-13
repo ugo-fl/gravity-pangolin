@@ -1,4 +1,4 @@
-package fr.gravity.pangolin.entity;
+package fr.gravity.pangolin.entity.pangolin;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class FallingPangolinSprite extends PangolinSprite {
+public class FallingPangolinSprite extends PangolinGraphic {
 
 	public static final float WIDTH = 1f;
 	public static final float HEIGHT = 1f;

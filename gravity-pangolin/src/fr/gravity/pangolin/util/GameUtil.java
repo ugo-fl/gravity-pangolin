@@ -18,6 +18,6 @@ public class GameUtil {
 	}
 
 	public static float projectCoordinateY(float y) {
-		return -screen.getHeight() / 2 + y;
+		return -(-screen.getHeight() / 2 + y);
 	}
 }

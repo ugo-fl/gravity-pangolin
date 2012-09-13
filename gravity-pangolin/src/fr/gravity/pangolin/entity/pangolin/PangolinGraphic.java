@@ -1,7 +1,8 @@
-package fr.gravity.pangolin.entity;
+package fr.gravity.pangolin.entity.pangolin;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,20 +12,22 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.Gravity.Side;
-import fr.gravity.pangolin.entity.Pangolin.Direction;
+import fr.gravity.pangolin.entity.EntityGraphic;
+import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 
-public abstract class PangolinSprite {
+public abstract class PangolinGraphic extends EntityGraphic {
 	
 	private static final int FRAME_COLS = 2;
 	private static final int FRAME_ROWS = 1;
 	
-	protected Gravity gravity = PangolinWorld.getInstance().getGravity();
 	protected Pangolin pangolin;
 	
 	private Texture pangolinTexture = new Texture("images/sprite_pangolin.png");
 	protected HashMap<Side , HashMap<Direction, Animation>> animationMap = new HashMap<Side , HashMap<Direction, Animation>>();
 	
-	public PangolinSprite(Pangolin pangolin) {
+	private float stateTime = 0;
+	
+	public PangolinGraphic(Pangolin pangolin) {
 		this.pangolin = pangolin;
 		loadAnimation();
 	}
@@ -87,13 +90,18 @@ public abstract class PangolinSprite {
 	}
 	
 	public TextureRegion getFrame(float stateTime) {
-		Side side = gravity.getSide();
+		Side side = PangolinWorld.getInstance().getGravity().getSide();
 		Animation animation = animationMap.get(side).get(pangolin.getDirection());
 		return animation.getKeyFrame(stateTime, true);
 	}
 
-	public void draw(SpriteBatch spriteBatch, float stateTime) {
-		spriteBatch.draw(getFrame(stateTime), pangolin.getPosition().x, pangolin.getPosition().y, Pangolin.WIDTH,
-				Pangolin.HEIGHT);
+	@Override
+	public void draw(SpriteBatch spriteBatch) {
+		if (this instanceof IdlePangolinSprite)
+			stateTime = 0;
+		else
+			stateTime += Gdx.graphics.getDeltaTime();
+		setTexture(getFrame(stateTime).getTexture());
+		super.draw(spriteBatch);
 	}
 }

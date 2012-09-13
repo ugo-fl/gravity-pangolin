@@ -31,10 +31,13 @@ public class GravityPangolinGame extends Game {
 		// setScreen(getMainMenuScreen());
 	}
 
+	// TODO This is terrible code. Needs refactoring.
 	public void launchGame() {
 		PangolinWorld pangolinWorld = PangolinWorld.getInstance(Gdx.files.internal("data/map1.pm"));
-		setScreen(getGameScreen(pangolinWorld));
+		Screen screen = getGameScreen(pangolinWorld);
+		setScreen(screen);
 		pangolinWorld.init();
+		((GravityPangolinScreen) screen).init();
 	}
 
 	public void setScreen(Screen screen) {

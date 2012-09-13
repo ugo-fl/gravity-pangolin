@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,10 +12,7 @@ import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 
-public class GravityChangerBlock extends Entity implements Block {
-
-	public static float WIDTH = 0.5F;
-	public static float HEIGHT = 0.5F;
+public class GravityChangerBlock extends Entity {
 
 	private static final long DEACTIVATED_PERIOD = 1000;
 
@@ -26,11 +24,12 @@ public class GravityChangerBlock extends Entity implements Block {
 
 	private TextureRegion textureRegion;
 
-	public GravityChangerBlock(Vector2 pos, Gravity gravity, Side s1, Side s2) {
+	public GravityChangerBlock(float x, float y, Gravity gravity, Side s1, Side s2) {
 		this.gravity = gravity;
 		this.s1 = s1;
 		this.s2 = s2;
-		setSize(WIDTH, HEIGHT);
+		
+		entityGraphic = new GravityChangerBlockGraphic(x, y);
 	}
 
 	/**
@@ -56,12 +55,8 @@ public class GravityChangerBlock extends Entity implements Block {
 	}
 
 	@Override
-	public TextureRegion getTextureRegion() {
-		if (textureRegion == null) {
-			Texture gravityChangerTexture = new Texture(Gdx.files.internal("images/gravity_changer.png"));
-			textureRegion = new TextureRegion(gravityChangerTexture);
-		}
-		return textureRegion;
+	public void draw(SpriteBatch spriteBatch) {
+		
 	}
 
 }

@@ -9,7 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/gravity-pangolin"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-jogl-natives.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-jogl.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/netthreads-libgdx"/>
 	<classpathentry kind="lib" path="libs/tween-engine-api-sources.jar"/>
 	<classpathentry kind="lib" path="libs/tween-engine-api.jar"/>
 	<classpathentry kind="output" path="bin"/>

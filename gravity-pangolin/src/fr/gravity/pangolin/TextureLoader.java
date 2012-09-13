@@ -16,7 +16,10 @@ public class TextureLoader {
 	 * Texture ids containing texture and size
 	 */
 	public enum TextureId {
-		BUTTONS(new Texture("images/buttons_sprite.png"), 1, 2), BRANCH(new Texture("images/branche.png"), 1, 3);
+		BACKGROUND(new Texture("images/background.png"), 1, 1),
+		BUTTONS(new Texture("images/buttons_sprite.png"), 1, 2), 
+		BRANCH(new Texture("images/branche.png"), 1, 3), 
+		EXIT(new Texture("images/exit.png"), 1, 1);
 
 		private final Texture texture;
 		private final int frameRows;
@@ -48,7 +51,7 @@ public class TextureLoader {
 	private HashMap<TextureId, TextureRegion[]> textureMap = new HashMap<TextureLoader.TextureId, TextureRegion[]>();
 
 	/**
-	 * Singleton accessor
+	 * Singleton accessor.
 	 * @return the unique instance of the TextureLoader
 	 */
 	public static TextureLoader getInstance() {
@@ -57,6 +60,9 @@ public class TextureLoader {
 		return instance;
 	}
 
+	/**
+	 * Instantiate all the textures for the game.
+	 */
 	private TextureLoader() {
 		for (TextureId textureId : TextureId.values()) {
 			textureMap.put(textureId,
@@ -64,6 +70,13 @@ public class TextureLoader {
 		}
 	}
 
+	/**
+	 * Divides the source into n TextureRegions where n = frameRows * frameCols. 
+	 * @param source
+	 * @param frameRows
+	 * @param frameCols
+	 * @return
+	 */
 	private TextureRegion[] loadSprites(Texture source, int frameRows, int frameCols) {
 		TextureRegion[] result = new TextureRegion[frameRows * frameCols];
 		TextureRegion[][] tmp = TextureRegion.split(source, source.getWidth() / frameCols, source.getHeight()

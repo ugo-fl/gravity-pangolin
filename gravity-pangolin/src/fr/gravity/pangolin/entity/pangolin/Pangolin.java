@@ -1,4 +1,4 @@
-package fr.gravity.pangolin.entity;
+package fr.gravity.pangolin.entity.pangolin;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import fr.gravity.pangolin.TextureLoader;
+import fr.gravity.pangolin.entity.Entity;
 
 public class Pangolin extends Entity {
 
@@ -32,11 +33,9 @@ public class Pangolin extends Entity {
 	private Direction direction = Direction.RIGHT;
 
 	// States
-	private PangolinSprite pangolinState;
-
-	private IdlePangolinSprite idlePangolinState = new IdlePangolinSprite(this);
-	private WalkingPangolinSprite walkingPangolinState = new WalkingPangolinSprite(this);
-	private FallingPangolinSprite fallingPangolinState = new FallingPangolinSprite(this);
+	private IdlePangolinSprite idlePangolinState;
+	private WalkingPangolinSprite walkingPangolinState;
+	private FallingPangolinSprite fallingPangolinState;
 
 	private Vector2 position = new Vector2();
 	private Vector2 previousPosition = new Vector2();
@@ -52,8 +51,11 @@ public class Pangolin extends Entity {
 
 	private float stateTime = 0f;
 
-	public Pangolin() {
-		pangolinState = idlePangolinState;
+	public Pangolin(float x, float y) {
+		entityGraphic = idlePangolinState;
+		idlePangolinState = new IdlePangolinSprite(this);
+		walkingPangolinState = new WalkingPangolinSprite(this);
+		fallingPangolinState = new FallingPangolinSprite(this);
 	}
 	
 //	public Pangolin(Vector2 position) {
@@ -64,7 +66,7 @@ public class Pangolin extends Entity {
 //	}
 
 	public void idle() {
-		pangolinState = idlePangolinState;
+		entityGraphic = idlePangolinState;
 		getAcceleration().x = 0;
 		getVelocity().x = 0;
 		getVelocity().y = 0;
@@ -83,49 +85,49 @@ public class Pangolin extends Entity {
 
 	public void goLeft() {
 		direction = Direction.LEFT;
-		pangolinState = walkingPangolinState;
+		entityGraphic = walkingPangolinState;
 		velocity.x = -SPEED;
 	}
 
 	public void fallLeft() {
 		if (!landed)
-			pangolinState = fallingPangolinState;
+			entityGraphic = fallingPangolinState;
 		velocity.x = -FALLING_SPEED;
 	}
 
 	public void goRight() {
 		direction = Direction.RIGHT;
-		pangolinState = walkingPangolinState;
+		entityGraphic = walkingPangolinState;
 		velocity.x = SPEED;
 	}
 
 	public void fallRight() {
 		if (!landed)
-			pangolinState = fallingPangolinState;
+			entityGraphic = fallingPangolinState;
 		velocity.x = FALLING_SPEED;
 	}
 
 	public void goUp() {
 		direction = Direction.UP;
-		pangolinState = walkingPangolinState;
+		entityGraphic = walkingPangolinState;
 		velocity.y = -SPEED;
 	}
 
 	public void fallUp() {
 		if (!landed)
-			pangolinState = fallingPangolinState;
+			entityGraphic = fallingPangolinState;
 		velocity.y = -FALLING_SPEED;
 	}
 
 	public void goDown() {
 		direction = Direction.DOWN;
-		pangolinState = walkingPangolinState;
+		entityGraphic = walkingPangolinState;
 		velocity.y = SPEED;
 	}
 
 	public void fallDown() {
 		if (!landed)
-			pangolinState = fallingPangolinState;
+			entityGraphic = fallingPangolinState;
 		velocity.y = FALLING_SPEED;
 	}
 
@@ -133,24 +135,31 @@ public class Pangolin extends Entity {
 		position = previousPosition;
 	}
 
+	@Override
 	public void draw(SpriteBatch spriteBatch) {
-		if (pangolinState instanceof IdlePangolinSprite)
+		if (entityGraphic instanceof IdlePangolinSprite)
 			stateTime = 0;
 		else
 			stateTime += Gdx.graphics.getDeltaTime();
 
-		pangolinState.draw(spriteBatch, stateTime);
+		entityGraphic.draw(spriteBatch);
 	}
 
+	@Override
+	public boolean collides() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	/** GETTERS & SETTERS **/
 
 	public TextureRegion getCurrentFrame() {
-		if (pangolinState instanceof IdlePangolinSprite)
+		if (entityGraphic instanceof IdlePangolinSprite)
 			stateTime = 0;
 		else
 			stateTime += Gdx.graphics.getDeltaTime();
 
-		if (pangolinState instanceof FallingPangolinSprite) {
+		if (entityGraphic instanceof FallingPangolinSprite) {
 			bounds.setWidth(FallingPangolinSprite.WIDTH);
 			bounds.setHeight(FallingPangolinSprite.HEIGHT);
 		} else if (bounds.getWidth() == FallingPangolinSprite.WIDTH) {
@@ -158,7 +167,7 @@ public class Pangolin extends Entity {
 			bounds.setHeight(HEIGHT);
 		}
 
-		return pangolinState.getFrame(stateTime);
+		return ((PangolinGraphic) entityGraphic).getFrame(stateTime);
 	}
 
 	public Vector2 getPosition() {
@@ -185,14 +194,6 @@ public class Pangolin extends Entity {
 		return bounds;
 	}
 
-	public PangolinSprite getPangolinState() {
-		return pangolinState;
-	}
-
-	public void setPangolinState(PangolinSprite pangolinState) {
-		this.pangolinState = pangolinState;
-	}
-
 	public boolean isLanded() {
 		return landed;
 	}
@@ -203,12 +204,6 @@ public class Pangolin extends Entity {
 
 	public Direction getDirection() {
 		return direction;
-	}
-
-	@Override
-	public boolean collides() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

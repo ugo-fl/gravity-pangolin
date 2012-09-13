@@ -16,10 +16,13 @@ public class GravityPangolinScreen extends ScreenAbstract {
 		this.pangolinWorld = pangolinWorld;
 	}
 
-	@Override
-	public void show() {
+	public void init() {
 		worldRenderer = new WorldRenderer(pangolinWorld, this, false);
 		controller = new Controller(pangolinWorld);
+	}
+	
+	@Override
+	public void show() {
 		Gdx.input.setInputProcessor(this);
 	}
 
