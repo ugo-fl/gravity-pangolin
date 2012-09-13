@@ -1,11 +1,13 @@
-package fr.gravity.pangolin.block;
+package fr.gravity.pangolin.entity.block;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class ExitBlock extends Block {
+import fr.gravity.pangolin.entity.Entity;
+
+public class ExitBlock extends Entity implements Block {
 
 	public static int EXIT_DOWN = 0;
 	public static int EXIT_LEFT = 1;
@@ -20,9 +22,9 @@ public class ExitBlock extends Block {
 	private TextureRegion textureRegion;
 
 	public ExitBlock(Vector2 pos, int exitSide) {
-		super(pos);
 		this.exitSide = exitSide;
-		bounds.setY(bounds.y + 0.8F);
+		
+		getBoundingRectangle().setY(getBoundingRectangle().y + 0.8F);
 		setSize(WIDTH, HEIGHT);
 	}
 

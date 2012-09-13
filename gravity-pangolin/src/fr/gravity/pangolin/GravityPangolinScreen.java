@@ -1,32 +1,26 @@
 package fr.gravity.pangolin;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 
-import fr.gravity.pangolin.exception.InvalidMapException;
+public class GravityPangolinScreen extends ScreenAbstract {
 
-public class GravityPangolinScreen implements Screen, InputProcessor {
-	private PangolinWorld world;
+	private PangolinWorld pangolinWorld;
 	private WorldRenderer worldRenderer;
 	private Controller controller;
 
-	private int width, height;
+	protected GravityPangolinScreen(PangolinWorld pangolinWorld) {
+		super(pangolinWorld.getSizeX(), pangolinWorld.getSizeY());
+		this.pangolinWorld = pangolinWorld;
+	}
 
 	@Override
 	public void show() {
-		try {
-			world = PangolinWorld.getInstance();
-			world.init(Gdx.files.internal("data/map1.pm"));
-			worldRenderer = new WorldRenderer(world, false);
-			controller = new Controller(world);
-			Gdx.input.setInputProcessor(this);
-		} catch (InvalidMapException e) {
-			e.printStackTrace();
-		}
+		worldRenderer = new WorldRenderer(pangolinWorld, this, false);
+		controller = new Controller(pangolinWorld);
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override

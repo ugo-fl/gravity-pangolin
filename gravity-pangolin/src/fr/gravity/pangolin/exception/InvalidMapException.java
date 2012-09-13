@@ -1,6 +1,11 @@
 package fr.gravity.pangolin.exception;
 
-public class InvalidMapException extends Throwable {
+/**
+ * This RuntimeException notifies that the map is invalid or has not been set.
+ * @author Ugo Flamarion
+ *
+ */
+public class InvalidMapException extends RuntimeException {
 	
 	/**
 	 * 

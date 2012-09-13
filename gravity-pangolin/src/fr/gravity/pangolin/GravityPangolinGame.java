@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 
+import fr.gravity.pangolin.exception.InvalidMapException;
 import fr.gravity.pangolin.menu.MainMenuScreen;
 
 public class GravityPangolinGame extends Game {
@@ -26,19 +27,31 @@ public class GravityPangolinGame extends Game {
 	@Override
 	public void create() {
 		TextureLoader.getInstance();
-		// setScreen(new GravityPangolinScreen());
-
-		if (mainMenuScreen == null)
-			mainMenuScreen = new MainMenuScreen();
-		setScreen(mainMenuScreen);
-		Gdx.input.setInputProcessor((InputProcessor) mainMenuScreen);
+		launchGame();
+		// setScreen(getMainMenuScreen());
 	}
 
 	public void launchGame() {
-		if (gravityPangolinScreen == null)
-			gravityPangolinScreen = new GravityPangolinScreen();
-		setScreen(gravityPangolinScreen);
-		Gdx.input.setInputProcessor((InputProcessor) gravityPangolinScreen);
+		PangolinWorld pangolinWorld = PangolinWorld.getInstance(Gdx.files.internal("data/map1.pm"));
+		setScreen(getGameScreen(pangolinWorld));
+		pangolinWorld.init();
 	}
-	
+
+	public void setScreen(Screen screen) {
+		super.setScreen(screen);
+		Gdx.input.setInputProcessor((InputProcessor) screen);
+	}
+
+	private Screen getMainMenuScreen() {
+		if (mainMenuScreen == null)
+			mainMenuScreen = new MainMenuScreen();
+		return mainMenuScreen;
+	}
+
+	private Screen getGameScreen(PangolinWorld pangolinWorld) {
+		if (gravityPangolinScreen == null)
+			gravityPangolinScreen = new GravityPangolinScreen(pangolinWorld);
+		return gravityPangolinScreen;
+	}
+
 }

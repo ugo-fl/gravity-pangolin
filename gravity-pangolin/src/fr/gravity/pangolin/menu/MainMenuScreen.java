@@ -18,10 +18,14 @@ import com.badlogic.gdx.math.MathUtils;
 import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.ScreenAbstract;
 import fr.gravity.pangolin.tween.SpriteAccessor;
+import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.util.SpriteUtil;
 
-public class MainMenuScreen extends ScreenAbstract implements InputProcessor {
+public class MainMenuScreen extends ScreenAbstract {
 
+	public static final float MAIN_MENU_SCR_WIDTH = 100;
+	public static final float MAIN_MENU_SCR_HEIGHT = MAIN_MENU_SCR_WIDTH * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+	
 	private static final int HERBS_FRAME_COLS = 2;
 	private static final int HERBS_FRAME_ROWS = 1;
 
@@ -34,6 +38,10 @@ public class MainMenuScreen extends ScreenAbstract implements InputProcessor {
 
 	private Button newGameButton;
 
+	public MainMenuScreen() {
+		super(MAIN_MENU_SCR_WIDTH, MAIN_MENU_SCR_HEIGHT);
+	}
+	
 	@Override
 	public void show() {
 
@@ -65,25 +73,17 @@ public class MainMenuScreen extends ScreenAbstract implements InputProcessor {
 		}
 
 		// Herbs on the floor
-		herbSprites[0] = generateSprite(frames[0], 15, 0, false);
-		herbSprites[1] = generateSprite(frames[1], 25, 0, false);
-		herbSprites[2] = generateSprite(frames[0], 35, 0, false);
+		herbSprites[0] = SpriteUtil.generateSprite(frames[0], 15, 0, false);
+		herbSprites[1] = SpriteUtil.generateSprite(frames[1], 25, 0, false);
+		herbSprites[2] = SpriteUtil.generateSprite(frames[0], 35, 0, false);
 
-		herbSprites[3] = generateSprite(frames[1], 65, 0, false);
-		herbSprites[4] = generateSprite(frames[0], 75, 0, false);
-		herbSprites[5] = generateSprite(frames[1], 85, 0, false);
+		herbSprites[3] = SpriteUtil.generateSprite(frames[1], 65, 0, false);
+		herbSprites[4] = SpriteUtil.generateSprite(frames[0], 75, 0, false);
+		herbSprites[5] = SpriteUtil.generateSprite(frames[1], 85, 0, false);
+		
 		// Herbs on the left
-		herbSprites[6] = generateSprite(frames[0], 0, 25, true);
-		herbSprites[7] = generateSprite(frames[1], 0, 15, true);
-	}
-
-	private Sprite generateSprite(TextureRegion frame, float x, float y, boolean rotate) {
-		Sprite sprite = new Sprite(frame);
-		sprite.setSize(sprite.getWidth() / ppuX, sprite.getHeight() / ppuY);
-		sprite.setPosition(-width / 2 + x, -height / 2 + y);
-		if (rotate)
-			sprite.rotate90(true);
-		return sprite;
+		herbSprites[6] = SpriteUtil.generateSprite(frames[0], 0, 25, true);
+		herbSprites[7] = SpriteUtil.generateSprite(frames[1], 0, 15, true);
 	}
 
 	@Override

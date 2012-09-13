@@ -17,11 +17,11 @@ public abstract class ScreenAbstract implements Screen, InputProcessor {
 	protected OrthographicCamera camera;
 	protected SpriteBatch spriteBatch;
 	
-	public ScreenAbstract() {
+	protected ScreenAbstract(float width, float height) {
 		float screenW = Gdx.graphics.getWidth();
 		float screenH = Gdx.graphics.getHeight();
-		width = 100;
-		height = width * screenH / screenW;
+		this.width = width;
+		this.height = height;
 
 		ppuX = screenW / width;
 		ppuY = screenH / height;

@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Pangolin {
+import fr.gravity.pangolin.TextureLoader;
+
+public class Pangolin extends Entity {
 
 	// public enum State {
 	// IDLE, WALKING_RIGHT, WALKING_LEFT, FALLING, DYING
@@ -50,12 +52,16 @@ public class Pangolin {
 
 	private float stateTime = 0f;
 
-	public Pangolin(Vector2 position) {
-		this.position = position;
-		this.bounds.width = WIDTH;
-		this.bounds.height = HEIGHT;
+	public Pangolin() {
 		pangolinState = idlePangolinState;
 	}
+	
+//	public Pangolin(Vector2 position) {
+//		this.position = position;
+//		this.bounds.width = WIDTH;
+//		this.bounds.height = HEIGHT;
+//		pangolinState = idlePangolinState;
+//	}
 
 	public void idle() {
 		pangolinState = idlePangolinState;
@@ -144,13 +150,13 @@ public class Pangolin {
 		else
 			stateTime += Gdx.graphics.getDeltaTime();
 
-//		if (pangolinState instanceof FallingPangolinSprite) {
-//			bounds.setWidth(FallingPangolinSprite.WIDTH);
-//			bounds.setHeight(FallingPangolinSprite.HEIGHT);
-//		} else if (bounds.getWidth() == FallingPangolinSprite.WIDTH) {
-//			bounds.setWidth(WIDTH);
-//			bounds.setHeight(HEIGHT);
-//		}
+		if (pangolinState instanceof FallingPangolinSprite) {
+			bounds.setWidth(FallingPangolinSprite.WIDTH);
+			bounds.setHeight(FallingPangolinSprite.HEIGHT);
+		} else if (bounds.getWidth() == FallingPangolinSprite.WIDTH) {
+			bounds.setWidth(WIDTH);
+			bounds.setHeight(HEIGHT);
+		}
 
 		return pangolinState.getFrame(stateTime);
 	}
@@ -197,6 +203,12 @@ public class Pangolin {
 
 	public Direction getDirection() {
 		return direction;
+	}
+
+	@Override
+	public boolean collides() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

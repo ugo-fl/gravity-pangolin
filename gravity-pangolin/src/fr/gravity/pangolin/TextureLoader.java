@@ -1,50 +1,84 @@
 package fr.gravity.pangolin;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TextureLoader {
 
-	// Singleton instance
+	/**
+	 * Singleton instance
+	 */
 	private static TextureLoader instance;
-	
-	/** TEXTURES AND SIZE**/
-	
-	// Buttons
-	private static final int BUTTONS_FRAME_COLS = 2;
-	private static final int BUTTONS_FRAME_ROWS = 1;
-	private TextureRegion[] buttonTextureRegions = new TextureRegion[BUTTONS_FRAME_COLS * BUTTONS_FRAME_ROWS];
-	
-	
-	
+
+	/**
+	 * Texture ids containing texture and size
+	 */
+	public enum TextureId {
+		BUTTONS(new Texture("images/buttons_sprite.png"), 1, 2), BRANCH(new Texture("images/branche.png"), 1, 3);
+
+		private final Texture texture;
+		private final int frameRows;
+		private final int frameCols;
+
+		private TextureId(Texture texture, int frameRows, int frameCols) {
+			this.texture = texture;
+			this.frameRows = frameRows;
+			this.frameCols = frameCols;
+		}
+
+		public Texture getTexture() {
+			return texture;
+		}
+
+		public int getFrameRows() {
+			return frameRows;
+		}
+
+		public int getFrameCols() {
+			return frameCols;
+		}
+
+	}
+
+	/**
+	 * The map containing all the textures of the game
+	 */
+	private HashMap<TextureId, TextureRegion[]> textureMap = new HashMap<TextureLoader.TextureId, TextureRegion[]>();
+
+	/**
+	 * Singleton accessor
+	 * @return the unique instance of the TextureLoader
+	 */
 	public static TextureLoader getInstance() {
 		if (instance == null)
 			instance = new TextureLoader();
 		return instance;
 	}
-	
+
 	private TextureLoader() {
-		loadButtonSprites();
-	}
-	
-	private void loadButtonSprites() {
-		Texture buttonsTexture = new Texture("images/buttons_sprite.png");
-		TextureRegion[][] tmp = TextureRegion.split(buttonsTexture, buttonsTexture.getWidth() / BUTTONS_FRAME_COLS,
-				buttonsTexture.getHeight() / BUTTONS_FRAME_ROWS);
-		TextureRegion[] frames = new TextureRegion[BUTTONS_FRAME_COLS * BUTTONS_FRAME_ROWS];
-		int index = 0;
-		for (int i = 0; i < BUTTONS_FRAME_ROWS; i++) {
-			for (int j = 0; j < BUTTONS_FRAME_COLS; j++) {
-				buttonTextureRegions[index++] = tmp[i][j];
-			}
+		for (TextureId textureId : TextureId.values()) {
+			textureMap.put(textureId,
+					loadSprites(textureId.getTexture(), textureId.getFrameRows(), textureId.getFrameCols()));
 		}
 	}
 
-	/** GETTERS **/
-	
-	public TextureRegion[] getButtonTextureRegions() {
-		return buttonTextureRegions;
+	private TextureRegion[] loadSprites(Texture source, int frameRows, int frameCols) {
+		TextureRegion[] result = new TextureRegion[frameRows * frameCols];
+		TextureRegion[][] tmp = TextureRegion.split(source, source.getWidth() / frameCols, source.getHeight()
+				/ frameRows);
+		int index = 0;
+		for (int i = 0; i < frameRows; i++) {
+			for (int j = 0; j < frameCols; j++) {
+				result[index++] = tmp[i][j];
+			}
+		}
+		return result;
 	}
-	
+
+	public TextureRegion[] getTextureRegions(TextureId textureId) {
+		return textureMap.get(textureId);
+	}
+
 }
