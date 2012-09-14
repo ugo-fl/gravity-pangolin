@@ -21,11 +21,13 @@ public class SpriteUtil {
 	public static boolean isTouched(Sprite sprite, float x, float y) {
 		ScreenAbstract screen = GameUtil.getScreen();
 		
-//		x = -screen.getWidth() / 2 + (x / screen.getPpuX());
-//		y = -(-screen.getHeight() / 2 + (y / screen.getPpuY()));
+		x = GameUtil.projectCoordinateX(x / screen.getPpuX()); 
+		y = GameUtil.projectCoordinateY(y / screen.getPpuY());
 		
-		x = GameUtil.projectCoordinateX(x / screen.getPpuX());
-		y = -GameUtil.projectCoordinateY(y / screen.getPpuY());
+		System.out.println("X: " + x);
+		System.out.println("Y: " + y);
+		System.out.println("-----");
+		
 		if (x >= sprite.getX() && x <= sprite.getX() + sprite.getWidth())
 			if (y >= sprite.getY() && y <= sprite.getY() + sprite.getHeight())
 			return true;

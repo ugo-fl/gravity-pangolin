@@ -69,7 +69,8 @@ public class PangolinWorld {
 	public static PangolinWorld getInstance() {
 		try {
 			if (instance == null)
-				throw new NullPointerException("The Pangolin World has not been initiated yet.");
+				throw new NullPointerException(
+						"The Pangolin World has not been initiated yet.");
 		} catch (InvalidMapException e) {
 			e.printStackTrace();
 		}
@@ -87,21 +88,22 @@ public class PangolinWorld {
 			sizeX = Integer.valueOf(size[0]);
 			sizeY = Integer.valueOf(size[1]);
 			if (sizeX <= 0 || sizeY <= 0)
-				throw new InvalidMapException("Invalid definition of size (size should be > 0 for both X and Y)");
+				throw new InvalidMapException(
+						"Invalid definition of size (size should be > 0 for both X and Y)");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Init the world.
-	 * The game screen must be initiated first.
+	 * Init the world. The game screen must be initiated first.
 	 */
 	public void init() {
 		// Checks if the screen is set first
 		if (GameUtil.getScreen() == null)
-			throw new NullPointerException("The screen has not been initiated yet.");
-		
+			throw new NullPointerException(
+					"The screen has not been initiated yet.");
+
 		background = new Background();
 		Entity exitBlock = null;
 		try {
@@ -113,21 +115,29 @@ public class PangolinWorld {
 					String sym = String.valueOf(line.charAt(x));
 					if (BLOCK_SYM.equalsIgnoreCase(sym)) {
 						BranchFramePos branchFramePos = BranchFramePos.START;
-						String previousSym = String.valueOf(line.charAt(x - 1));
-						String nextSym = String.valueOf(line.charAt(x + 1));
+						String previousSym = "";
+						String nextSym = "";
 
-						if (BLOCK_SYM.equalsIgnoreCase(previousSym) && BLOCK_SYM.equalsIgnoreCase(nextSym))
+						if ((x - 1) >= 0)
+							previousSym = String.valueOf(line.charAt(x - 1));
+						if ((x + 1) < line.length())
+							nextSym = String.valueOf(line.charAt(x + 1));
+
+						if (BLOCK_SYM.equalsIgnoreCase(previousSym)
+								&& BLOCK_SYM.equalsIgnoreCase(nextSym))
 							branchFramePos = BranchFramePos.MIDDLE;
 						else if (BLOCK_SYM.equalsIgnoreCase(previousSym))
 							branchFramePos = BranchFramePos.END;
 
-						entities.add(new BranchBlock(x, y, branchFramePos));
+						entities.add(new BranchBlock(x, sizeY - y, branchFramePos));
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
-						pangolin = new Pangolin(x, y);
+						pangolin = new Pangolin(x, sizeY - y);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-						entities.add(new GravityChangerBlock(x, y, gravity, Side.DOWN, Side.RIGHT));
+						entities.add(new GravityChangerBlock(x, sizeY - y, gravity,
+								Side.DOWN, Side.RIGHT));
 					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
-						entities.add((exitBlock = new ExitBlock(x, y, ExitSide.EXIT_DOWN)));
+						entities.add((exitBlock = new ExitBlock(x, sizeY - y,
+								ExitSide.EXIT_DOWN)));
 					}
 				}
 				y++;

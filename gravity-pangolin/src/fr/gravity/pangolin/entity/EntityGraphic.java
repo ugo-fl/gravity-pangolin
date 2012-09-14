@@ -1,6 +1,5 @@
 package fr.gravity.pangolin.entity;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -9,13 +8,13 @@ import fr.gravity.pangolin.util.GameUtil;
 
 public abstract class EntityGraphic extends Sprite {
 	
-	public void init(TextureRegion frame, float x, float y) {
+	public void init(TextureRegion textureRegion, float x, float y) {
 		ScreenAbstract screen = GameUtil.getScreen();
 		
-		Texture texture = frame.getTexture(); 
-		
-		setTexture(texture);
-		setSize(texture.getWidth() / screen.getPpuX(), texture.getHeight() / screen.getPpuY());
+		setRegion(textureRegion);
+		setSize(textureRegion.getRegionWidth() / screen.getPpuX(), textureRegion.getRegionHeight() / screen.getPpuY());
+		setRegionWidth(textureRegion.getRegionWidth());
+		setRegionHeight(textureRegion.getRegionHeight());
 		setPosition(x, y);
 	}
 	

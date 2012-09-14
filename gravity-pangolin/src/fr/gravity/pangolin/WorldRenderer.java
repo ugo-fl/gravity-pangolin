@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.block.BranchBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock;
+import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePos;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.util.GameUtil;
 
@@ -64,7 +66,10 @@ public class WorldRenderer {
 	private void draw() {
 		/* DRAW BACKGROUND */
 		background.draw(spriteBatch);
-
+		
+//		BranchBlock bb = new BranchBlock(1, 1, BranchFramePos.MIDDLE);
+//		bb.draw(spriteBatch);
+		
 		/* DRAW BLOCKS */
 		Entity exitBlock = null;
 		for (Entity block : world.getBlocks()) {

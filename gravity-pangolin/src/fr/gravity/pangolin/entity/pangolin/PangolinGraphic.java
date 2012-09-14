@@ -9,9 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.Gravity;
-import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.Gravity.Side;
+import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.entity.EntityGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 
@@ -25,7 +24,7 @@ public abstract class PangolinGraphic extends EntityGraphic {
 	private Texture pangolinTexture = new Texture("images/sprite_pangolin.png");
 	protected HashMap<Side , HashMap<Direction, Animation>> animationMap = new HashMap<Side , HashMap<Direction, Animation>>();
 	
-	private float stateTime = 0;
+	protected float stateTime = 0;
 	
 	public PangolinGraphic(Pangolin pangolin) {
 		this.pangolin = pangolin;
@@ -97,11 +96,19 @@ public abstract class PangolinGraphic extends EntityGraphic {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
-		if (this instanceof IdlePangolinSprite)
-			stateTime = 0;
-		else
-			stateTime += Gdx.graphics.getDeltaTime();
-		setTexture(getFrame(stateTime).getTexture());
+		process();
 		super.draw(spriteBatch);
 	}
+	
+	public abstract void process();
+	
+//	@Override
+//	public void draw(SpriteBatch spriteBatch) {
+//		if (this instanceof IdlePangolinSprite)
+//			stateTime = 0;
+//		else
+//			stateTime += Gdx.graphics.getDeltaTime();
+//		setRegion(getFrame(stateTime));
+//		super.draw(spriteBatch);
+//	}
 }

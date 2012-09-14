@@ -42,9 +42,16 @@ public class FallingPangolinSprite extends PangolinGraphic {
 		return animation.getKeyFrame(stateTime, true);
 	}
 
+//	@Override
+//	public void draw(SpriteBatch spriteBatch, float stateTime) {
+//		spriteBatch.draw(getFrame(stateTime), pangolin.getPosition().x, pangolin.getPosition().y, WIDTH, HEIGHT);
+//	}
+
 	@Override
-	public void draw(SpriteBatch spriteBatch, float stateTime) {
-		spriteBatch.draw(getFrame(stateTime), pangolin.getPosition().x, pangolin.getPosition().y, WIDTH, HEIGHT);
+	public void process() {
+		setRegion(getFrame(stateTime));
+		setRegionWidth((int) WIDTH);
+		setRegionHeight((int) HEIGHT);
 	}
 
 }

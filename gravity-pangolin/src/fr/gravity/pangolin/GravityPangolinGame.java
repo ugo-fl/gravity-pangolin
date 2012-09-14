@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 
 import fr.gravity.pangolin.exception.InvalidMapException;
 import fr.gravity.pangolin.menu.MainMenuScreen;
+import fr.gravity.pangolin.util.GameUtil;
 
 public class GravityPangolinGame extends Game {
 
@@ -27,17 +28,21 @@ public class GravityPangolinGame extends Game {
 	@Override
 	public void create() {
 		TextureLoader.getInstance();
-		launchGame();
-		// setScreen(getMainMenuScreen());
+		 launchGame();
+//		setScreen(getMainMenuScreen());
 	}
 
 	// TODO This is terrible code. Needs refactoring.
 	public void launchGame() {
-		PangolinWorld pangolinWorld = PangolinWorld.getInstance(Gdx.files.internal("data/map1.pm"));
+		PangolinWorld pangolinWorld = PangolinWorld.getInstance(Gdx.files
+				.internal("data/map1.pm"));
 		Screen screen = getGameScreen(pangolinWorld);
 		setScreen(screen);
 		pangolinWorld.init();
 		((GravityPangolinScreen) screen).init();
+		
+//		setScreen(GravityPangolinScreen.getInstance());
+		
 	}
 
 	public void setScreen(Screen screen) {
