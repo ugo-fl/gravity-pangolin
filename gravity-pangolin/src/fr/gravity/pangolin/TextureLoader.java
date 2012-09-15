@@ -18,7 +18,8 @@ public class TextureLoader {
 	public enum TextureId {
 		BACKGROUND(new Texture("images/background.png"), 1, 1),
 		BUTTONS(new Texture("images/buttons_sprite.png"), 1, 2), 
-		BRANCH(new Texture("images/branche.png"), 1, 3), 
+		BRANCH(new Texture("images/branche.png"), 1, 3),
+		PANGOLIN_BALLMODE(new Texture("images/sprite_pangolin_ballmode.png"), 1, 4),
 		EXIT(new Texture("images/exit.png"), 1, 1);
 
 		private final Texture texture;

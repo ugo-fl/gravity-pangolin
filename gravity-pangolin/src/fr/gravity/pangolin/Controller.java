@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
-import fr.gravity.pangolin.util.GameUtil;
 
 public class Controller {
 
@@ -83,44 +82,45 @@ public class Controller {
 		pangolin.setLanded(false);
 		// Control for the X axis
 		{
-			Vector2 savedPosition = pangolin.getPosition().cpy();
+			Vector2 positionCpy = pangolin.getPosition();
 			Vector2 velocityCpy = pangolin.getVelocity().cpy();
 
 			velocityCpy.set(pangolin.getVelocity().x, 0);
-			pangolin.getPosition().add(velocityCpy.tmp().mul(delta));
+			pangolin.translate(velocityCpy.tmp().mul(delta));
 
 			Entity collidedEntity = CollisionHelper.collidesAny(pangolin, pangolinWorld.getBlocks());
-			if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
-				pangolin.getVelocity().set(0, pangolin.getVelocity().y);
-				if (pangolinWorld.getGravity().getSide() == Side.LEFT)
-					pangolin.setLanded(true);
-			}
-			else if (CollisionHelper.collidesRight(pangolin, collidedEntity)) {
-				pangolin.getVelocity().set(0, pangolin.getVelocity().y);
-				if (pangolinWorld.getGravity().getSide() == Side.RIGHT)
-					pangolin.setLanded(true);
-			}
-			pangolin.setPosition(savedPosition);
+			if (collidedEntity != null)
+				if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
+					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
+					if (pangolinWorld.getGravity().getSide() == Side.LEFT)
+						pangolin.setLanded(true);
+				} else if (CollisionHelper.collidesRight(pangolin, collidedEntity)) {
+					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
+					if (pangolinWorld.getGravity().getSide() == Side.RIGHT)
+						pangolin.setLanded(true);
+				}
+			pangolin.setPosition(positionCpy);
 		}
 		// Control for the Y axis
 		{
-			Vector2 savedPosition = pangolin.getPosition().cpy();
+			Vector2 positionCpy = pangolin.getPosition().cpy();
 			Vector2 velocityCpy = pangolin.getVelocity().cpy();
 
 			velocityCpy.set(0, pangolin.getVelocity().y);
-			pangolin.getPosition().add(velocityCpy.tmp().mul(delta));
+			pangolin.translate(velocityCpy.tmp().mul(delta));
 
 			Entity collidedEntity = CollisionHelper.collidesAny(pangolin, pangolinWorld.getBlocks());
-			if (CollisionHelper.collidesDown(pangolin, collidedEntity)) {
-				pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
-				if (pangolinWorld.getGravity().getSide() == Side.DOWN)
-					pangolin.setLanded(true);
-			} else if (CollisionHelper.collidesUp(pangolin, collidedEntity)) {
-				pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
-				if (pangolinWorld.getGravity().getSide() == Side.UP)
-					pangolin.setLanded(true);
-			}
-			pangolin.setPosition(savedPosition);
+			if (collidedEntity != null)
+				if (CollisionHelper.collidesDown(pangolin, collidedEntity)) {
+					pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
+					if (pangolinWorld.getGravity().getSide() == Side.DOWN)
+						pangolin.setLanded(true);
+				} else if (CollisionHelper.collidesUp(pangolin, collidedEntity)) {
+					pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
+					if (pangolinWorld.getGravity().getSide() == Side.UP)
+						pangolin.setLanded(true);
+				}
+			pangolin.setPosition(positionCpy);
 		}
 
 	}
@@ -128,9 +128,9 @@ public class Controller {
 	/** Change Pangolin's state and parameters based on input controls **/
 	private void processInput() {
 
-	    if (pangolin == null)
-	        return;
-	    
+		if (pangolin == null)
+			return;
+
 		pangolin.idle();
 
 		Side gravitySide = pangolinWorld.getGravity().getSide();

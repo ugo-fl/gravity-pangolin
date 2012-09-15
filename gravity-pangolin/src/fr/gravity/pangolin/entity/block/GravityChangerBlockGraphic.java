@@ -1,17 +1,17 @@
 package fr.gravity.pangolin.entity.block;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import fr.gravity.pangolin.TextureLoader;
+import fr.gravity.pangolin.TextureLoader.TextureId;
 import fr.gravity.pangolin.entity.EntityGraphic;
 
 public class GravityChangerBlockGraphic extends EntityGraphic {
 
-//	public static float WIDTH = 0.5F;
-//	public static float HEIGHT = 0.5F;
-
-	private TextureRegion textureRegion;
-
 	public GravityChangerBlockGraphic(float x, float y) {
+//		TextureRegion textureRegion = TextureLoader.getInstance().getTextureRegions(TextureId.GRAVITY_CHANGER)[0];
+//		set(new Sprite(textureRegion));
 //		setSize(WIDTH, HEIGHT);
 	}
 

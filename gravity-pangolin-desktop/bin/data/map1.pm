@@ -2,14 +2,14 @@
                     
                     
                   
-                    
-                    
-                    
-                    
-                    
+X                   
                     
 S                   
                     
+                    
+                    
+                    
+                    
               F     
-X           XXX     
+X      XXX    X     
                     

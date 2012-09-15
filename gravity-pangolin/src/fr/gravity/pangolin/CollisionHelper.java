@@ -1,14 +1,18 @@
 package fr.gravity.pangolin;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.util.Numbers;
 
 public class CollisionHelper {
 
+	/**
+	 * 
+	 * @param entity1
+	 * @param entity2
+	 * @return true if the left side of entity1 collides with entity2
+	 */
 	public static boolean collidesLeft(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
@@ -18,6 +22,12 @@ public class CollisionHelper {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param entity1
+	 * @param entity2
+	 * @return true if the right side of entity1 collides with entity2
+	 */
 	public static boolean collidesRight(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
@@ -27,31 +37,42 @@ public class CollisionHelper {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param entity1
+	 * @param entity2
+	 * @return true if the up side of entity1 collides with entity2
+	 */
 	public static boolean collidesUp(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getY(), entity2.getY(), entity2.getY()
+		if (Numbers.between(entity1.getY() + entity1.getBoundingRectangle().getHeight(), entity2.getY(), entity2.getY()
 				+ entity2.getBoundingRectangle().getHeight()))
 			return true;
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param entity1
+	 * @param entity2
+	 * @return true if the down side of entity1 collides with entity2
+	 */
 	public static boolean collidesDown(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getY() + entity1.getBoundingRectangle().getHeight(), entity2.getY(),
+		if (Numbers.between(entity1.getY(), entity2.getY(),
 				entity2.getY() + entity2.getBoundingRectangle().getHeight()))
 			return true;
 		return false;
 	}
 	
 	/**
-	 * Returns the Block the Pangolin collides with if and only if the block is
-	 * Solid
 	 * 
-	 * @param block
-	 * @param pangolin
-	 * @return
+	 * If there is none, return
+	 * @param entity
+	 * @param entities
+	 * @return the {@link Entity} that entity collides with. If there is none, returns null.
 	 */
 	public static Entity collidesAny(Entity entity, Array<Entity> entities) {
 		float entityPosX = entity.getX();

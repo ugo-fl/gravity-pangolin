@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.BranchBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock;
-import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePos;
+import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.util.GameUtil;
 
-public class WorldRenderer {
+public class PangolinWorldRenderer {
 
 	private boolean debug;
 
@@ -31,7 +31,7 @@ public class WorldRenderer {
 	// private float ppuX;
 	// private float ppuY;
 
-	public WorldRenderer(PangolinWorld world, GravityPangolinScreen screen,
+	public PangolinWorldRenderer(PangolinWorld world, GravityPangolinScreen screen,
 			boolean debug) {
 		this.world = world;
 		this.pangolin = world.getPangolin();
@@ -65,11 +65,7 @@ public class WorldRenderer {
 
 	private void draw() {
 		/* DRAW BACKGROUND */
-		background.draw(spriteBatch);
-		
-//		BranchBlock bb = new BranchBlock(1, 1, BranchFramePos.MIDDLE);
-//		bb.draw(spriteBatch);
-		
+		background.draw(spriteBatch);	
 		/* DRAW BLOCKS */
 		Entity exitBlock = null;
 		for (Entity block : world.getBlocks()) {
@@ -82,6 +78,9 @@ public class WorldRenderer {
 		exitBlock.draw(spriteBatch);
 		/* DRAW PANGOLIN */
 		pangolin.draw(spriteBatch);
+		
+		SpriteTest sp = new SpriteTest();
+		sp.draw(spriteBatch);
 	}
 
 	// private void drawSprite(Sprite sprite) {

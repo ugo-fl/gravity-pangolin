@@ -5,12 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 
-import fr.gravity.pangolin.menu.MainMenuScreen;
-
 public class GravityPangolinScreen extends ScreenAbstract {
 
 	private PangolinWorld pangolinWorld;
-	private WorldRenderer worldRenderer;
+	private PangolinWorldRenderer worldRenderer;
 	private Controller controller;
 
 	// protected GravityPangolinScreen(PangolinWorld pangolinWorld) {
@@ -28,7 +26,7 @@ public class GravityPangolinScreen extends ScreenAbstract {
 	}
 
 	public void init() {
-		worldRenderer = new WorldRenderer(pangolinWorld, this, false);
+		worldRenderer = new PangolinWorldRenderer(pangolinWorld, this, false);
 		controller = new Controller(pangolinWorld);
 	}
 

@@ -10,7 +10,6 @@
 
 [DONE] Make GravityPangolinScreen implements ScreenAbstract and do the adjustments
 - Use the SpriteLoader everywhere it's needed
-- Create an interface Drawable with draw(SpriteBatch) method
 - Every entities (even blocks) must extend (or implement) a superclass/abstract/interface
 
 ---------------------------------------

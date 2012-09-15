@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.BranchBlock;
-import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePos;
+import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock.ExitSide;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
@@ -109,27 +109,12 @@ public class PangolinWorld {
 		try {
 			int y = 0;
 			int x = 0;
-			for (String line; (line = mapFile.readLine()) != null;) {
+			for (String line; y < sizeY && (line = mapFile.readLine()) != null;) {
 				x = 0;
-				for (; x < line.length(); x++) {
+				for (; x < sizeX && x < line.length(); x++) {
 					String sym = String.valueOf(line.charAt(x));
 					if (BLOCK_SYM.equalsIgnoreCase(sym)) {
-						BranchFramePos branchFramePos = BranchFramePos.START;
-						String previousSym = "";
-						String nextSym = "";
-
-						if ((x - 1) >= 0)
-							previousSym = String.valueOf(line.charAt(x - 1));
-						if ((x + 1) < line.length())
-							nextSym = String.valueOf(line.charAt(x + 1));
-
-						if (BLOCK_SYM.equalsIgnoreCase(previousSym)
-								&& BLOCK_SYM.equalsIgnoreCase(nextSym))
-							branchFramePos = BranchFramePos.MIDDLE;
-						else if (BLOCK_SYM.equalsIgnoreCase(previousSym))
-							branchFramePos = BranchFramePos.END;
-
-						entities.add(new BranchBlock(x, sizeY - y, branchFramePos));
+						entities.add(new BranchBlock(x, sizeY - y, getBranchFramePosition(x, y, line)));
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(x, sizeY - y);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
@@ -151,6 +136,24 @@ public class PangolinWorld {
 			throw new InvalidMapException("No start point found in map.");
 		else if (exitBlock == null)
 			throw new InvalidMapException("No finish point found in map.");
+	}
+
+	private BranchFramePosition getBranchFramePosition(int x, int y, String line) {
+		BranchFramePosition branchFramePos = BranchFramePosition.START;
+		String previousSym = "";
+		String nextSym = "";
+
+		if ((x - 1) >= 0)
+			previousSym = String.valueOf(line.charAt(x - 1));
+		if ((x + 1) < line.length())
+			nextSym = String.valueOf(line.charAt(x + 1));
+
+		if (BLOCK_SYM.equalsIgnoreCase(previousSym)
+				&& BLOCK_SYM.equalsIgnoreCase(nextSym))
+			branchFramePos = BranchFramePosition.MIDDLE;
+		else if (BLOCK_SYM.equalsIgnoreCase(previousSym))
+			branchFramePos = BranchFramePosition.END;
+		return branchFramePos;
 	}
 
 	public Array<Entity> getBlocks() {
