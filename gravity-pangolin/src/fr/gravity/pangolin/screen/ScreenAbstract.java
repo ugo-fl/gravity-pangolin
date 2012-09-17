@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class ScreenAbstract implements Screen, InputProcessor {
 	
+	protected static float SCREEN_WIDTH = 480;
+	protected static float SCREEN_HEIGHT = 320;
+	
 	protected static float DEFAULT_WIDTH = 100;
 	protected static float DEFAULT_HEIGHT = DEFAULT_WIDTH * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
 	
@@ -25,13 +28,13 @@ public abstract class ScreenAbstract implements Screen, InputProcessor {
 	}
 	
 	protected ScreenAbstract(float width, float height) {
-		float screenW = Gdx.graphics.getWidth();
-		float screenH = Gdx.graphics.getHeight();
+//		float screenW = Gdx.graphics.getWidth();
+//		float screenH = Gdx.graphics.getHeight();
 		this.width = width;
 		this.height = height;
 
-		ppuX = screenW / width;
-		ppuY = screenH / height;
+		ppuX = SCREEN_WIDTH / width;
+		ppuY = SCREEN_HEIGHT / height;
 
 		camera = new OrthographicCamera(width, height);
 		spriteBatch = new SpriteBatch();

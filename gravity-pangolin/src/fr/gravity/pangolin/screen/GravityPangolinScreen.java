@@ -128,7 +128,7 @@ public class GravityPangolinScreen extends ScreenAbstract {
 
 	@Override
 	public void hide() {
-		Gdx.input.setInputProcessor(null);
+//		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class GravityPangolinScreen extends ScreenAbstract {
 
 	@Override
 	public void dispose() {
-
+//		Gdx.input.setInputProcessor(null);
 	}
 
 }

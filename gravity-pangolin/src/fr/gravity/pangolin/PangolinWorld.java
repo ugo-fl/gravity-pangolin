@@ -105,29 +105,28 @@ public class PangolinWorld {
 		background = new Background();
 		Entity exitBlock = null;
 		try {
-			int y = 0;
+			int y = sizeY - 1;
 			int x = 0;
-			for (String line; y < sizeY && (line = mapFile.readLine()) != null;) {
+			for (String line; y >= 0 && (line = mapFile.readLine()) != null; y--) {
 				x = 0;
 				for (; x < sizeX && x < line.length(); x++) {
+					
 					String sym = String.valueOf(line.charAt(x));
+					
 					if (BLOCK_SYM.equalsIgnoreCase(sym)) {
-						entities.add(new BranchBlock(x, sizeY - y,
+						entities.add(new BranchBlock(x, y,
 								getBranchFramePosition(x, y, line)));
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
-						pangolin = new Pangolin(x, sizeY - y);
+						pangolin = new Pangolin(x, y);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-						entities.add(new GravityChangerBlock(x, sizeY - y,
+						entities.add(new GravityChangerBlock(x, y,
 								gravity, Side.DOWN, Side.RIGHT));
 					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
-						entities.add((exitBlock = new ExitBlock(x, sizeY - y,
+						entities.add((exitBlock = new ExitBlock(x, y,
 								ExitSide.EXIT_DOWN)));
 					}
 				}
-				y++;
 			}
-			sizeX = x;
-			sizeY = y;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

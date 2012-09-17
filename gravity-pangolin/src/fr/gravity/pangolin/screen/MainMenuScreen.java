@@ -13,17 +13,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
-import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.menu.Button;
 import fr.gravity.pangolin.tween.SpriteAccessor;
 import fr.gravity.pangolin.util.SpriteUtil;
 
 public class MainMenuScreen extends ScreenAbstract {
 
-//	public static final float MAIN_MENU_SCR_WIDTH = 100;
-//	public static final float MAIN_MENU_SCR_HEIGHT = MAIN_MENU_SCR_WIDTH * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
-	
+	// public static final float MAIN_MENU_SCR_WIDTH = 100;
+	// public static final float MAIN_MENU_SCR_HEIGHT = MAIN_MENU_SCR_WIDTH *
+	// Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+
 	private static final int HERBS_FRAME_COLS = 2;
 	private static final int HERBS_FRAME_ROWS = 1;
 
@@ -39,7 +42,7 @@ public class MainMenuScreen extends ScreenAbstract {
 	public MainMenuScreen() {
 		super();
 	}
-	
+
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(this);
@@ -78,7 +81,7 @@ public class MainMenuScreen extends ScreenAbstract {
 		herbSprites[3] = SpriteUtil.generateSprite(frames[1], 65, 0, false);
 		herbSprites[4] = SpriteUtil.generateSprite(frames[0], 75, 0, false);
 		herbSprites[5] = SpriteUtil.generateSprite(frames[1], 85, 0, false);
-		
+
 		// Herbs on the left
 		herbSprites[6] = SpriteUtil.generateSprite(frames[0], 0, 25, true);
 		herbSprites[7] = SpriteUtil.generateSprite(frames[1], 0, 15, true);
@@ -100,7 +103,9 @@ public class MainMenuScreen extends ScreenAbstract {
 		for (Sprite sprite : herbSprites)
 			if (sprite != null)
 				sprite.draw(spriteBatch);
+
 		spriteBatch.end();
+		
 	}
 
 	private final TweenCallback windCallback = new TweenCallback() {

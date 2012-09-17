@@ -9,6 +9,7 @@ import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.util.GameUtil;
+import fr.gravity.pangolin.util.SpriteUtil;
 
 public class Controller {
 
@@ -86,7 +87,7 @@ public class Controller {
 
 	private void controlPangolinMovement(float delta) {
 
-		if (GameUtil.isOutOfScreen(pangolin.getX(), pangolin.getY()))
+		if (GameUtil.isOutOfScreen(pangolin.getBoundingRectangle()))
 			GravityPangolinGame.getInstance().gameOver();
 
 		pangolin.setLanded(false);
