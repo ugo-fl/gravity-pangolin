@@ -1,8 +1,8 @@
 20;14
                     
-                    
+        XXXXXXXX    
                   
-X                   
+XXXXXXXXX           
                     
 S                   
                     
@@ -11,5 +11,5 @@ S
                     
                     
               F     
-X      XXX    X     
+XXXXXXXXXX    X     
                     

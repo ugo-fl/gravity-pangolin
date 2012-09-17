@@ -35,4 +35,33 @@ public class FallingPangolinGraphic extends PangolinGraphic {
 		updateFrame();
 	}
 
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchDownOut() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUpOut() {
+		// TODO Auto-generated method stub
+		
+	}
+
+//	@Override
+//	public Rectangle getBoundingRectangle(){
+//		return new Rectangle(0, 0, 1, 1);
+//	}
+	
 }

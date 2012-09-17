@@ -1,9 +1,10 @@
-package fr.gravity.pangolin;
+package fr.gravity.pangolin.test;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import fr.gravity.pangolin.screen.ScreenAbstract;
 import fr.gravity.pangolin.util.GameUtil;
 
 public class SpriteTest extends Sprite { 

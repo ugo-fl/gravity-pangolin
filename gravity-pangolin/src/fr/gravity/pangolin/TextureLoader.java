@@ -3,6 +3,7 @@ package fr.gravity.pangolin;
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class TextureLoader {
@@ -20,7 +21,9 @@ public class TextureLoader {
 		BUTTONS(new Texture("images/buttons_sprite.png"), 1, 2), 
 		BRANCH(new Texture("images/branche.png"), 1, 3),
 		PANGOLIN_BALLMODE(new Texture("images/sprite_pangolin_ballmode.png"), 1, 4),
-		EXIT(new Texture("images/exit.png"), 1, 1);
+		EXIT(new Texture("images/exit.png"), 1, 1),
+		YOU_WIN(new Texture("images/you_win.png"), 1, 1),
+		GAME_OVER(new Texture("images/game_over.png"), 1, 1);
 
 		private final Texture texture;
 		private final int frameRows;
@@ -95,4 +98,8 @@ public class TextureLoader {
 		return textureMap.get(textureId);
 	}
 
+	public Sprite getSingleSprite(TextureId textureId) {
+		return new Sprite(getTextureRegions(textureId)[0]);
+	}
+	
 }

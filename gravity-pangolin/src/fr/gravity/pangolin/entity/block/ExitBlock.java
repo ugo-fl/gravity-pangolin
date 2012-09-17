@@ -2,6 +2,7 @@ package fr.gravity.pangolin.entity.block;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.Entity;
 
 public class ExitBlock extends Entity {
@@ -16,12 +17,25 @@ public class ExitBlock extends Entity {
 
 	@Override
 	public boolean collides() {
+		GravityPangolinGame.getInstance().youWin();
 		return false;
 	}
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
 		entityGraphic.draw(spriteBatch);
+	}
+
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUp() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

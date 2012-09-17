@@ -1,9 +1,13 @@
-package fr.gravity.pangolin;
+package fr.gravity.pangolin.screen;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
+
+import fr.gravity.pangolin.Controller;
+import fr.gravity.pangolin.PangolinWorld;
+import fr.gravity.pangolin.PangolinWorldRenderer;
 
 public class GravityPangolinScreen extends ScreenAbstract {
 
@@ -11,17 +15,8 @@ public class GravityPangolinScreen extends ScreenAbstract {
 	private PangolinWorldRenderer worldRenderer;
 	private Controller controller;
 
-	// protected GravityPangolinScreen(PangolinWorld pangolinWorld) {
-	// super(pangolinWorld.getSizeX(), pangolinWorld.getSizeY());
-	// super(MainMenuScreen.MAIN_MENU_SCR_WIDTH,
-	// MainMenuScreen.MAIN_MENU_SCR_HEIGHT);
-	// this.pangolinWorld = pangolinWorld;
-	// }
-
-	protected GravityPangolinScreen(PangolinWorld pangolinWorld) {
-		 super(pangolinWorld.getSizeX(), pangolinWorld.getSizeY());
-//		super(MainMenuScreen.MAIN_MENU_SCR_WIDTH,
-//				MainMenuScreen.MAIN_MENU_SCR_HEIGHT);
+	public GravityPangolinScreen(PangolinWorld pangolinWorld) {
+		super(pangolinWorld.getSizeX(), pangolinWorld.getSizeY());
 		this.pangolinWorld = pangolinWorld;
 	}
 
@@ -69,6 +64,8 @@ public class GravityPangolinScreen extends ScreenAbstract {
 			controller.upReleased();
 		if (keycode == Keys.DOWN)
 			controller.downReleased();
+		if (keycode == Keys.SPACE)
+			controller.gravityChangeReleased();
 		return true;
 	}
 
@@ -142,13 +139,10 @@ public class GravityPangolinScreen extends ScreenAbstract {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -7,10 +7,14 @@
 - Set the texture for every sprite
 --------- ////////////////// ----------
 
+- The Animations (ie. for Pangolin) need to be a child class of EntityAnimation (which needs to be implemented)
+- Use the SpriteLoader everywhere it's needed
+- Should I use Scene2D with Stages and Actors instead of Entities ?
+- Cannot put blocks on the map at first line
+- The controller is buggy -> press falling direction's arrow when inverting gravity
 
 [DONE] Make GravityPangolinScreen implements ScreenAbstract and do the adjustments
-- Use the SpriteLoader everywhere it's needed
-- Every entities (even blocks) must extend (or implement) a superclass/abstract/interface
+[DONE] Every entities (even blocks) must extend (or implement) a superclass/abstract/interface
 
 ---------------------------------------
 --------------   END     --------------

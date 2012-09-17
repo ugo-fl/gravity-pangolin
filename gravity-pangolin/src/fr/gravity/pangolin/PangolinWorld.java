@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.Gravity.Side;
@@ -55,8 +54,7 @@ public class PangolinWorld {
 	 * @throws InvalidMapException
 	 */
 	public static PangolinWorld getInstance(FileHandle pangolinMap) {
-		if (instance == null)
-			instance = new PangolinWorld(pangolinMap);
+		instance = new PangolinWorld(pangolinMap);
 		return instance;
 	}
 
@@ -96,7 +94,7 @@ public class PangolinWorld {
 	}
 
 	/**
-	 * Init the world. The game screen must be initiated first.
+	 * Initiate the world. The game screen must be initiated first.
 	 */
 	public void init() {
 		// Checks if the screen is set first
@@ -114,12 +112,13 @@ public class PangolinWorld {
 				for (; x < sizeX && x < line.length(); x++) {
 					String sym = String.valueOf(line.charAt(x));
 					if (BLOCK_SYM.equalsIgnoreCase(sym)) {
-						entities.add(new BranchBlock(x, sizeY - y, getBranchFramePosition(x, y, line)));
+						entities.add(new BranchBlock(x, sizeY - y,
+								getBranchFramePosition(x, y, line)));
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(x, sizeY - y);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-						entities.add(new GravityChangerBlock(x, sizeY - y, gravity,
-								Side.DOWN, Side.RIGHT));
+						entities.add(new GravityChangerBlock(x, sizeY - y,
+								gravity, Side.DOWN, Side.RIGHT));
 					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
 						entities.add((exitBlock = new ExitBlock(x, sizeY - y,
 								ExitSide.EXIT_DOWN)));

@@ -2,11 +2,8 @@ package fr.gravity.pangolin.entity.block;
 
 import java.util.Date;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.Gravity.Side;
@@ -56,6 +53,18 @@ public class GravityChangerBlock extends Entity {
 
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
+		
+	}
+
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUp() {
+		// TODO Auto-generated method stub
 		
 	}
 

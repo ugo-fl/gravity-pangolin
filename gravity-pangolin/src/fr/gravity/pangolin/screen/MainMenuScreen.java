@@ -1,4 +1,4 @@
-package fr.gravity.pangolin.menu;
+package fr.gravity.pangolin.screen;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
@@ -8,7 +8,6 @@ import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Sine;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,38 +15,37 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 
 import fr.gravity.pangolin.GravityPangolinGame;
-import fr.gravity.pangolin.ScreenAbstract;
+import fr.gravity.pangolin.entity.menu.Button;
 import fr.gravity.pangolin.tween.SpriteAccessor;
-import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.util.SpriteUtil;
 
 public class MainMenuScreen extends ScreenAbstract {
 
-	public static final float MAIN_MENU_SCR_WIDTH = 100;
-	public static final float MAIN_MENU_SCR_HEIGHT = MAIN_MENU_SCR_WIDTH * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+//	public static final float MAIN_MENU_SCR_WIDTH = 100;
+//	public static final float MAIN_MENU_SCR_HEIGHT = MAIN_MENU_SCR_WIDTH * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
 	
 	private static final int HERBS_FRAME_COLS = 2;
 	private static final int HERBS_FRAME_ROWS = 1;
 
-	private static final int NB_HERBS = 10;
+	private static final int MAX_HERBS = 10;
 
 	private TweenManager tweenManager = new TweenManager();
 
 	private Sprite background;
-	private Sprite[] herbSprites = new Sprite[NB_HERBS];
+	private Sprite[] herbSprites = new Sprite[MAX_HERBS];
 
 	private Button newGameButton;
 
 	public MainMenuScreen() {
-		super(MAIN_MENU_SCR_WIDTH, MAIN_MENU_SCR_HEIGHT);
+		super();
 	}
 	
 	@Override
 	public void show() {
-
+		Gdx.input.setInputProcessor(this);
 		loadBackgroundSprite();
 		loadHerbSprites();
-		newGameButton = new Button(0, 5, 40);
+		newGameButton = new Button(5, 40);
 
 		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 		Tween.call(windCallback).start(tweenManager);
@@ -151,17 +149,13 @@ public class MainMenuScreen extends ScreenAbstract {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		if (SpriteUtil.isTouched(newGameButton.getSprite(), x, y))
-			newGameButton.touchDown();
+		newGameButton.touchDown(x, y);
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		if (newGameButton.isHover() && SpriteUtil.isTouched(newGameButton.getSprite(), x, y)) {
-			newGameButton.touchUp();
-			GravityPangolinGame.getInstance().launchGame();
-		}
+		newGameButton.touchUp(x, y);
 		return false;
 	}
 
@@ -191,8 +185,7 @@ public class MainMenuScreen extends ScreenAbstract {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -203,8 +196,6 @@ public class MainMenuScreen extends ScreenAbstract {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package fr.gravity.pangolin.util;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.ScreenAbstract;
+import fr.gravity.pangolin.screen.ScreenAbstract;
 
 public class SpriteUtil {
 
@@ -21,12 +21,14 @@ public class SpriteUtil {
 	public static boolean isTouched(Sprite sprite, float x, float y) {
 		ScreenAbstract screen = GameUtil.getScreen();
 		
+//		System.out.println("TOUCHED X: " + GameUtil.projectCoordinateX(x / screen.getPpuX()) + "(" + x + ")");
+//		System.out.println("TOUCHED Y: " + GameUtil.projectCoordinateY(y / screen.getPpuY()) + "(" + y + ")");
 		x = GameUtil.projectCoordinateX(x / screen.getPpuX()); 
-		y = GameUtil.projectCoordinateY(y / screen.getPpuY());
+		y = -GameUtil.projectCoordinateY(y / screen.getPpuY());
 		
-		System.out.println("X: " + x);
-		System.out.println("Y: " + y);
-		System.out.println("-----");
+//		System.out.println("SPRITE X:" + sprite.getX() + " WIDTH:" + sprite.getWidth());
+//		System.out.println("SPRITE Y:" + sprite.getY() + " HEIGHT:" + sprite.getHeight());
+//		System.out.println("-----");
 		
 		if (x >= sprite.getX() && x <= sprite.getX() + sprite.getWidth())
 			if (y >= sprite.getY() && y <= sprite.getY() + sprite.getHeight())

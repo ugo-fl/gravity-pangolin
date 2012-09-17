@@ -9,25 +9,41 @@ import fr.gravity.pangolin.entity.EntityGraphic;
 
 public class BranchBlockGraphic extends EntityGraphic {
 
-	private BranchFramePosition branchFramePos;
-
 	public enum BranchFramePosition {
 		START, MIDDLE, END
 	}
 
 	public BranchBlockGraphic(float x, float y, BranchFramePosition branchFramePos) {
-		this.branchFramePos = branchFramePos;
-		set(getSprite(), x, y);
+		set(getSprite(branchFramePos), x, y);
 	}
 
-	private Sprite getSprite() {
+	private Sprite getSprite(BranchFramePosition branchFramePosition) {
 		TextureRegion[] textureRegions = TextureLoader.getInstance().getTextureRegions(TextureId.BRANCH);
-		int index = 0;
-		if (branchFramePos == BranchFramePosition.MIDDLE)
-			index = 1;
-		else if (branchFramePos == BranchFramePosition.END)
-			index = 2;
-		return new Sprite(textureRegions[index]);
+		return new Sprite(textureRegions[branchFramePosition.ordinal()]);
+	}
+
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchDownOut() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUpOut() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

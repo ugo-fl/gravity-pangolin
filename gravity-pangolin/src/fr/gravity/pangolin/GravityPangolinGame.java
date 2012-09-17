@@ -2,19 +2,18 @@ package fr.gravity.pangolin;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 
-import fr.gravity.pangolin.exception.InvalidMapException;
-import fr.gravity.pangolin.menu.MainMenuScreen;
-import fr.gravity.pangolin.util.GameUtil;
+import fr.gravity.pangolin.screen.GameOverScreen;
+import fr.gravity.pangolin.screen.GravityPangolinScreen;
+import fr.gravity.pangolin.screen.MainMenuScreen;
+import fr.gravity.pangolin.screen.YouWinScreen;
 
 public class GravityPangolinGame extends Game {
 
 	private static GravityPangolinGame instance;
 
-	private Screen mainMenuScreen;
-	private Screen gravityPangolinScreen;
+//	private Screen mainMenuScreen;
+//	private Screen gravityPangolinScreen;
 
 	private GravityPangolinGame() {
 	}
@@ -27,39 +26,50 @@ public class GravityPangolinGame extends Game {
 
 	@Override
 	public void create() {
+		// Loads all the textures before launching the game
 		TextureLoader.getInstance();
-		 launchGame();
-//		setScreen(getMainMenuScreen());
+		
+//		launchGame();
+		setScreen(new MainMenuScreen());
 	}
 
 	// TODO This is terrible code. Needs refactoring.
-	public void launchGame() {
+	public void startNewGame() {
 		PangolinWorld pangolinWorld = PangolinWorld.getInstance(Gdx.files
 				.internal("data/map1.pm"));
-		Screen screen = getGameScreen(pangolinWorld);
-		setScreen(screen);
+		GravityPangolinScreen gravityPangolinScreen = new GravityPangolinScreen(pangolinWorld);
+		
+		setScreen(gravityPangolinScreen);
+//		resize((int) gravityPangolinScreen.getWidth(), (int) gravityPangolinScreen.getHeight());
+		
 		pangolinWorld.init();
-		((GravityPangolinScreen) screen).init();
-		
-//		setScreen(GravityPangolinScreen.getInstance());
-		
+		gravityPangolinScreen.init();
+
+	}
+	
+	public void gameOver() {
+		setScreen(new GameOverScreen());
 	}
 
-	public void setScreen(Screen screen) {
-		super.setScreen(screen);
-		Gdx.input.setInputProcessor((InputProcessor) screen);
+	public void youWin() {
+		setScreen(new YouWinScreen());
 	}
+	
+//	public void setScreen(Screen screen) {
+//		super.setScreen(screen);
+//		Gdx.input.setInputProcessor((InputProcessor) screen);
+//	}
 
-	private Screen getMainMenuScreen() {
-		if (mainMenuScreen == null)
-			mainMenuScreen = new MainMenuScreen();
-		return mainMenuScreen;
-	}
-
-	private Screen getGameScreen(PangolinWorld pangolinWorld) {
-		if (gravityPangolinScreen == null)
-			gravityPangolinScreen = new GravityPangolinScreen(pangolinWorld);
-		return gravityPangolinScreen;
-	}
+//	private Screen getMainMenuScreen() {
+//		if (mainMenuScreen == null)
+//			mainMenuScreen = new MainMenuScreen();
+//		return mainMenuScreen;
+//	}
+//
+//	private Screen getGameScreen(PangolinWorld pangolinWorld) {
+//		if (gravityPangolinScreen == null)
+//			gravityPangolinScreen = new GravityPangolinScreen(pangolinWorld);
+//		return gravityPangolinScreen;
+//	}
 
 }
