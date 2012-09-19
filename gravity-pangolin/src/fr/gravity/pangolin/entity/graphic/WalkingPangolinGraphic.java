@@ -1,16 +1,17 @@
-package fr.gravity.pangolin.entity.pangolin;
+package fr.gravity.pangolin.entity.graphic;
 
-public class DyingPangolinGraphic extends PangolinGraphic {
+import fr.gravity.pangolin.entity.pangolin.Pangolin;
 
-	public DyingPangolinGraphic(Pangolin pangolin, float x, float y) {
+public class WalkingPangolinGraphic extends PangolinGraphic {
+
+	public WalkingPangolinGraphic(Pangolin pangolin, float x, float y) {
 		super(pangolin, x, y);
-		// TODO Auto-generated constructor stub
+		set(getFrame(stateTime));
 	}
 
 	@Override
 	public void process() {
-		// TODO Auto-generated method stub
-
+		updateFrame();
 	}
 
 	@Override

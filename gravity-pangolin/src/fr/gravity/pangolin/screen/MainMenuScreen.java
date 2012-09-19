@@ -21,7 +21,7 @@ import fr.gravity.pangolin.entity.menu.Button;
 import fr.gravity.pangolin.tween.SpriteAccessor;
 import fr.gravity.pangolin.util.SpriteUtil;
 
-public class MainMenuScreen extends ScreenAbstract {
+public class MainMenuScreen extends AbstractScreen {
 
 	// public static final float MAIN_MENU_SCR_WIDTH = 100;
 	// public static final float MAIN_MENU_SCR_HEIGHT = MAIN_MENU_SCR_WIDTH *

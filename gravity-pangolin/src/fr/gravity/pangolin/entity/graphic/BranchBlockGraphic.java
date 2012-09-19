@@ -1,4 +1,4 @@
-package fr.gravity.pangolin.entity.block;
+package fr.gravity.pangolin.entity.graphic;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

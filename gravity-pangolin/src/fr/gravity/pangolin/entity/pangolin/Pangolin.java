@@ -5,6 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.graphic.DyingPangolinGraphic;
+import fr.gravity.pangolin.entity.graphic.FallingPangolinGraphic;
+import fr.gravity.pangolin.entity.graphic.IdlePangolinGraphic;
+import fr.gravity.pangolin.entity.graphic.PangolinGraphic;
+import fr.gravity.pangolin.entity.graphic.WalkingPangolinGraphic;
 
 public class Pangolin extends Entity {
 
@@ -90,28 +95,38 @@ public class Pangolin extends Entity {
 		getVelocity().y = 0;
 	}
 
-	public void goLeft() {
-		pangolinState = PangolinState.WALKING;
-		direction = Direction.LEFT;
-		velocity.x = -SPEED;
-	}
+//	public void goLeft() {
+//		pangolinState = PangolinState.WALKING;
+//		direction = Direction.LEFT;
+//		velocity.x = -SPEED;
+//	}
+//
+//	public void goRight() {
+//		pangolinState = PangolinState.WALKING;
+//		direction = Direction.RIGHT;
+//		velocity.x = SPEED;
+//	}
+//
+//	public void goUp() {
+//		pangolinState = PangolinState.WALKING;
+//		direction = Direction.UP;
+//		velocity.y = -SPEED;
+//	}
+//
+//	public void goDown() {
+//		pangolinState = PangolinState.WALKING;
+//		direction = Direction.DOWN;
+//		velocity.y = SPEED;
+//	}
 
-	public void goRight() {
-		pangolinState = PangolinState.WALKING;
-		direction = Direction.RIGHT;
-		velocity.x = SPEED;
-	}
-
-	public void goUp() {
-		pangolinState = PangolinState.WALKING;
-		direction = Direction.UP;
-		velocity.y = -SPEED;
-	}
-
-	public void goDown() {
-		pangolinState = PangolinState.WALKING;
-		direction = Direction.DOWN;
-		velocity.y = SPEED;
+	public void go(Direction direction) {
+		if (landed)
+			pangolinState = PangolinState.WALKING;
+		this.direction = direction;
+		if (direction == Direction.LEFT || direction == Direction.RIGHT)
+			velocity.x = direction == Direction.LEFT ? -SPEED : SPEED;
+		else if (direction == Direction.UP || direction == Direction.DOWN)
+			velocity.y = direction == Direction.UP ? -SPEED : SPEED;
 	}
 
 	public void fall(Side side) {
@@ -151,6 +166,13 @@ public class Pangolin extends Entity {
 		velocity.x = FALLING_SPEED;
 	}
 
+	public void land(Side gravitySide) {
+		landed = true;
+		if (gravitySide == Side.RIGHT)
+			if (direction == Direction.RIGHT || direction == Direction.UP)
+				direction = Direction.UP;
+	}
+
 	public void rollBackPosition() {
 		setX(previousPosition.x);
 		setY(previousPosition.y);
@@ -159,7 +181,7 @@ public class Pangolin extends Entity {
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
 		entityGraphic = pangolinState.pangolinGraphic;
-		pangolinState.pangolinGraphic.draw(spriteBatch);
+		entityGraphic.draw(spriteBatch);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package fr.gravity.pangolin;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import fr.gravity.pangolin.screen.GameOverScreen;
 import fr.gravity.pangolin.screen.GravityPangolinScreen;
@@ -29,8 +30,8 @@ public class GravityPangolinGame extends Game {
 		// Loads all the textures before launching the game
 		TextureLoader.getInstance();
 		
-//		launchGame();
-		setScreen(new MainMenuScreen());
+		startNewGame();
+//		setScreen(new MainMenuScreen());
 	}
 
 	// TODO This is terrible code. Needs refactoring.

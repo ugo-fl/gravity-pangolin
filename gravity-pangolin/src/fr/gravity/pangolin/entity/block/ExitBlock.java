@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.graphic.ExitBlockGraphic;
 
 public class ExitBlock extends Entity {
 

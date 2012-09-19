@@ -1,10 +1,11 @@
-package fr.gravity.pangolin.entity.pangolin;
+package fr.gravity.pangolin.entity.graphic;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import fr.gravity.pangolin.TextureLoader;
 import fr.gravity.pangolin.TextureLoader.TextureId;
+import fr.gravity.pangolin.entity.pangolin.Pangolin;
 
 public class FallingPangolinGraphic extends PangolinGraphic {
 
@@ -17,14 +18,20 @@ public class FallingPangolinGraphic extends PangolinGraphic {
 	}
 
 	private void loadAnimation() {
-		animation = new Animation(0.08f, TextureLoader.getInstance().getTextureRegions(TextureId.PANGOLIN_BALLMODE));
+		animation = new Animation(0.08f, TextureLoader.getInstance()
+				.getTextureRegions(TextureId.PANGOLIN_BALLMODE));
 	}
 
 	@Override
 	public Sprite getFrame(float stateTime) {
-		return new Sprite(animation.getKeyFrame(stateTime, true));
+		Sprite sprite;
+		if (animation != null)
+			sprite = new Sprite(animation.getKeyFrame(stateTime, true));
+		else
+			sprite = new Sprite(super.animation.getKeyFrame(stateTime, true));
+		return sprite;
 	}
-	
+
 	@Override
 	protected void updateFrame() {
 		setRegion(getFrame(stateTime));
@@ -38,30 +45,30 @@ public class FallingPangolinGraphic extends PangolinGraphic {
 	@Override
 	public void touchDown() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void touchUp() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void touchDownOut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void touchUpOut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-//	@Override
-//	public Rectangle getBoundingRectangle(){
-//		return new Rectangle(0, 0, 1, 1);
-//	}
-	
+	// @Override
+	// public Rectangle getBoundingRectangle(){
+	// return new Rectangle(0, 0, 1, 1);
+	// }
+
 }

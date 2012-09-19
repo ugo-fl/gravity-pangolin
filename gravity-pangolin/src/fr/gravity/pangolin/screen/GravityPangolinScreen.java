@@ -9,7 +9,7 @@ import fr.gravity.pangolin.Controller;
 import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.PangolinWorldRenderer;
 
-public class GravityPangolinScreen extends ScreenAbstract {
+public class GravityPangolinScreen extends AbstractScreen {
 
 	private PangolinWorld pangolinWorld;
 	private PangolinWorldRenderer worldRenderer;
@@ -21,7 +21,7 @@ public class GravityPangolinScreen extends ScreenAbstract {
 	}
 
 	public void init() {
-		worldRenderer = new PangolinWorldRenderer(pangolinWorld, this, false);
+		worldRenderer = new PangolinWorldRenderer(pangolinWorld, this, true);
 		controller = new Controller(pangolinWorld);
 	}
 

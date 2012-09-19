@@ -1,13 +1,16 @@
 package fr.gravity.pangolin.test;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.screen.ScreenAbstract;
+import fr.gravity.pangolin.entity.EntityGraphic;
+import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.util.GameUtil;
+import fr.gravity.pangolin.util.SpriteUtil;
 
-public class SpriteTest extends Sprite { 
+public class SpriteTest extends EntityGraphic { 
 
 	private static final int FRAME_COLS = 2;
 	private static final int FRAME_ROWS = 1;
@@ -23,19 +26,53 @@ public class SpriteTest extends Sprite {
 		for (int i = 0; i < FRAME_ROWS; i++) {
 			for (int j = 0; j < FRAME_COLS; j++) {
 				Sprite sprite = new Sprite(tmp[i][j]);
+				
+				SpriteUtil.rotate(sprite, false);
+				
+//				sprite.rotate90(false);
+//				float width = sprite.getWidth();
+//				float height = sprite.getHeight();
+//				
+//				sprite.setSize(height, width);
+				
 				// Flip and rotate
 //				sprite.setScale(-0.1F, -0.1F);
 //				sprite.flip(flipX, flipY);
+//				sprite.rotate90(false);
 				walkFrames[index++] = sprite;
 			}
 		}
+		Animation animation = new Animation(0.25F, walkFrames);
+		set(new Sprite(animation.getKeyFrame(0)), 10, 10);
 		
-		set(walkFrames[0]);
-		setPosition(1, -4);
-		
-		ScreenAbstract screen = GameUtil.getScreen();
-		setSize(Math.abs(getRegionWidth()) / screen.getPpuX(), getRegionHeight() / screen.getPpuY());
+//		ScreenAbstract screen = GameUtil.getScreen();
+//		setSize(Math.abs(getRegionWidth()) / screen.getPpuX(), getRegionHeight() / screen.getPpuY());
+//		setSize(Math.abs(getRegionWidth()) / screen.getPpuX(), getRegionHeight() / screen.getPpuY());
 //		init(walkFrames[0], 1, 1);
+		
+	}
+
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchDownOut() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void touchUpOut() {
+		// TODO Auto-generated method stub
 		
 	}
 	

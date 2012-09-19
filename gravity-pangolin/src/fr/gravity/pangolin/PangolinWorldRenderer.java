@@ -11,6 +11,7 @@ import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.screen.GravityPangolinScreen;
+import fr.gravity.pangolin.test.SpriteTest;
 
 public class PangolinWorldRenderer {
 
@@ -80,8 +81,8 @@ public class PangolinWorldRenderer {
 		/* DRAW PANGOLIN */
 		pangolin.draw(spriteBatch);
 
-		// SpriteTest sp = new SpriteTest();
-		// sp.draw(spriteBatch);
+//		SpriteTest sp = new SpriteTest();
+//		sp.draw(spriteBatch);
 	}
 
 //	private void drawSprite(Sprite sprite) {

@@ -1,15 +1,20 @@
-package fr.gravity.pangolin.entity.pangolin;
+package fr.gravity.pangolin.entity.graphic;
 
-public class WalkingPangolinGraphic extends PangolinGraphic {
+import fr.gravity.pangolin.entity.pangolin.Pangolin;
 
-	public WalkingPangolinGraphic(Pangolin pangolin, float x, float y) {
+
+public class IdlePangolinGraphic extends PangolinGraphic {
+
+	public IdlePangolinGraphic(Pangolin pangolin, float x, float y) {
 		super(pangolin, x, y);
 		set(getFrame(stateTime));
 	}
 
 	@Override
 	public void process() {
+		stateTime = 0;
 		updateFrame();
+//		setRegion(getFrame(stateTime));
 	}
 
 	@Override

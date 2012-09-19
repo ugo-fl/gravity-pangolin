@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.Array;
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.BranchBlock;
-import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock.ExitSide;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
+import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.exception.InvalidMapException;
 import fr.gravity.pangolin.util.GameUtil;
@@ -110,17 +110,16 @@ public class PangolinWorld {
 			for (String line; y >= 0 && (line = mapFile.readLine()) != null; y--) {
 				x = 0;
 				for (; x < sizeX && x < line.length(); x++) {
-					
+
 					String sym = String.valueOf(line.charAt(x));
-					
+
 					if (BLOCK_SYM.equalsIgnoreCase(sym)) {
 						entities.add(new BranchBlock(x, y,
 								getBranchFramePosition(x, y, line)));
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(x, y);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-						entities.add(new GravityChangerBlock(x, y,
-								gravity, Side.DOWN, Side.RIGHT));
+						entities.add(new GravityChangerBlock(x, y, gravity));
 					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
 						entities.add((exitBlock = new ExitBlock(x, y,
 								ExitSide.EXIT_DOWN)));

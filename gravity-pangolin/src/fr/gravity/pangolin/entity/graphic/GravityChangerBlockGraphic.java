@@ -1,22 +1,23 @@
-package fr.gravity.pangolin.entity.block;
+package fr.gravity.pangolin.entity.graphic;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import fr.gravity.pangolin.TextureLoader;
 import fr.gravity.pangolin.TextureLoader.TextureId;
 import fr.gravity.pangolin.entity.EntityGraphic;
-import fr.gravity.pangolin.entity.block.ExitBlock.ExitSide;
 
-public class ExitBlockGraphic extends EntityGraphic {
+public class GravityChangerBlockGraphic extends EntityGraphic {
 
-//	public static float WIDTH = 1F;
-//	public static float HEIGHT = 0.3F;
-	
-	public ExitBlockGraphic(float x, float y, ExitSide exitSide) {
-		Sprite sprite = new Sprite(TextureLoader.getInstance().getTextureRegions(TextureId.EXIT)[0]);
-		set(sprite, x, y);
+	public GravityChangerBlockGraphic(float x, float y) {
+		set(getSprite(), x, y);
 	}
 
+	private Sprite getSprite() {
+		TextureRegion[] textureRegions = TextureLoader.getInstance().getTextureRegions(TextureId.GRAVITY_CHANGER);
+		return new Sprite(textureRegions[0]);
+	}
+	
 	@Override
 	public void touchDown() {
 		// TODO Auto-generated method stub

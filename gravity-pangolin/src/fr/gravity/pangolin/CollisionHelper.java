@@ -81,8 +81,8 @@ public class CollisionHelper {
 		float entityHeight = entity.getBoundingRectangle().getHeight();
 
 		for (Entity any : entities) {
-			float blockPosX = any.getX();
-			float blockPosY = any.getY();
+			float blockPosX = any.getBoundingRectangle().x;
+			float blockPosY = any.getBoundingRectangle().y;
 			float blockWidth = any.getBoundingRectangle().getWidth();
 			float blockHeight = any.getBoundingRectangle().getHeight();
 

@@ -3,10 +3,13 @@ package fr.gravity.pangolin.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
-public abstract class ScreenAbstract implements Screen, InputProcessor {
+public abstract class AbstractScreen implements Screen, InputProcessor {
 	
 	protected static float SCREEN_WIDTH = 480;
 	protected static float SCREEN_HEIGHT = 320;
@@ -23,11 +26,15 @@ public abstract class ScreenAbstract implements Screen, InputProcessor {
 	protected OrthographicCamera camera;
 	protected SpriteBatch spriteBatch;
 	
-	protected ScreenAbstract() {
+	/* MENU AND BUTTONS */
+	private Skin skin;
+	private Table table;
+	
+	protected AbstractScreen() {
 		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
-	protected ScreenAbstract(float width, float height) {
+	protected AbstractScreen(float width, float height) {
 //		float screenW = Gdx.graphics.getWidth();
 //		float screenH = Gdx.graphics.getHeight();
 		this.width = width;
@@ -66,4 +73,24 @@ public abstract class ScreenAbstract implements Screen, InputProcessor {
 		return spriteBatch;
 	}
 
+	protected Skin getSkin()
+    {
+        if( skin == null ) {
+            FileHandle skinFile = Gdx.files.internal( "skin/uiskin.json" );
+            skin = new Skin( skinFile );
+        }
+        return skin;
+    }
+	
+	protected Table getTable()
+    {
+        if( table == null ) {
+            table = new Table( getSkin() );
+            table.setFillParent( true );
+//            if( Tyrian.DEV_MODE ) {
+//                table.debug();
+//            }
+        }
+        return table;
+    }
 }

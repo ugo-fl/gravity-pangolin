@@ -3,12 +3,12 @@ package fr.gravity.pangolin.util;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.screen.ScreenAbstract;
+import fr.gravity.pangolin.screen.AbstractScreen;
 
 public class SpriteUtil {
 
 	public static Sprite generateSprite(TextureRegion frame, float x, float y, boolean rotate) {
-		ScreenAbstract screen = GameUtil.getScreen();
+		AbstractScreen screen = GameUtil.getScreen();
 		
 		Sprite sprite = new Sprite(frame);
 		sprite.setSize(sprite.getWidth() / screen.getPpuX(), sprite.getHeight() / screen.getPpuY());
@@ -18,8 +18,17 @@ public class SpriteUtil {
 		return sprite;
 	}
 	
+	public static void rotate(Sprite sprite, boolean clockWise) {
+		sprite.rotate90(clockWise);
+		
+		// Inverts width and height
+		float width = sprite.getWidth();
+		float height = sprite.getHeight();
+		sprite.setSize(height, width);
+	}
+	
 	public static boolean isTouched(Sprite sprite, float x, float y) {
-		ScreenAbstract screen = GameUtil.getScreen();
+		AbstractScreen screen = GameUtil.getScreen();
 		
 		x = GameUtil.projectCoordinateX(x / screen.getPpuX()); 
 		y = -GameUtil.projectCoordinateY(y / screen.getPpuY());

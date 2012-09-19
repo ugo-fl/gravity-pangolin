@@ -10,7 +10,7 @@ import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.TextureLoader;
 import fr.gravity.pangolin.TextureLoader.TextureId;
 
-public class GameOverScreen extends ScreenAbstract {
+public class GameOverScreen extends AbstractScreen {
 
 	private static final long DISPLAY_PERIOD = 3000;
 	private long timestamp;

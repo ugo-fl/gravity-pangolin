@@ -3,7 +3,8 @@ package fr.gravity.pangolin.entity.block;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.block.BranchBlockGraphic.BranchFramePosition;
+import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic;
+import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;
 
 public class BranchBlock extends Entity {
 

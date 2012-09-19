@@ -2,7 +2,7 @@ package fr.gravity.pangolin.entity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import fr.gravity.pangolin.screen.ScreenAbstract;
+import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.util.GameUtil;
 
 public abstract class EntityGraphic extends Sprite {
@@ -30,9 +30,9 @@ public abstract class EntityGraphic extends Sprite {
 
 		// Set the sprite and its size
 		super.set(sprite);
-		ScreenAbstract screen = GameUtil.getScreen();
-		setSize(Math.abs(sprite.getRegionWidth()) / screen.getPpuX(),
-				Math.abs(sprite.getRegionHeight()) / screen.getPpuY());
+		AbstractScreen screen = GameUtil.getScreen();
+		setSize(Math.abs(sprite.getWidth()) / screen.getPpuX(),
+				Math.abs(sprite.getHeight()) / screen.getPpuY());
 
 		// Reset the coordinates
 		setX(xCpy);
@@ -44,24 +44,6 @@ public abstract class EntityGraphic extends Sprite {
 		setX(GameUtil.projectCoordinateX(x));
 		setY(GameUtil.projectCoordinateY(y));
 	}
-
-	// @Override
-	// public void setX(float x) {
-	// super.setX(GameUtil.projectCoordinateX(x));
-	// }
-	//
-	// @Override
-	// public void setY(float y) {
-	// super.setY(GameUtil.projectCoordinateY(y));
-	// }
-	//
-	// public void setXProjected(float x) {
-	// super.setX(x);
-	// }
-	//
-	// public void setYProjected(float y) {
-	// super.setY(y);
-	// }
 
 	public void resetStateTime() {
 		stateTime = 0;

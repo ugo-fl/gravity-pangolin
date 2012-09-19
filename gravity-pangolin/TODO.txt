@@ -4,15 +4,17 @@
 
 
 --------- FIRST THINGS FIRST ----------
-- Set the texture for every sprite
+- All pangolin sprite need to have the same size
 --------- ////////////////// ----------
 
-- The Animations (ie. for Pangolin) need to be a child class of EntityAnimation (which needs to be implemented)
-- Use the SpriteLoader everywhere it's needed
-- Should I use Scene2D with Stages and Actors instead of Entities ?
-- Cannot put blocks on the map at first line
-- The controller is buggy -> press falling direction's arrow when inverting gravity
+[?] The Animations (ie. for Pangolin) need to be children classes of EntityAnimation (which needs to be implemented)
+		OR
+[?] Should I use Scene2D with Stages and Actors instead of Entities ? (http://www.netthreads.co.uk/2012/01/31/libgdx-example-of-using-scene2d-actions-and-event-handling/)
 
+[DONE] Use the SpriteLoader everywhere it's needed
+[DONE] Set the texture for every sprite
+[DONE] Cannot put blocks on the map at first line
+[DONE] The controller is buggy -> press falling direction's arrow when inverting gravity
 [DONE] Make GravityPangolinScreen implements ScreenAbstract and do the adjustments
 [DONE] Every entities (even blocks) must extend (or implement) a superclass/abstract/interface
 

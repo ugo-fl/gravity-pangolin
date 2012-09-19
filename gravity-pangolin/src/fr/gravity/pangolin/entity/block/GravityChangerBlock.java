@@ -3,29 +3,23 @@ package fr.gravity.pangolin.entity.block;
 import java.util.Date;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.graphic.GravityChangerBlockGraphic;
 
 public class GravityChangerBlock extends Entity {
 
 	private static final long DEACTIVATED_PERIOD = 1000;
 
 	private Gravity gravity;
-	private Side s1;
-	private Side s2;
 
 	private long timestamp;
 
-	private TextureRegion textureRegion;
-
-	public GravityChangerBlock(float x, float y, Gravity gravity, Side s1, Side s2) {
+	public GravityChangerBlock(float x, float y, Gravity gravity) {
 		this.gravity = gravity;
-		this.s1 = s1;
-		this.s2 = s2;
-		
 		entityGraphic = new GravityChangerBlockGraphic(x, y);
 	}
 
@@ -40,20 +34,31 @@ public class GravityChangerBlock extends Entity {
 			return false;
 		timestamp = date.getTime();
 		Side currentGravitySide = gravity.getSide();
-		Side newGravitySide;
+		Side newGravitySide = Side.DOWN;
 
-		if (currentGravitySide == s1
-				|| currentGravitySide == Gravity.getOppositeSide(s1))
-			newGravitySide = s2;
-		else
-			newGravitySide = s1;
+		if (currentGravitySide == Side.UP)
+			newGravitySide = Side.RIGHT;
+		else if (currentGravitySide == Side.DOWN)
+			newGravitySide = Side.LEFT;
+		else if (currentGravitySide == Side.LEFT)
+			newGravitySide = Side.UP;
 		gravity.setSide(newGravitySide);
 		return false;
 	}
 
 	@Override
-	public void draw(SpriteBatch spriteBatch) {
+	public Rectangle getBoundingRectangle() {
+		final float width = entityGraphic.getWidth() / 5;
+		final float height = entityGraphic.getHeight() / 5;
+		final float x = getX() + (entityGraphic.getWidth() / 2) - (width / 2);
+		final float y = getY() + (entityGraphic.getHeight() / 2) - (height / 2);
 		
+		return new Rectangle(x, y, width, height);
+	}
+	
+	@Override
+	public void draw(SpriteBatch spriteBatch) {
+		entityGraphic.draw(spriteBatch);
 	}
 
 	@Override
