@@ -13,6 +13,7 @@ public class Main {
 		cfg.height = 320;
 		
 		new LwjglApplication(GravityPangolinGame.getInstance(), cfg);
+		
 	}
 	
 }

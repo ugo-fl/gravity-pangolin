@@ -2,6 +2,7 @@ package fr.gravity.pangolin.entity.pangolin;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
@@ -178,11 +179,11 @@ public class Pangolin extends Entity {
 		setY(previousPosition.y);
 	}
 
-	@Override
-	public void draw(SpriteBatch spriteBatch) {
-		entityGraphic = pangolinState.pangolinGraphic;
-		entityGraphic.draw(spriteBatch);
-	}
+//	@Override
+//	public void draw(SpriteBatch spriteBatch) {
+//		entityGraphic = pangolinState.pangolinGraphic;
+//		entityGraphic.draw(spriteBatch);
+//	}
 
 	@Override
 	public boolean collides() {
@@ -223,6 +224,18 @@ public class Pangolin extends Entity {
 
 	public Direction getDirection() {
 		return direction;
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		entityGraphic = pangolinState.pangolinGraphic;
+		entityGraphic.draw(batch);
+	}
+
+	@Override
+	public Actor hit(float x, float y) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

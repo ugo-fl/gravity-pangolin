@@ -18,6 +18,7 @@ public class ButtonGraphic extends EntityGraphic {
 		button = SpriteUtil.generateSprite(buttons[0], x, y, false);
 		buttonHover = SpriteUtil.generateSprite(buttons[0 + 1], x, y, false);
 		set(button, x, y);
+//		setSize(button.getRegionWidth(), button.getRegionHeight());
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class GameOverScreen extends AbstractScreen {
 	public void render(float delta) {
 		
 		if (new Date().getTime() - timestamp > DISPLAY_PERIOD)
-			GravityPangolinGame.getInstance().startNewGame();
+			GravityPangolinGame.getInstance().restart();
 		
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);

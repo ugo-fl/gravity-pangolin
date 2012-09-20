@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.Gravity.Side;
@@ -56,10 +57,10 @@ public class GravityChangerBlock extends Entity {
 		return new Rectangle(x, y, width, height);
 	}
 	
-	@Override
-	public void draw(SpriteBatch spriteBatch) {
-		entityGraphic.draw(spriteBatch);
-	}
+//	@Override
+//	public void draw(SpriteBatch spriteBatch) {
+//		entityGraphic.draw(spriteBatch);
+//	}
 
 	@Override
 	public void touchDown() {
@@ -71,6 +72,17 @@ public class GravityChangerBlock extends Entity {
 	public void touchUp() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		entityGraphic.draw(batch);
+	}
+
+	@Override
+	public Actor hit(float x, float y) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

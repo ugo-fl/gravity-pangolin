@@ -2,7 +2,7 @@ package fr.gravity.pangolin.entity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import fr.gravity.pangolin.screen.AbstractScreen;
+import fr.gravity.pangolin.screen.AbstractScreen2;
 import fr.gravity.pangolin.util.GameUtil;
 
 public abstract class EntityGraphic extends Sprite {
@@ -30,7 +30,7 @@ public abstract class EntityGraphic extends Sprite {
 
 		// Set the sprite and its size
 		super.set(sprite);
-		AbstractScreen screen = GameUtil.getScreen();
+		AbstractScreen2 screen = GameUtil.getScreen();
 		setSize(Math.abs(sprite.getWidth()) / screen.getPpuX(),
 				Math.abs(sprite.getHeight()) / screen.getPpuY());
 

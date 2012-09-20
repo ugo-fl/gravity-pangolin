@@ -4,11 +4,12 @@ import com.badlogic.gdx.math.Rectangle;
 
 import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.screen.AbstractScreen;
+import fr.gravity.pangolin.screen.AbstractScreen2;
 
 public class GameUtil {
 
-	public static AbstractScreen getScreen() {
-		return (AbstractScreen) GravityPangolinGame.getInstance().getScreen();
+	public static AbstractScreen2 getScreen() {
+		return (AbstractScreen2) GravityPangolinGame.getInstance().getScreen();
 	}
 
 	public static float projectCoordinateX(float x) {
@@ -20,7 +21,7 @@ public class GameUtil {
 	}
 
 	public static boolean isOutOfScreen(Rectangle rectangle) {
-		AbstractScreen screen = GameUtil.getScreen();
+		AbstractScreen2 screen = GameUtil.getScreen();
 		
 		final float DEEP_SPACE_MARGIN = screen.getWidth() / 20;
 		

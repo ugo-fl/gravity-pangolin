@@ -40,8 +40,8 @@ public class PangolinWorldRenderer {
 		this.background = world.getBackground();
 		this.debug = debug;
 
-		this.spriteBatch = screen.getSpriteBatch();
-		this.cam = screen.getCamera();
+//		this.spriteBatch = screen.getSpriteBatch();
+//		this.cam = screen.getCamera();
 
 		this.screenWidth = screen.getWidth();
 		this.screenHeight = screen.getHeight();
@@ -75,11 +75,11 @@ public class PangolinWorldRenderer {
 				exitBlock = block;
 				continue;
 			}
-			block.draw(spriteBatch);
+//			block.draw(spriteBatch);
 		}
-		exitBlock.draw(spriteBatch);
+//		exitBlock.draw(spriteBatch);
 		/* DRAW PANGOLIN */
-		pangolin.draw(spriteBatch);
+//		pangolin.draw(spriteBatch);
 
 //		SpriteTest sp = new SpriteTest();
 //		sp.draw(spriteBatch);

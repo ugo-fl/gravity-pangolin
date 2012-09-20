@@ -1,6 +1,7 @@
 package fr.gravity.pangolin.entity.menu;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.Entity;
@@ -18,16 +19,27 @@ public class Button extends Entity {
 
 	@Override
 	public void touchUp() {
-		GravityPangolinGame.getInstance().startNewGame();
+		GravityPangolinGame.getInstance().showSelectLevelScreen();
 	}
 	
-	public void draw(SpriteBatch spriteBatch) {
-		entityGraphic.draw(spriteBatch);
-	}
+//	public void draw(SpriteBatch spriteBatch) {
+//		entityGraphic.draw(spriteBatch);
+//	}
 
 	@Override
 	public boolean collides() {
 		return false;
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		entityGraphic.draw(batch);
+	}
+
+	@Override
+	public Actor hit(float x, float y) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

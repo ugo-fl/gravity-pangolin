@@ -1,14 +1,13 @@
 package fr.gravity.pangolin.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.util.SpriteUtil;
 
-public abstract class Entity {
+public abstract class Entity extends Actor {
 
 	protected EntityGraphic entityGraphic;
 
@@ -43,7 +42,7 @@ public abstract class Entity {
 
 	public abstract boolean collides();
 
-	public abstract void draw(SpriteBatch spriteBatch);
+//	public abstract void draw(SpriteBatch spriteBatch);
 
 	/* TOUCH EVENTS */
 

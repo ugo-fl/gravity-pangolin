@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 public abstract class AbstractScreen implements Screen, InputProcessor {
 	
-	protected static float SCREEN_WIDTH = 480;
-	protected static float SCREEN_HEIGHT = 320;
+//	protected static float SCREEN_WIDTH = 480;
+//	protected static float SCREEN_HEIGHT = 320;
 	
 	protected static float DEFAULT_WIDTH = 100;
 	protected static float DEFAULT_HEIGHT = DEFAULT_WIDTH * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
@@ -35,13 +35,13 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 	}
 	
 	protected AbstractScreen(float width, float height) {
-//		float screenW = Gdx.graphics.getWidth();
-//		float screenH = Gdx.graphics.getHeight();
+		float screenW = Gdx.graphics.getWidth();
+		float screenH = Gdx.graphics.getHeight();
 		this.width = width;
 		this.height = height;
 
-		ppuX = SCREEN_WIDTH / width;
-		ppuY = SCREEN_HEIGHT / height;
+		ppuX = screenW / width;
+		ppuY = screenH / height;
 
 		camera = new OrthographicCamera(width, height);
 		spriteBatch = new SpriteBatch();

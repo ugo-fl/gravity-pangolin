@@ -1,6 +1,7 @@
 package fr.gravity.pangolin.entity.block;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.Entity;
@@ -22,10 +23,10 @@ public class ExitBlock extends Entity {
 		return false;
 	}
 
-	@Override
-	public void draw(SpriteBatch spriteBatch) {
-		entityGraphic.draw(spriteBatch);
-	}
+//	@Override
+//	public void draw(SpriteBatch spriteBatch) {
+//		entityGraphic.draw(spriteBatch);
+//	}
 
 	@Override
 	public void touchDown() {
@@ -37,6 +38,17 @@ public class ExitBlock extends Entity {
 	public void touchUp() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		entityGraphic.draw(batch);
+	}
+
+	@Override
+	public Actor hit(float x, float y) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
