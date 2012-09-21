@@ -45,12 +45,11 @@ public class GravityPangolinGame extends Game {
 	public void start(FileHandle mapFile) {
 		this.mapFile = mapFile;
 		pangolinWorld = PangolinWorld.getInstance(mapFile);
-		GravityPangolinScreen gravityPangolinScreen = new GravityPangolinScreen(
-				this);
+		GravityPangolinScreen gravityPangolinScreen = new GravityPangolinScreen(this, pangolinWorld);
 
 		setScreen(gravityPangolinScreen);
-		pangolinWorld.init();
-		gravityPangolinScreen.init();
+		// pangolinWorld.init();
+		// gravityPangolinScreen.init();
 	}
 
 	public void restart() {
@@ -73,7 +72,6 @@ public class GravityPangolinGame extends Game {
 		return pangolinWorld;
 	}
 
-	
 	// public void setScreen(Screen screen) {
 	// super.setScreen(screen);
 	// Gdx.input.setInputProcessor((InputProcessor) screen);

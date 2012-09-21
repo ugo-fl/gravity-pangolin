@@ -3,6 +3,7 @@ package fr.gravity.pangolin;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 
 import fr.gravity.pangolin.Gravity.Side;
@@ -13,18 +14,18 @@ import fr.gravity.pangolin.util.GameUtil;
 
 public class Controller {
 
-	enum Keys {
-		LEFT, RIGHT, UP, DOWN, GRAVITY_CHANGE
-	}
+//	enum Keys {
+//		LEFT, RIGHT, UP, DOWN, GRAVITY_CHANGE
+//	}
 
 	private PangolinWorld pangolinWorld;
 	private Pangolin pangolin;
 
-	static Map<Keys, Boolean> keys = new HashMap<Controller.Keys, Boolean>();
+	static Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
 
-	public Controller(PangolinWorld world) {
+	public Controller(PangolinWorld world, Pangolin pangolin) {
 		this.pangolinWorld = world;
-		this.pangolin = world.getPangolin();
+		this.pangolin = pangolin;
 		initKeys();
 	}
 
@@ -35,55 +36,62 @@ public class Controller {
 		keys.put(Keys.RIGHT, false);
 		keys.put(Keys.UP, false);
 		keys.put(Keys.DOWN, false);
-		keys.put(Keys.GRAVITY_CHANGE, false);
+		keys.put(Keys.SPACE, false);
 	}
 
-	public void leftPressed() {
-		keys.get(keys.put(Keys.LEFT, true));
+	public void keyDown(int keycode) {
+		keys.get(keys.put(keycode, true));
 	}
-
-	public void rightPressed() {
-		keys.get(keys.put(Keys.RIGHT, true));
+	
+	public void keyUp(int keycode) {
+		keys.get(keys.put(keycode, false));
 	}
-
-	public void upPressed() {
-		keys.get(keys.put(Keys.UP, true));
-	}
-
-	public void downPressed() {
-		keys.get(keys.put(Keys.DOWN, true));
-	}
-
-	public void gravityChangePressed() {
-		keys.get(keys.put(Keys.GRAVITY_CHANGE, true));
-	}
-
-	public void leftReleased() {
-		keys.get(keys.put(Keys.LEFT, false));
-	}
-
-	public void rightReleased() {
-		keys.get(keys.put(Keys.RIGHT, false));
-	}
-
-	public void upReleased() {
-		keys.get(keys.put(Keys.UP, false));
-	}
-
-	public void downReleased() {
-		keys.get(keys.put(Keys.DOWN, false));
-	}
-
-	public void gravityChangeReleased() {
-		keys.get(keys.put(Keys.GRAVITY_CHANGE, false));
-	}
+	
+//	public void leftPressed() {
+//		keys.get(keys.put(Keys.LEFT, true));
+//	}
+//
+//	public void rightPressed() {
+//		keys.get(keys.put(Keys.RIGHT, true));
+//	}
+//
+//	public void upPressed() {
+//		keys.get(keys.put(Keys.UP, true));
+//	}
+//
+//	public void downPressed() {
+//		keys.get(keys.put(Keys.DOWN, true));
+//	}
+//
+//	public void gravityChangePressed() {
+//		keys.get(keys.put(Keys.SPACE, true));
+//	}
+//
+//	public void leftReleased() {
+//		keys.get(keys.put(Keys.LEFT, false));
+//	}
+//
+//	public void rightReleased() {
+//		keys.get(keys.put(Keys.RIGHT, false));
+//	}
+//
+//	public void upReleased() {
+//		keys.get(keys.put(Keys.UP, false));
+//	}
+//
+//	public void downReleased() {
+//		keys.get(keys.put(Keys.DOWN, false));
+//	}
+//
+//	public void gravityChangeReleased() {
+//		keys.get(keys.put(Keys.SPACE, false));
+//	}
 
 	/** The main update method **/
 	public void update(float delta) {
 		processInput();
 		if (!getMeOut(delta))
 			controlPangolinMovement(delta);
-		pangolin.update(delta);
 	}
 
 	/**
@@ -185,7 +193,7 @@ public class Controller {
 
 		pangolin.idle();
 
-		if (keys.get(Keys.GRAVITY_CHANGE) && pangolin.isLanded()) {
+		if (keys.get(Keys.SPACE) && pangolin.isLanded()) {
 			pangolinWorld.getGravity().switchSide();
 			// To avoid one frame of pangolin upside down (not falling) when the
 			// button is pressed

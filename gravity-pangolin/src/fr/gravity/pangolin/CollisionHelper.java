@@ -16,8 +16,7 @@ public class CollisionHelper {
 	public static boolean collidesLeft(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getX(), entity2.getX(), entity2.getY()
-				+ entity2.getBoundingRectangle().getWidth()))
+		if (Numbers.between(entity1.getX(), entity2.getX(), entity2.getY() + entity2.getBoundingRectangle().getWidth()))
 			return true;
 		return false;
 	}
@@ -31,8 +30,8 @@ public class CollisionHelper {
 	public static boolean collidesRight(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getX() + entity1.getBoundingRectangle().getWidth(), entity2.getX(),
-				entity2.getX() + entity2.getBoundingRectangle().getWidth()))
+		if (Numbers.between(entity1.getX() + entity1.getBoundingRectangle().getWidth(), entity2.getX(), entity2.getX()
+				+ entity2.getBoundingRectangle().getWidth()))
 			return true;
 		return false;
 	}
@@ -61,18 +60,17 @@ public class CollisionHelper {
 	public static boolean collidesDown(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getY(), entity2.getY(),
-				entity2.getY() + entity2.getBoundingRectangle().getHeight()))
+		if (Numbers.between(entity1.getY(), entity2.getY(), entity2.getY() + entity2.getBoundingRectangle().getHeight()))
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * 
-	 * If there is none, return
 	 * @param entity
 	 * @param entities
-	 * @return the {@link Entity} that entity collides with. If there is none, returns null.
+	 * @return the {@link Entity} that entity collides with. If there is none,
+	 *         returns null.
 	 */
 	public static Entity collidesAny(Entity entity, Array<Entity> entities) {
 		float entityPosX = entity.getX();
@@ -88,8 +86,7 @@ public class CollisionHelper {
 
 			if (Numbers.betweenStrict(entityPosX, blockPosX - entityWidth, blockPosX + blockWidth))
 				if (Numbers.betweenStrict(entityPosY, blockPosY - entityHeight, blockPosY + blockHeight)) {
-					if (any.collides())
-						return any;
+					return (Entity) any.hit(0, 0);
 				}
 		}
 		return null;

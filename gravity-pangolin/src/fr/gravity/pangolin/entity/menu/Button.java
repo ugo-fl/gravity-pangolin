@@ -27,11 +27,6 @@ public class Button extends Entity {
 //	}
 
 	@Override
-	public boolean collides() {
-		return false;
-	}
-
-	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		entityGraphic.draw(batch);
 	}

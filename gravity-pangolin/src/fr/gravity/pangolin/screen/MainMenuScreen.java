@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -42,7 +43,7 @@ public class MainMenuScreen extends AbstractScreen2 {
 	// private Button newGameButton;
 
 	public MainMenuScreen(GravityPangolinGame gravityPangolinGame) {
-		super(gravityPangolinGame);
+		super(gravityPangolinGame, null);
 	}
 
 	@Override
@@ -98,7 +99,7 @@ public class MainMenuScreen extends AbstractScreen2 {
 		startButton = new TextButton("Go !", getSkin());
 		startButton.x = 150;
 		startButton.y = 300;
-		
+
 		startButton.setClickListener(new ClickListener() {
 			@Override
 			public void click(Actor actor, float x, float y) {

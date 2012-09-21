@@ -16,7 +16,7 @@ public class SelectLevelScreen extends AbstractScreen2 {
 	private static final int MAX_COL = 5;
 
 	public SelectLevelScreen(GravityPangolinGame game) {
-		super(game);
+		super(game, null);
 	}
 
 	@Override

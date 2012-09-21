@@ -40,8 +40,11 @@ public abstract class Entity extends Actor {
 		setY(position.y);
 	}
 
-	public abstract boolean collides();
-
+	@Override
+	public void draw(SpriteBatch spriteBatch, float alphaModulation) {
+		entityGraphic.draw(spriteBatch, alphaModulation);
+	}
+	
 //	public abstract void draw(SpriteBatch spriteBatch);
 
 	/* TOUCH EVENTS */

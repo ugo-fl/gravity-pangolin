@@ -3,6 +3,8 @@ package fr.gravity.pangolin.entity.block;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import fr.gravity.pangolin.CollisionHelper;
+import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic;
 import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;
@@ -11,11 +13,6 @@ public class BranchBlock extends Entity {
 
 	public BranchBlock(float x, float y, BranchFramePosition branchFramePos) {
 		entityGraphic = new BranchBlockGraphic(x, y, branchFramePos);
-	}
-
-	@Override
-	public boolean collides() {
-		return true;
 	}
 
 //	@Override
@@ -40,8 +37,7 @@ public class BranchBlock extends Entity {
 
 	@Override
 	public Actor hit(float x, float y) {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 //	@Override

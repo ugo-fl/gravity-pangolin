@@ -29,25 +29,6 @@ public class GravityChangerBlock extends Entity {
 	 * GravityChanger is deactivated for DEACTIVATED_PERIOD milliseconds.
 	 */
 	@Override
-	public boolean collides() {
-		Date date = new Date();
-		if (date.getTime() - timestamp < DEACTIVATED_PERIOD)
-			return false;
-		timestamp = date.getTime();
-		Side currentGravitySide = gravity.getSide();
-		Side newGravitySide = Side.DOWN;
-
-		if (currentGravitySide == Side.UP)
-			newGravitySide = Side.RIGHT;
-		else if (currentGravitySide == Side.DOWN)
-			newGravitySide = Side.LEFT;
-		else if (currentGravitySide == Side.LEFT)
-			newGravitySide = Side.UP;
-		gravity.setSide(newGravitySide);
-		return false;
-	}
-
-	@Override
 	public Rectangle getBoundingRectangle() {
 		final float width = entityGraphic.getWidth() / 5;
 		final float height = entityGraphic.getHeight() / 5;
@@ -81,8 +62,21 @@ public class GravityChangerBlock extends Entity {
 
 	@Override
 	public Actor hit(float x, float y) {
-		// TODO Auto-generated method stub
-		return null;
+		Date date = new Date();
+		if (date.getTime() - timestamp < DEACTIVATED_PERIOD)
+			return this;
+		timestamp = date.getTime();
+		Side currentGravitySide = gravity.getSide();
+		Side newGravitySide = Side.DOWN;
+
+		if (currentGravitySide == Side.UP)
+			newGravitySide = Side.RIGHT;
+		else if (currentGravitySide == Side.DOWN)
+			newGravitySide = Side.LEFT;
+		else if (currentGravitySide == Side.LEFT)
+			newGravitySide = Side.UP;
+		gravity.setSide(newGravitySide);
+		return this;
 	}
 
 }

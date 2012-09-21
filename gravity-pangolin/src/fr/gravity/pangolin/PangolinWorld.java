@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.Gravity.Side;
@@ -15,6 +16,7 @@ import fr.gravity.pangolin.entity.block.GravityChangerBlock;
 import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.exception.InvalidMapException;
+import fr.gravity.pangolin.screen.AbstractScreen2;
 import fr.gravity.pangolin.util.GameUtil;
 
 public class PangolinWorld {
@@ -65,13 +67,8 @@ public class PangolinWorld {
 	 * @return
 	 */
 	public static PangolinWorld getInstance() {
-		try {
-			if (instance == null)
-				throw new NullPointerException(
-						"The Pangolin World has not been initiated yet.");
-		} catch (InvalidMapException e) {
-			e.printStackTrace();
-		}
+		if (instance == null)
+			throw new NullPointerException("The Pangolin World has not been initiated yet.");
 		return instance;
 	}
 
@@ -81,13 +78,11 @@ public class PangolinWorld {
 			String sizeLine = mapFile.readLine();
 			String[] size = sizeLine.split(";");
 			if (size.length != 2)
-				throw new InvalidMapException(
-						"Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
+				throw new InvalidMapException("Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
 			sizeX = Integer.valueOf(size[0]);
 			sizeY = Integer.valueOf(size[1]);
 			if (sizeX <= 0 || sizeY <= 0)
-				throw new InvalidMapException(
-						"Invalid definition of size (size should be > 0 for both X and Y)");
+				throw new InvalidMapException("Invalid definition of size (size should be > 0 for both X and Y)");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -96,11 +91,11 @@ public class PangolinWorld {
 	/**
 	 * Initiate the world. The game screen must be initiated first.
 	 */
-	public void init() {
+	public void init(Stage stage) {
 		// Checks if the screen is set first
-		if (GameUtil.getScreen() == null)
-			throw new NullPointerException(
-					"The screen has not been initiated yet.");
+		AbstractScreen2 screen = GameUtil.getScreen();
+		if (screen == null)
+			throw new NullPointerException("The screen has not been initiated yet.");
 
 		background = new Background();
 		Entity exitBlock = null;
@@ -114,25 +109,29 @@ public class PangolinWorld {
 					String sym = String.valueOf(line.charAt(x));
 
 					if (BLOCK_SYM.equalsIgnoreCase(sym)) {
-						entities.add(new BranchBlock(x, y,
-								getBranchFramePosition(x, y, line)));
+						BranchBlock branchBlock = new BranchBlock(x, y, getBranchFramePosition(x, y, line));
+						entities.add(branchBlock);
+						stage.addActor(branchBlock);
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(x, y);
+						stage.addActor(pangolin);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-						entities.add(new GravityChangerBlock(x, y, gravity));
+//						 entities.add(new GravityChangerBlock(x, y, gravity));
+						stage.addActor(new GravityChangerBlock(x, y, gravity));
 					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
-						entities.add((exitBlock = new ExitBlock(x, y,
-								ExitSide.EXIT_DOWN)));
+						// entities.add((exitBlock = new ExitBlock(x, y,
+						// ExitSide.EXIT_DOWN)));
+						stage.addActor((exitBlock = new ExitBlock(x, y, ExitSide.EXIT_DOWN)));
 					}
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (pangolin == null)
-			throw new InvalidMapException("No start point found in map.");
-		else if (exitBlock == null)
-			throw new InvalidMapException("No finish point found in map.");
+		// if (pangolin == null)
+		// throw new InvalidMapException("No start point found in map.");
+		// else if (exitBlock == null)
+		// throw new InvalidMapException("No finish point found in map.");
 	}
 
 	private BranchFramePosition getBranchFramePosition(int x, int y, String line) {
@@ -145,8 +144,7 @@ public class PangolinWorld {
 		if ((x + 1) < line.length())
 			nextSym = String.valueOf(line.charAt(x + 1));
 
-		if (BLOCK_SYM.equalsIgnoreCase(previousSym)
-				&& BLOCK_SYM.equalsIgnoreCase(nextSym))
+		if (BLOCK_SYM.equalsIgnoreCase(previousSym) && BLOCK_SYM.equalsIgnoreCase(nextSym))
 			branchFramePos = BranchFramePosition.MIDDLE;
 		else if (BLOCK_SYM.equalsIgnoreCase(previousSym))
 			branchFramePos = BranchFramePosition.END;

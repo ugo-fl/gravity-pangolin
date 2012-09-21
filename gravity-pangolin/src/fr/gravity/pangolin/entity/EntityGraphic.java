@@ -30,9 +30,9 @@ public abstract class EntityGraphic extends Sprite {
 
 		// Set the sprite and its size
 		super.set(sprite);
-		AbstractScreen2 screen = GameUtil.getScreen();
-		setSize(Math.abs(sprite.getWidth()) / screen.getPpuX(),
-				Math.abs(sprite.getHeight()) / screen.getPpuY());
+//		AbstractScreen2 screen = GameUtil.getScreen();
+//		setSize(Math.abs(sprite.getWidth()) / screen.getPpuX(),
+//				Math.abs(sprite.getHeight()) / screen.getPpuY());
 
 		// Reset the coordinates
 		setX(xCpy);

@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import fr.gravity.pangolin.Controller;
 import fr.gravity.pangolin.Gravity.Side;
+import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.DyingPangolinGraphic;
 import fr.gravity.pangolin.entity.graphic.FallingPangolinGraphic;
@@ -14,10 +16,11 @@ import fr.gravity.pangolin.entity.graphic.WalkingPangolinGraphic;
 
 public class Pangolin extends Entity {
 
-	public static final float SPEED = 4f; // unit per second
-	public static final float FALLING_SPEED = 7f; // unit per second
+	public static final float SPEED = 150; // unit per second
+	public static final float FALLING_SPEED = SPEED * 1.5F; // unit per second
 	public static final float JUMP_VELOCITY = 4f;
 
+	private Controller controller;
 	private float delta;
 
 	/* DIRECTION */
@@ -55,16 +58,20 @@ public class Pangolin extends Entity {
 	private boolean landed;
 
 	public Pangolin(float x, float y) {
-		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x,
-				y));
-		PangolinState.WALKING.setPangolinGraphic(new WalkingPangolinGraphic(
-				this, x, y));
-		PangolinState.FALLING.setPangolinGraphic(new FallingPangolinGraphic(
-				this, x, y));
-		PangolinState.DYING.setPangolinGraphic(new DyingPangolinGraphic(this,
-				x, y));
+		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x, y));
+		PangolinState.WALKING.setPangolinGraphic(new WalkingPangolinGraphic(this, x, y));
+		PangolinState.FALLING.setPangolinGraphic(new FallingPangolinGraphic(this, x, y));
+		PangolinState.DYING.setPangolinGraphic(new DyingPangolinGraphic(this, x, y));
 
 		entityGraphic = pangolinState.pangolinGraphic;
+		controller = new Controller(GravityPangolinGame.getInstance().getPangolinWorld(), this);
+	}
+
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		controller.update(delta);
+		update(delta);
 	}
 
 	public void update(float delta) {
@@ -84,8 +91,7 @@ public class Pangolin extends Entity {
 
 	public void translate(Vector2 translation) {
 		for (PangolinState pangolinState : PangolinState.values()) {
-			pangolinState.setPosition(getX() + translation.x, getY()
-					- translation.y);
+			pangolinState.setPosition(getX() + translation.x, getY() - translation.y);
 		}
 	}
 
@@ -96,29 +102,29 @@ public class Pangolin extends Entity {
 		getVelocity().y = 0;
 	}
 
-//	public void goLeft() {
-//		pangolinState = PangolinState.WALKING;
-//		direction = Direction.LEFT;
-//		velocity.x = -SPEED;
-//	}
-//
-//	public void goRight() {
-//		pangolinState = PangolinState.WALKING;
-//		direction = Direction.RIGHT;
-//		velocity.x = SPEED;
-//	}
-//
-//	public void goUp() {
-//		pangolinState = PangolinState.WALKING;
-//		direction = Direction.UP;
-//		velocity.y = -SPEED;
-//	}
-//
-//	public void goDown() {
-//		pangolinState = PangolinState.WALKING;
-//		direction = Direction.DOWN;
-//		velocity.y = SPEED;
-//	}
+	// public void goLeft() {
+	// pangolinState = PangolinState.WALKING;
+	// direction = Direction.LEFT;
+	// velocity.x = -SPEED;
+	// }
+	//
+	// public void goRight() {
+	// pangolinState = PangolinState.WALKING;
+	// direction = Direction.RIGHT;
+	// velocity.x = SPEED;
+	// }
+	//
+	// public void goUp() {
+	// pangolinState = PangolinState.WALKING;
+	// direction = Direction.UP;
+	// velocity.y = -SPEED;
+	// }
+	//
+	// public void goDown() {
+	// pangolinState = PangolinState.WALKING;
+	// direction = Direction.DOWN;
+	// velocity.y = SPEED;
+	// }
 
 	public void go(Direction direction) {
 		if (landed)
@@ -179,16 +185,11 @@ public class Pangolin extends Entity {
 		setY(previousPosition.y);
 	}
 
-//	@Override
-//	public void draw(SpriteBatch spriteBatch) {
-//		entityGraphic = pangolinState.pangolinGraphic;
-//		entityGraphic.draw(spriteBatch);
-//	}
-
-	@Override
-	public boolean collides() {
-		return false;
-	}
+	// @Override
+	// public void draw(SpriteBatch spriteBatch) {
+	// entityGraphic = pangolinState.pangolinGraphic;
+	// entityGraphic.draw(spriteBatch);
+	// }
 
 	/** TOUCH EVENTS **/
 
@@ -238,4 +239,18 @@ public class Pangolin extends Entity {
 		return null;
 	}
 
+	@Override
+	public boolean keyDown(int keycode) {
+		controller.keyDown(keycode);
+		System.out.println("DOWN KEYCODE/ " + keycode);
+		return true;
+	}
+	
+	@Override
+	public boolean keyUp(int keycode) {
+		controller.keyUp(keycode);
+		System.out.println("UP KEYCODE/ " + keycode);
+		return true;
+	}
+	
 }

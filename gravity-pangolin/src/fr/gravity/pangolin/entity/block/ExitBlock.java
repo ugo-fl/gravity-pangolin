@@ -17,12 +17,6 @@ public class ExitBlock extends Entity {
 		entityGraphic = new ExitBlockGraphic(x, y, exitSide);
 	}
 
-	@Override
-	public boolean collides() {
-		GravityPangolinGame.getInstance().youWin();
-		return false;
-	}
-
 //	@Override
 //	public void draw(SpriteBatch spriteBatch) {
 //		entityGraphic.draw(spriteBatch);
@@ -47,8 +41,8 @@ public class ExitBlock extends Entity {
 
 	@Override
 	public Actor hit(float x, float y) {
-		// TODO Auto-generated method stub
-		return null;
+		GravityPangolinGame.getInstance().youWin();
+		return this;
 	}
 
 }

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 import fr.gravity.pangolin.GravityPangolinGame;
+import fr.gravity.pangolin.PangolinWorld;
 
 public abstract class AbstractScreen2 implements Screen {
 	// the fixed viewport dimensions (ratio: 1.6)
@@ -21,6 +22,7 @@ public abstract class AbstractScreen2 implements Screen {
 			MENU_VIEWPORT_HEIGHT = 480;
 
 	protected final GravityPangolinGame game;
+	protected final PangolinWorld pangolinWorld;
 	protected final Stage stage;
 
 	private BitmapFont font;
@@ -32,8 +34,9 @@ public abstract class AbstractScreen2 implements Screen {
 	protected int width;
 	protected int height;
 	
-	public AbstractScreen2(GravityPangolinGame game) {
+	public AbstractScreen2(GravityPangolinGame game, PangolinWorld pangolinWorld) {
 		this.game = game;
+		this.pangolinWorld = pangolinWorld;
 		width = (isGameScreen() ? GAME_VIEWPORT_WIDTH : MENU_VIEWPORT_WIDTH);
 		height = (isGameScreen() ? GAME_VIEWPORT_HEIGHT
 				: MENU_VIEWPORT_HEIGHT);
@@ -146,6 +149,7 @@ public abstract class AbstractScreen2 implements Screen {
 	@Override
 	public void resume() {
 		Gdx.app.log(GravityPangolinGame.LOG, "Resuming screen: " + getName());
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -177,11 +181,17 @@ public abstract class AbstractScreen2 implements Screen {
 	}
 
 	public float getPpuX() {
-		return 1;
+		if (pangolinWorld == null)
+			return 1;
+		float sizeX = pangolinWorld.getSizeX();
+		return width / sizeX;
 	}
 	
 	public float getPpuY() {
-		return 1;
+		if (pangolinWorld == null)
+			return 1;
+		float sizeY = pangolinWorld.getSizeY();
+		return height / sizeY;
 	}
 	
 }
