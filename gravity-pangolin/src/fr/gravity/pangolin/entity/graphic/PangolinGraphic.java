@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.TextureLoader;
 import fr.gravity.pangolin.TextureLoader.TextureId;
@@ -30,26 +29,26 @@ public abstract class PangolinGraphic extends EntityGraphic {
 	}
 
 	public Sprite getFrame(float stateTime) {
-		Side side = PangolinWorld.getInstance().getGravity().getSide();
+		Direction direction = PangolinWorld.getInstance().getGravity().getDirection();
 		if (animation != null) {
 			Sprite sprite = new Sprite(animation.getKeyFrame(stateTime, true));
-			adjustSpriteSide(sprite, side, pangolin.getDirection());
+			adjustSpriteSide(sprite, direction, pangolin.getDirection());
 			return sprite;
 		}
 		return null;
 	}
 
-	private void adjustSpriteSide(Sprite sprite, Side side, Direction direction) {
-		if (side == Side.RIGHT) {
-			sprite.flip(direction == Direction.UP, true);
+	private void adjustSpriteSide(Sprite sprite, Direction gravityDirection, Direction pangolinDirection) {
+		if (gravityDirection == Direction.RIGHT) {
+			sprite.flip(pangolinDirection == Direction.UP, true);
 			SpriteUtil.rotate(sprite, true);
-		} else if (side == Side.LEFT) {
-			sprite.flip(direction == Direction.DOWN, true);
+		} else if (gravityDirection == Direction.LEFT) {
+			sprite.flip(pangolinDirection == Direction.DOWN, true);
 			SpriteUtil.rotate(sprite, false);
-		} else if (side == Side.UP) {
-			sprite.flip(direction == Direction.LEFT, true);
-		} else if (side == Side.DOWN) {
-			sprite.flip(direction == Direction.LEFT, false);
+		} else if (gravityDirection == Direction.UP) {
+			sprite.flip(pangolinDirection == Direction.LEFT, true);
+		} else if (gravityDirection == Direction.DOWN) {
+			sprite.flip(pangolinDirection == Direction.LEFT, false);
 		}
 	}
 

@@ -7,7 +7,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
-import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.BranchBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock;
@@ -15,6 +14,7 @@ import fr.gravity.pangolin.entity.block.ExitBlock.ExitSide;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
 import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
+import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.exception.InvalidMapException;
 import fr.gravity.pangolin.screen.AbstractScreen2;
 import fr.gravity.pangolin.util.GameUtil;
@@ -46,7 +46,7 @@ public class PangolinWorld {
 
 	private Background background;
 
-	private Gravity gravity = new Gravity(Side.DOWN);
+	private Gravity gravity = new Gravity(Direction.DOWN);
 
 	/**
 	 * Singleton accessor.

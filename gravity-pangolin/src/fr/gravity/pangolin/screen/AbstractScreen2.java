@@ -3,16 +3,23 @@ package fr.gravity.pangolin.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.PangolinWorld;
+import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.EntityGraphic;
 
 public abstract class AbstractScreen2 implements Screen {
 	// the fixed viewport dimensions (ratio: 1.6)
@@ -126,9 +133,27 @@ public abstract class AbstractScreen2 implements Screen {
 
 		// draw the actors
 		stage.draw();
+		drawDebugView();
 
 		// draw the table debug lines
 		Table.drawDebug(stage);
+	}
+
+	private void drawDebugView() {
+		ShapeRenderer debugRenderer = new ShapeRenderer();
+		
+		debugRenderer.setProjectionMatrix(stage.getCamera().combined);
+		debugRenderer.begin(ShapeType.Rectangle);
+
+		debugRenderer.setColor(new Color(0, 1, 0, 1));
+		
+		for (Actor actor : stage.getActors()) {
+			if (!(actor instanceof Entity))
+				continue ;
+			EntityGraphic entityGraphic = ((Entity)actor).getEntityGraphic();
+			debugRenderer.rect(entityGraphic.getX(), entityGraphic.getY(), entityGraphic.getWidth(), entityGraphic.getHeight());
+		}
+		debugRenderer.end();
 	}
 
 	@Override

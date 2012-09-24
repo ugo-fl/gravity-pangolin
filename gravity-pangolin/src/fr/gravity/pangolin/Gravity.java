@@ -1,39 +1,41 @@
 package fr.gravity.pangolin;
 
+import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
+
 public class Gravity {
 
-	public static enum Side { UP, DOWN, LEFT, RIGHT};
+//	public static enum Side { UP, DOWN, LEFT, RIGHT};
 
-	private Side side;
+	private Direction direction;
 	
-	public Gravity(Side side) {
-		this.side = side;
+	public Gravity(Direction direction) {
+		this.direction = direction;
 	}
 	
-	public static Side getOppositeSide(Side side) {
-		if (side == Side.UP)
-			return Side.DOWN;
-		else if (side == Side.DOWN)
-			return Side.UP;
-		else if (side == Side.LEFT)
-			return Side.RIGHT;
+	public static Direction getOppositeSide(Direction direction) {
+		if (direction == Direction.UP)
+			return Direction.DOWN;
+		else if (direction == Direction.DOWN)
+			return Direction.UP;
+		else if (direction == Direction.LEFT)
+			return Direction.RIGHT;
 		else
-			return Side.LEFT;
+			return Direction.LEFT;
 	}
 	
 	/**
 	 * Sets the gravity to the opposite of the current gravity side
 	 */
-	public void switchSide() {
-		side = Gravity.getOppositeSide(side);
+	public void switchDirection() {
+		direction = Gravity.getOppositeSide(direction);
 	}
 
-	public Side getSide() {
-		return side;
+	public Direction getDirection() {
+		return direction;
 	}
 
-	public void setSide(Side side) {
-		this.side = side;
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 	
 }

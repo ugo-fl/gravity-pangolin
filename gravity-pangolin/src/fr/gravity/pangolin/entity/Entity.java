@@ -31,6 +31,14 @@ public abstract class Entity extends Actor {
 		entityGraphic.setY(y);
 	}
 
+	public float getWidth() {
+		return entityGraphic.getWidth();
+	}
+	
+	public float getHeight() {
+		return entityGraphic.getHeight();
+	}
+	
 	public Vector2 getPosition() {
 		return new Vector2(getX(), getY());
 	}
@@ -38,6 +46,10 @@ public abstract class Entity extends Actor {
 	public void setPosition(Vector2 position) {
 		setX(position.x);
 		setY(position.y);
+	}
+
+	public EntityGraphic getEntityGraphic() {
+		return entityGraphic;
 	}
 
 	@Override

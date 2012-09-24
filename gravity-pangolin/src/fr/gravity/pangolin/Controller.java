@@ -6,7 +6,6 @@ import java.util.Map;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 
-import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
@@ -133,7 +132,7 @@ public class Controller {
 		if (GameUtil.isOutOfScreen(pangolin.getBoundingRectangle()))
 			GravityPangolinGame.getInstance().gameOver();
 
-		pangolin.setLanded(false);
+//		pangolin.setLanded(false);
 		// Control for the X axis
 		{
 			Vector2 positionCpy = pangolin.getPosition();
@@ -147,15 +146,15 @@ public class Controller {
 			if (collidedEntity != null)
 				if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
-					if (pangolinWorld.getGravity().getSide() == Side.LEFT) {
+					if (pangolinWorld.getGravity().getDirection() == Direction.LEFT) {
 						pangolin.setLanded(true);
 					}
 				} else if (CollisionHelper.collidesRight(pangolin,
 						collidedEntity)) {
 					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
-					if (pangolinWorld.getGravity().getSide() == Side.RIGHT) {
+					if (pangolinWorld.getGravity().getDirection() == Direction.RIGHT) {
 						// pangolin.setLanded(true);
-						pangolin.land(Side.RIGHT);
+						pangolin.land(Direction.RIGHT);
 					}
 				}
 			pangolin.setPosition(positionCpy);
@@ -173,11 +172,11 @@ public class Controller {
 			if (collidedEntity != null)
 				if (CollisionHelper.collidesDown(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
-					if (pangolinWorld.getGravity().getSide() == Side.DOWN)
+					if (pangolinWorld.getGravity().getDirection() == Direction.DOWN)
 						pangolin.setLanded(true);
 				} else if (CollisionHelper.collidesUp(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
-					if (pangolinWorld.getGravity().getSide() == Side.UP)
+					if (pangolinWorld.getGravity().getDirection() == Direction.UP)
 						pangolin.setLanded(true);
 				}
 			pangolin.setPosition(positionCpy);
@@ -194,36 +193,36 @@ public class Controller {
 		pangolin.idle();
 
 		if (keys.get(Keys.SPACE) && pangolin.isLanded()) {
-			pangolinWorld.getGravity().switchSide();
-			// To avoid one frame of pangolin upside down (not falling) when the
+			pangolinWorld.getGravity().switchDirection();
+			// To avoid one frame of pangolin upDirection down (not falling) when the
 			// button is pressed
 			pangolin.setLanded(false);
 		}
 
-		Side gravitySide = pangolinWorld.getGravity().getSide();
-		if (keys.get(Keys.LEFT) && gravitySide != Side.RIGHT
-				&& gravitySide != Side.LEFT) {
+		Direction gravityDirection = pangolinWorld.getGravity().getDirection();
+		if (keys.get(Keys.LEFT) && gravityDirection != Direction.RIGHT
+				&& gravityDirection != Direction.LEFT) {
 			pangolin.go(Direction.LEFT);
-		} else if (gravitySide == Side.LEFT) {
-			pangolin.fallLeft();
+		} else if (gravityDirection == Direction.LEFT) {
+			pangolin.fall(Direction.LEFT);
 		}
-		if (keys.get(Keys.RIGHT) && gravitySide != Side.LEFT
-				&& gravitySide != Side.RIGHT) {
+		if (keys.get(Keys.RIGHT) && gravityDirection != Direction.LEFT
+				&& gravityDirection != Direction.RIGHT) {
 			pangolin.go(Direction.RIGHT);
-		} else if (gravitySide == Side.RIGHT) {
-			pangolin.fallRight();
+		} else if (gravityDirection == Direction.RIGHT) {
+			pangolin.fall(Direction.RIGHT);
 		}
-		if (keys.get(Keys.UP) && gravitySide != Side.DOWN
-				&& gravitySide != Side.UP) {
+		if (keys.get(Keys.UP) && gravityDirection != Direction.DOWN
+				&& gravityDirection != Direction.UP) {
 			pangolin.go(Direction.UP);
-		} else if (gravitySide == Side.UP) {
-			pangolin.fallUp();
+		} else if (gravityDirection == Direction.UP) {
+			pangolin.fall(Direction.UP);
 		}
-		if (keys.get(Keys.DOWN) && gravitySide != Side.UP
-				&& gravitySide != Side.DOWN) {
+		if (keys.get(Keys.DOWN) && gravityDirection != Direction.UP
+				&& gravityDirection != Direction.DOWN) {
 			pangolin.go(Direction.DOWN);
-		} else if (gravitySide == Side.DOWN) {
-			pangolin.fallDown();
+		} else if (gravityDirection == Direction.DOWN) {
+			pangolin.fall(Direction.DOWN);
 		}
 
 	}

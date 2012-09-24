@@ -3,8 +3,6 @@ package fr.gravity.pangolin.entity.block;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import fr.gravity.pangolin.CollisionHelper;
-import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic;
 import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;

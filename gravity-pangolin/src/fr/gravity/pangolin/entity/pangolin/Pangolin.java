@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.Controller;
-import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.DyingPangolinGraphic;
@@ -136,46 +135,39 @@ public class Pangolin extends Entity {
 			velocity.y = direction == Direction.UP ? -SPEED : SPEED;
 	}
 
-	public void fall(Side side) {
-		switch (side) {
-		case UP:
-			fallUp();
-		case DOWN:
-			fallDown();
-		case LEFT:
-			fallLeft();
-		case RIGHT:
-			fallRight();
-		}
-	}
-
-	public void fallUp() {
+	public void fall(Direction direction) {
 		if (!landed)
 			pangolinState = PangolinState.FALLING;
-		velocity.y = -FALLING_SPEED;
+		go(direction);
 	}
 
-	public void fallDown() {
-		if (!landed)
-			pangolinState = PangolinState.FALLING;
-		velocity.y = FALLING_SPEED;
-	}
+//	public void fallUp() {
+//		if (!landed)
+//			pangolinState = PangolinState.FALLING;
+//		velocity.y = -FALLING_SPEED;
+//	}
+//
+//	public void fallDown() {
+//		if (!landed)
+//			pangolinState = PangolinState.FALLING;
+//		velocity.y = FALLING_SPEED;
+//	}
+//
+//	public void fallLeft() {
+//		if (!landed)
+//			pangolinState = PangolinState.FALLING;
+//		velocity.x = -FALLING_SPEED;
+//	}
+//
+//	public void fallRight() {
+//		if (!landed)
+//			pangolinState = PangolinState.FALLING;
+//		velocity.x = FALLING_SPEED;
+//	}
 
-	public void fallLeft() {
-		if (!landed)
-			pangolinState = PangolinState.FALLING;
-		velocity.x = -FALLING_SPEED;
-	}
-
-	public void fallRight() {
-		if (!landed)
-			pangolinState = PangolinState.FALLING;
-		velocity.x = FALLING_SPEED;
-	}
-
-	public void land(Side gravitySide) {
+	public void land(Direction gravitySide) {
 		landed = true;
-		if (gravitySide == Side.RIGHT)
+		if (gravitySide == Direction.RIGHT)
 			if (direction == Direction.RIGHT || direction == Direction.UP)
 				direction = Direction.UP;
 	}

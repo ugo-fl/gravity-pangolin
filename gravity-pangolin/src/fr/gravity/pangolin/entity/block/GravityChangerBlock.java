@@ -7,9 +7,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.Gravity;
-import fr.gravity.pangolin.Gravity.Side;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.GravityChangerBlockGraphic;
+import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 
 public class GravityChangerBlock extends Entity {
 
@@ -66,16 +66,16 @@ public class GravityChangerBlock extends Entity {
 		if (date.getTime() - timestamp < DEACTIVATED_PERIOD)
 			return this;
 		timestamp = date.getTime();
-		Side currentGravitySide = gravity.getSide();
-		Side newGravitySide = Side.DOWN;
+		Direction currentGravityDirection = gravity.getDirection();
+		Direction newGravityDirection = Direction.DOWN;
 
-		if (currentGravitySide == Side.UP)
-			newGravitySide = Side.RIGHT;
-		else if (currentGravitySide == Side.DOWN)
-			newGravitySide = Side.LEFT;
-		else if (currentGravitySide == Side.LEFT)
-			newGravitySide = Side.UP;
-		gravity.setSide(newGravitySide);
+		if (currentGravityDirection == Direction.UP)
+			newGravityDirection = Direction.RIGHT;
+		else if (currentGravityDirection == Direction.DOWN)
+			newGravityDirection = Direction.LEFT;
+		else if (currentGravityDirection == Direction.LEFT)
+			newGravityDirection = Direction.UP;
+		gravity.setDirection(newGravityDirection);
 		return this;
 	}
 
