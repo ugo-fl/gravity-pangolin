@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.util.Numbers;
 
 public class CollisionHelper {
@@ -64,6 +65,19 @@ public class CollisionHelper {
 			return true;
 		return false;
 	}
+	
+	
+	public static boolean collides(Entity entity1, Entity entity2, Direction direction) {
+		if (direction == Direction.DOWN)
+			return collidesDown(entity1, entity2);
+		else if (direction == Direction.UP)
+			return collidesUp(entity1, entity2);
+		else if (direction == Direction.LEFT)
+			return collidesLeft(entity1, entity2);
+		else if (direction == Direction.RIGHT)
+			return collidesRight(entity1, entity2);
+		return false;
+	}
 
 	/**
 	 * 
@@ -88,7 +102,9 @@ public class CollisionHelper {
 
 			if (Numbers.betweenStrict(entityPosX, blockPosX - entityWidth, blockPosX + blockWidth)) {
 				if (Numbers.betweenStrict(entityPosY, blockPosY - entityHeight, blockPosY + blockHeight)) {
-					return any.collides();
+					Entity collidedEntity = any.collides();
+					if (collidedEntity != null)
+						return collidedEntity;
 				}
 			}
 		}

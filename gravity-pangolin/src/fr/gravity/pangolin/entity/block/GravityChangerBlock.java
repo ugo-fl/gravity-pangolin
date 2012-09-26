@@ -64,7 +64,7 @@ public class GravityChangerBlock extends Entity {
 	public Entity collides() {
 		Date date = new Date();
 		if (date.getTime() - timestamp < DEACTIVATED_PERIOD)
-			return this;
+			return null;
 		timestamp = date.getTime();
 		Direction currentGravityDirection = gravity.getDirection();
 		Direction newGravityDirection = Direction.DOWN;
@@ -76,7 +76,7 @@ public class GravityChangerBlock extends Entity {
 		else if (currentGravityDirection == Direction.LEFT)
 			newGravityDirection = Direction.UP;
 		gravity.setDirection(newGravityDirection);
-		return this;
+		return null;
 	}
 
 	@Override

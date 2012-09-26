@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.Array;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.BranchBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock;
-import fr.gravity.pangolin.entity.block.ExitBlock.ExitSide;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
 import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
@@ -113,12 +112,11 @@ public class PangolinWorld {
 						addEntity(stage, branchBlock);
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(x, y);
-						stage.addActor(pangolin);
 					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym)) {
 						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(x, y, gravity);
 						addEntity(stage, gravityChangerBlock);
 					} else if (FINISH_SYM.equalsIgnoreCase(sym)) {
-						exitBlock = new ExitBlock(x, y, ExitSide.EXIT_DOWN);
+						exitBlock = new ExitBlock(x, y, Direction.DOWN);
 						addEntity(stage, exitBlock);
 					}
 				}
@@ -130,6 +128,7 @@ public class PangolinWorld {
 			throw new InvalidMapException("No start point found in map.");
 		else if (exitBlock == null)
 			throw new InvalidMapException("No finish point found in map.");
+		stage.addActor(pangolin);
 	}
 
 	private void addEntity(Stage stage, Entity entity) {

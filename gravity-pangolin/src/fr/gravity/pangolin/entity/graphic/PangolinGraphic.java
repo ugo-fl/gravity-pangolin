@@ -64,12 +64,6 @@ public abstract class PangolinGraphic extends EntityGraphic {
 		super.draw(spriteBatch);
 	}
 
-	// TODO JUST FOR TESTING. ALL THE SPRITES NEED TO HAVE SAME SIZE.
-	@Override
-	public Rectangle getBoundingRectangle(){
-		return new Rectangle(getX(), getY(), 21, 21);
-	}
-	
 	/**
 	 * Abstract methods
 	 */

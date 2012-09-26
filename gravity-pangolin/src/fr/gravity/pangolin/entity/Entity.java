@@ -22,6 +22,7 @@ public abstract class Entity extends Actor {
 	}
 
 	public void setX(float x) {
+		this.x = x;
 		entityGraphic.setX(x);
 	}
 
@@ -30,6 +31,7 @@ public abstract class Entity extends Actor {
 	}
 
 	public void setY(float y) {
+		this.y = y;
 		entityGraphic.setY(y);
 	}
 

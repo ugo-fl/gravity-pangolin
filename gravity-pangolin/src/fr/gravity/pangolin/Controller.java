@@ -147,11 +147,13 @@ public class Controller {
 			if (collidedEntity != null)
 				if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
+//					pangolin.setPosition(new Vector2(pangolin.x, collidedEntity.y));
 					if (gravityDirection == Direction.LEFT) {
 						pangolin.setLanded(true);
 					}
 				} else if (CollisionHelper.collidesRight(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
+//					pangolin.setPosition(new Vector2(pangolin.x + collidedEntity.width, collidedEntity.y));
 					if (gravityDirection == Direction.RIGHT)
 						pangolin.land(Direction.RIGHT);
 				}
@@ -169,10 +171,14 @@ public class Controller {
 			if (collidedEntity != null)
 				if (CollisionHelper.collidesDown(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
+					positionCpy.y = collidedEntity.getY() + collidedEntity.getHeight();
+//					pangolin.setPosition(new Vector2(pangolin.x, collidedEntity.y + collidedEntity.height));
 					if (gravityDirection == Direction.DOWN)
 						pangolin.setLanded(true);
 				} else if (CollisionHelper.collidesUp(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
+					positionCpy.y = collidedEntity.getY() - pangolin.getHeight();
+//					pangolin.setPosition(new Vector2(pangolin.x, collidedEntity.y));
 					if (gravityDirection == Direction.UP)
 						pangolin.setLanded(true);
 				}
