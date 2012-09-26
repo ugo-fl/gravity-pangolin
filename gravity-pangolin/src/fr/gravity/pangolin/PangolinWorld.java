@@ -110,28 +110,31 @@ public class PangolinWorld {
 
 					if (BLOCK_SYM.equalsIgnoreCase(sym)) {
 						BranchBlock branchBlock = new BranchBlock(x, y, getBranchFramePosition(x, y, line));
-						entities.add(branchBlock);
-						stage.addActor(branchBlock);
+						addEntity(stage, branchBlock);
 					} else if (START_SYM.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(x, y);
 						stage.addActor(pangolin);
-					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym))
-//						 entities.add(new GravityChangerBlock(x, y, gravity));
-						stage.addActor(new GravityChangerBlock(x, y, gravity));
-					else if (FINISH_SYM.equalsIgnoreCase(sym)) {
-						// entities.add((exitBlock = new ExitBlock(x, y,
-						// ExitSide.EXIT_DOWN)));
-						stage.addActor((exitBlock = new ExitBlock(x, y, ExitSide.EXIT_DOWN)));
+					} else if (GRAVITY_CHANGER_SYM.equalsIgnoreCase(sym)) {
+						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(x, y, gravity);
+						addEntity(stage, gravityChangerBlock);
+					} else if (FINISH_SYM.equalsIgnoreCase(sym)) {
+						exitBlock = new ExitBlock(x, y, ExitSide.EXIT_DOWN);
+						addEntity(stage, exitBlock);
 					}
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// if (pangolin == null)
-		// throw new InvalidMapException("No start point found in map.");
-		// else if (exitBlock == null)
-		// throw new InvalidMapException("No finish point found in map.");
+		if (pangolin == null)
+			throw new InvalidMapException("No start point found in map.");
+		else if (exitBlock == null)
+			throw new InvalidMapException("No finish point found in map.");
+	}
+
+	private void addEntity(Stage stage, Entity entity) {
+		entities.add(entity);
+		stage.addActor(entity);
 	}
 
 	private BranchFramePosition getBranchFramePosition(int x, int y, String line) {

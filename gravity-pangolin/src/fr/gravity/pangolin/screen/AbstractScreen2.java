@@ -20,13 +20,13 @@ import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.EntityGraphic;
+import fr.gravity.pangolin.entity.pangolin.Pangolin;
 
 public abstract class AbstractScreen2 implements Screen {
 	// the fixed viewport dimensions (ratio: 1.6)
-	public static final int GAME_VIEWPORT_WIDTH = 400,
-			GAME_VIEWPORT_HEIGHT = 240;
-	public static final int MENU_VIEWPORT_WIDTH = 800,
-			MENU_VIEWPORT_HEIGHT = 480;
+	public static final int GAME_VIEWPORT_WIDTH = 480, GAME_VIEWPORT_HEIGHT = 320;
+	// public static final int MENU_VIEWPORT_WIDTH = 800, MENU_VIEWPORT_HEIGHT =
+	// 480;
 
 	protected final GravityPangolinGame game;
 	protected final PangolinWorld pangolinWorld;
@@ -40,13 +40,15 @@ public abstract class AbstractScreen2 implements Screen {
 
 	protected int width;
 	protected int height;
-	
+
 	public AbstractScreen2(GravityPangolinGame game, PangolinWorld pangolinWorld) {
 		this.game = game;
 		this.pangolinWorld = pangolinWorld;
-		width = (isGameScreen() ? GAME_VIEWPORT_WIDTH : MENU_VIEWPORT_WIDTH);
-		height = (isGameScreen() ? GAME_VIEWPORT_HEIGHT
-				: MENU_VIEWPORT_HEIGHT);
+		width = GAME_VIEWPORT_WIDTH;
+		height = GAME_VIEWPORT_HEIGHT;
+		// width = (isGameScreen() ? GAME_VIEWPORT_WIDTH : MENU_VIEWPORT_WIDTH);
+		// height = (isGameScreen() ? GAME_VIEWPORT_HEIGHT :
+		// MENU_VIEWPORT_HEIGHT);
 		this.stage = new Stage(width, height, true);
 	}
 
@@ -67,20 +69,12 @@ public abstract class AbstractScreen2 implements Screen {
 		return font;
 	}
 
-//	public SpriteBatch getBatch() {
-//		if (batch == null) {
-//			batch = new SpriteBatch();
-//		}
-//		return batch;
-//	}
-
-	public TextureAtlas getAtlas() {
-		if (atlas == null) {
-			atlas = new TextureAtlas(
-					Gdx.files.internal("image-atlases/pages.atlas"));
-		}
-		return atlas;
-	}
+	// public SpriteBatch getBatch() {
+	// if (batch == null) {
+	// batch = new SpriteBatch();
+	// }
+	// return batch;
+	// }
 
 	protected Skin getSkin() {
 		if (skin == null) {
@@ -94,9 +88,6 @@ public abstract class AbstractScreen2 implements Screen {
 		if (table == null) {
 			table = new Table(getSkin());
 			table.setFillParent(true);
-//			if (Tyrian.DEV_MODE) {
-//				table.debug();
-//			}
 			stage.addActor(table);
 		}
 		return table;
@@ -114,8 +105,7 @@ public abstract class AbstractScreen2 implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		Gdx.app.log(GravityPangolinGame.LOG, "Resizing screen: " + getName() + " to: "
-				+ width + " x " + height);
+		Gdx.app.log(GravityPangolinGame.LOG, "Resizing screen: " + getName() + " to: " + width + " x " + height);
 	}
 
 	@Override
@@ -133,7 +123,7 @@ public abstract class AbstractScreen2 implements Screen {
 
 		// draw the actors
 		stage.draw();
-		drawDebugView();
+//		drawDebugView();
 
 		// draw the table debug lines
 		Table.drawDebug(stage);
@@ -141,19 +131,38 @@ public abstract class AbstractScreen2 implements Screen {
 
 	private void drawDebugView() {
 		ShapeRenderer debugRenderer = new ShapeRenderer();
-		
-		debugRenderer.setProjectionMatrix(stage.getCamera().combined);
-		debugRenderer.begin(ShapeType.Rectangle);
 
-		debugRenderer.setColor(new Color(0, 1, 0, 1));
-		
+		debugRenderer.setProjectionMatrix(stage.getCamera().combined);
+
+		if (pangolinWorld == null)
+			return;
+
+		Pangolin pangolin = pangolinWorld.getPangolin();
+
 		for (Actor actor : stage.getActors()) {
 			if (!(actor instanceof Entity))
-				continue ;
-			EntityGraphic entityGraphic = ((Entity)actor).getEntityGraphic();
-			debugRenderer.rect(entityGraphic.getX(), entityGraphic.getY(), entityGraphic.getWidth(), entityGraphic.getHeight());
+				continue;
+
+			Rectangle bounds = ((Entity) actor).getBoundingRectangle();
+
+			// Draws actors
+			debugRenderer.begin(ShapeType.Rectangle);
+			debugRenderer.setColor(new Color(0, 1, 0, 1));
+			debugRenderer.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+			debugRenderer.end();
+
+			// Draws collision points
+			debugRenderer.begin(ShapeType.Circle);
+			debugRenderer.setColor(new Color(1, 0, 0, 0));
+			debugRenderer.circle(bounds.getX(), bounds.getY(), 2.5F);
+			debugRenderer.setColor(new Color(25, 85, 26, 3));
+			debugRenderer.circle(bounds.getX(), bounds.getY() + bounds.getHeight(), 2.5F);
+			debugRenderer.circle(bounds.getX(), bounds.getY() - pangolin.getHeight(), 2.5F);
+			debugRenderer.setColor(new Color(1, 1, 0, 1));
+			debugRenderer.circle(bounds.getX() + bounds.getWidth(), bounds.getY(), 2.5F);
+			debugRenderer.circle(bounds.getX() - pangolin.getWidth(), bounds.getY(), 2.5F);
+			debugRenderer.end();
 		}
-		debugRenderer.end();
 	}
 
 	@Override
@@ -189,8 +198,8 @@ public abstract class AbstractScreen2 implements Screen {
 		// as the collaborators are lazily loaded, they may be null
 		if (font != null)
 			font.dispose();
-//		if (batch != null)
-//			batch.dispose();
+		// if (batch != null)
+		// batch.dispose();
 		if (skin != null)
 			skin.dispose();
 		if (atlas != null)
@@ -211,12 +220,12 @@ public abstract class AbstractScreen2 implements Screen {
 		float sizeX = pangolinWorld.getSizeX();
 		return width / sizeX;
 	}
-	
+
 	public float getPpuY() {
 		if (pangolinWorld == null)
 			return 1;
 		float sizeY = pangolinWorld.getSizeY();
 		return height / sizeY;
 	}
-	
+
 }

@@ -1,5 +1,6 @@
 package fr.gravity.pangolin;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.entity.Entity;
@@ -16,7 +17,7 @@ public class CollisionHelper {
 	public static boolean collidesLeft(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getX(), entity2.getX(), entity2.getY() + entity2.getBoundingRectangle().getWidth()))
+		if (Numbers.between(entity1.getX(), entity2.getX(), entity2.getX() + entity2.getBoundingRectangle().getWidth()))
 			return true;
 		return false;
 	}
@@ -45,11 +46,8 @@ public class CollisionHelper {
 	public static boolean collidesUp(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getY() + entity1.getHeight(), entity2.getY(), entity2.getY() + entity2.getHeight())) {
-			System.out.println("COLLIDES UP: " + entity1.getY() + entity1.getBoundingRectangle().getHeight() + " BETWEEN " + entity2.getY() + " AND "
-					+ (entity2.getY() + entity2.getBoundingRectangle().getHeight()));
+		if (Numbers.between(entity1.getY() + entity1.getHeight(), entity2.getY(), entity2.getY() + entity2.getHeight()))
 			return true;
-		}
 		return false;
 	}
 
@@ -62,11 +60,8 @@ public class CollisionHelper {
 	public static boolean collidesDown(Entity entity1, Entity entity2) {
 		if (entity1 == null || entity2 == null)
 			return false;
-		if (Numbers.between(entity1.getY(), entity2.getY(), entity2.getY() + entity2.getHeight())) {
-			System.out.println("COLLIDES DOWN: " + entity1.getY() + " BETWEEN " + entity2.getY() + " AND "
-					+ (entity2.getY() + entity2.getBoundingRectangle().getHeight()));
+		if (Numbers.between(entity1.getY(), entity2.getY(), entity2.getY() + entity2.getHeight()))
 			return true;
-		}
 		return false;
 	}
 
@@ -78,22 +73,22 @@ public class CollisionHelper {
 	 *         returns null.
 	 */
 	public static Entity collidesAny(Entity entity, Array<Entity> entities) {
-		float entityPosX = entity.getX();
-		float entityPosY = entity.getY();
-		float entityWidth = entity.getWidth();
-		float entityHeight = entity.getHeight();
+		Rectangle entityBounds = entity.getBoundingRectangle();
+		float entityPosX = entityBounds.x;
+		float entityPosY = entityBounds.y;
+		float entityWidth = entityBounds.width;
+		float entityHeight = entityBounds.height;
 
 		for (Entity any : entities) {
-			float blockPosX = any.getX();
-			float blockPosY = any.getY();
-			float blockWidth = any.getWidth();
-			float blockHeight = any.getHeight();
+			Rectangle blockBounds = any.getBoundingRectangle();
+			float blockPosX = blockBounds.getX();
+			float blockPosY = blockBounds.getY();
+			float blockWidth = blockBounds.getWidth();
+			float blockHeight = blockBounds.getHeight();
 
 			if (Numbers.betweenStrict(entityPosX, blockPosX - entityWidth, blockPosX + blockWidth)) {
-				System.out.println("X --> " + entityPosX + " BETWEEN " + (blockPosX - entityWidth) + " AND " + (blockPosX + blockWidth));
-				System.out.println("Y --> " + entityPosY + " BETWEEN " + (blockPosY - entityHeight) + " AND " + (blockPosY + blockHeight));
-				if (Numbers.betweenStrict(entityPosY, blockPosY - blockHeight, blockPosY + entityHeight)) {
-					return any;
+				if (Numbers.betweenStrict(entityPosY, blockPosY - entityHeight, blockPosY + blockHeight)) {
+					return any.collides();
 				}
 			}
 		}

@@ -12,6 +12,8 @@ public abstract class Entity extends Actor {
 	protected EntityGraphic entityGraphic;
 
 	public Rectangle getBoundingRectangle() {
+//		Rectangle r = new Rectangle(entityGraphic.getX(), entityGraphic.getY(), entityGraphic.getWidth(), entityGraphic.getHeight());
+//		return r;
 		return entityGraphic.getBoundingRectangle();
 	}
 
@@ -57,6 +59,7 @@ public abstract class Entity extends Actor {
 		entityGraphic.draw(spriteBatch, alphaModulation);
 	}
 	
+	public abstract Entity collides();
 //	public abstract void draw(SpriteBatch spriteBatch);
 
 	/* TOUCH EVENTS */

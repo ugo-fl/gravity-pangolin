@@ -32,27 +32,27 @@ public class GravityChangerBlock extends Entity {
 	public Rectangle getBoundingRectangle() {
 		final float width = entityGraphic.getWidth() / 5;
 		final float height = entityGraphic.getHeight() / 5;
-		final float x = getX() + (entityGraphic.getWidth() / 2) - (width / 2);
-		final float y = getY() + (entityGraphic.getHeight() / 2) - (height / 2);
-		
+		final float x = entityGraphic.getX() + (entityGraphic.getWidth() / 2) - (width / 2);
+		final float y = entityGraphic.getY() + (entityGraphic.getHeight() / 2) - (height / 2);
+
 		return new Rectangle(x, y, width, height);
 	}
-	
-//	@Override
-//	public void draw(SpriteBatch spriteBatch) {
-//		entityGraphic.draw(spriteBatch);
-//	}
+
+	// @Override
+	// public void draw(SpriteBatch spriteBatch) {
+	// entityGraphic.draw(spriteBatch);
+	// }
 
 	@Override
 	public void touchDown() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void touchUp() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class GravityChangerBlock extends Entity {
 	}
 
 	@Override
-	public Actor hit(float x, float y) {
+	public Entity collides() {
 		Date date = new Date();
 		if (date.getTime() - timestamp < DEACTIVATED_PERIOD)
 			return this;
@@ -79,4 +79,8 @@ public class GravityChangerBlock extends Entity {
 		return this;
 	}
 
+	@Override
+	public Actor hit(float x, float y) {
+		return null;
+	}
 }

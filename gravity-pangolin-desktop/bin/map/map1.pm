@@ -1,18 +1,18 @@
 20;14
                     
-        XXXXXXXXXXXX
-                  XX
-XXXXXXXXX          X
+                    
+         XXXXXXXXXXX
+  XXXXX            X
 X                  X
 X                  X
-X      O           X
+X      O   X       X
 X    S             X
 X                  X
 X                  X
 X                  X
 X             F    X
-XXXXXXXXXX    X    X
-  XXXX           X X
+XXXXXXXXXXX   X    X
+                 X X
 X = block
 S = start
 F = finish

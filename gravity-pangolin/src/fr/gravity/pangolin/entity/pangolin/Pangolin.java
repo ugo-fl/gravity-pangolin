@@ -16,7 +16,7 @@ import fr.gravity.pangolin.entity.graphic.WalkingPangolinGraphic;
 public class Pangolin extends Entity {
 
 	public static final float SPEED = 150; // unit per second
-	public static final float FALLING_SPEED = SPEED * 1.5F; // unit per second
+	public static final float FALLING_SPEED = SPEED * 2F; // unit per second
 	public static final float JUMP_VELOCITY = 4f;
 
 	private Controller controller;
@@ -51,7 +51,7 @@ public class Pangolin extends Entity {
 
 	/* POSITION */
 
-	private Vector2 previousPosition = new Vector2();
+//	private Vector2 previousPosition = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private Vector2 velocity = new Vector2();
 	private boolean landed;
@@ -74,13 +74,13 @@ public class Pangolin extends Entity {
 	}
 
 	public void update(float delta) {
-		previousPosition = new Vector2(getX(), getY());
+//		previousPosition = new Vector2(getX(), getY());
 		this.delta = delta;
 		translate();
 	}
 
 	public void update() {
-		previousPosition = new Vector2(getX(), getY());
+//		previousPosition = new Vector2(getX(), getY());
 		translate();
 	}
 
@@ -101,69 +101,25 @@ public class Pangolin extends Entity {
 		getVelocity().y = 0;
 	}
 
-	// public void goLeft() {
-	// pangolinState = PangolinState.WALKING;
-	// direction = Direction.LEFT;
-	// velocity.x = -SPEED;
-	// }
-	//
-	// public void goRight() {
-	// pangolinState = PangolinState.WALKING;
-	// direction = Direction.RIGHT;
-	// velocity.x = SPEED;
-	// }
-	//
-	// public void goUp() {
-	// pangolinState = PangolinState.WALKING;
-	// direction = Direction.UP;
-	// velocity.y = -SPEED;
-	// }
-	//
-	// public void goDown() {
-	// pangolinState = PangolinState.WALKING;
-	// direction = Direction.DOWN;
-	// velocity.y = SPEED;
-	// }
-
 	public void go(Direction direction) {
 		if (landed)
 			pangolinState = PangolinState.WALKING;
 		this.direction = direction;
-		if (direction == Direction.LEFT || direction == Direction.RIGHT)
-			velocity.x = direction == Direction.LEFT ? -SPEED : SPEED;
-		else if (direction == Direction.UP || direction == Direction.DOWN)
-			velocity.y = direction == Direction.UP ? -SPEED : SPEED;
+		move(direction);
 	}
 
 	public void fall(Direction direction) {
 		if (!landed)
 			pangolinState = PangolinState.FALLING;
-		go(direction);
+		move(direction);
 	}
 
-//	public void fallUp() {
-//		if (!landed)
-//			pangolinState = PangolinState.FALLING;
-//		velocity.y = -FALLING_SPEED;
-//	}
-//
-//	public void fallDown() {
-//		if (!landed)
-//			pangolinState = PangolinState.FALLING;
-//		velocity.y = FALLING_SPEED;
-//	}
-//
-//	public void fallLeft() {
-//		if (!landed)
-//			pangolinState = PangolinState.FALLING;
-//		velocity.x = -FALLING_SPEED;
-//	}
-//
-//	public void fallRight() {
-//		if (!landed)
-//			pangolinState = PangolinState.FALLING;
-//		velocity.x = FALLING_SPEED;
-//	}
+	private void move(Direction direction) {
+		if (direction == Direction.LEFT || direction == Direction.RIGHT)
+			velocity.x = direction == Direction.LEFT ? -SPEED : SPEED;
+		else if (direction == Direction.UP || direction == Direction.DOWN)
+			velocity.y = direction == Direction.UP ? -SPEED : SPEED;
+	}
 
 	public void land(Direction gravitySide) {
 		landed = true;
@@ -172,16 +128,10 @@ public class Pangolin extends Entity {
 				direction = Direction.UP;
 	}
 
-	public void rollBackPosition() {
-		setX(previousPosition.x);
-		setY(previousPosition.y);
-	}
-
-	// @Override
-	// public void draw(SpriteBatch spriteBatch) {
-	// entityGraphic = pangolinState.pangolinGraphic;
-	// entityGraphic.draw(spriteBatch);
-	// }
+//	public void rollBackPosition() {
+//		setX(previousPosition.x);
+//		setY(previousPosition.y);
+//	}
 
 	/** TOUCH EVENTS **/
 
@@ -226,6 +176,12 @@ public class Pangolin extends Entity {
 	}
 
 	@Override
+	public Entity collides() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public Actor hit(float x, float y) {
 		// TODO Auto-generated method stub
 		return null;
@@ -234,15 +190,13 @@ public class Pangolin extends Entity {
 	@Override
 	public boolean keyDown(int keycode) {
 		controller.keyDown(keycode);
-		System.out.println("DOWN KEYCODE/ " + keycode);
 		return true;
 	}
-	
+
 	@Override
 	public boolean keyUp(int keycode) {
 		controller.keyUp(keycode);
-		System.out.println("UP KEYCODE/ " + keycode);
 		return true;
 	}
-	
+
 }

@@ -41,6 +41,11 @@ public class ExitBlock extends Entity {
 
 	@Override
 	public Actor hit(float x, float y) {
+		return null;
+	}
+
+	@Override
+	public Entity collides() {
 		GravityPangolinGame.getInstance().youWin();
 		return this;
 	}

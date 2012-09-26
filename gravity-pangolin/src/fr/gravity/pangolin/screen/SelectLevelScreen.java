@@ -15,6 +15,9 @@ public class SelectLevelScreen extends AbstractScreen2 {
 	private static final int MAX_ROW = 5;
 	private static final int MAX_COL = 5;
 
+	private static final int BUTTON_WIDTH = 40;
+	private static final int BUTTON_HEIGHT = 40;
+	
 	public SelectLevelScreen(GravityPangolinGame game) {
 		super(game, null);
 	}
@@ -45,7 +48,7 @@ public class SelectLevelScreen extends AbstractScreen2 {
 						}
 					});
 				}
-				table.add(textButton).size(75, 75).uniform().fill();
+				table.add(textButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).uniform().fill();
 			}
 			table.row();
 		}

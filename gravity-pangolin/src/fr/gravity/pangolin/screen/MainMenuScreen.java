@@ -97,8 +97,8 @@ public class MainMenuScreen extends AbstractScreen2 {
 
 	private void loadButtons() {
 		startButton = new TextButton("Go !", getSkin());
-		startButton.x = 150;
-		startButton.y = 300;
+		startButton.x = 100;
+		startButton.y = 200;
 
 		startButton.setClickListener(new ClickListener() {
 			@Override

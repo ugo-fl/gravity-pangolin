@@ -37,4 +37,10 @@ public class Button extends Entity {
 		return null;
 	}
 
+	@Override
+	public Entity collides() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

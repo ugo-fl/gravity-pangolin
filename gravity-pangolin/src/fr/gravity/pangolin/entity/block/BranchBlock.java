@@ -34,8 +34,13 @@ public class BranchBlock extends Entity {
 	}
 
 	@Override
-	public Actor hit(float x, float y) {
+	public Entity collides() {
 		return this;
+	}
+	
+	@Override
+	public Actor hit(float x, float y) {
+		return null;
 	}
 
 //	@Override
