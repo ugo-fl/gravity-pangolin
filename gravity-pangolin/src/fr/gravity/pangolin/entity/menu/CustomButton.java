@@ -9,23 +9,4 @@ public class CustomButton extends TextButton {
 		super(skin);
 	}
 	
-	@Override
-	public boolean touchDown (float x, float y, int pointer) {
-		parent.touchDown(x, y, pointer);
-		System.out.println("TOUCHED DOWN CHILD");
-		return false;
-	}
-
-	@Override
-	public void touchUp (float x, float y, int pointer) {
-		parent.touchUp(x, y, pointer);
-		System.out.println("TOUCHED UP CHILD");
-	}
-
-	@Override
-	public void touchDragged (float x, float y, int pointer) {
-		parent.touchDragged(x, y, pointer);
-		System.out.println("TOUCHED DRAGGED CHILD");
-	}
-
 }

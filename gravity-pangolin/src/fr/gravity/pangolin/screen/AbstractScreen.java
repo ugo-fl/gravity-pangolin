@@ -76,7 +76,7 @@ public abstract class AbstractScreen implements Screen {
 	// return batch;
 	// }
 
-	protected Skin getSkin() {
+	public Skin getSkin() {
 		if (skin == null) {
 			FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
 			skin = new Skin(skinFile);

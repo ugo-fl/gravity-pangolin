@@ -14,4 +14,11 @@ public class Numbers {
 		return false;
 	}
 	
+	public static float limit(float n, float maximum, float minimum) {
+		if (n > maximum)
+			return maximum;
+		else if (n < minimum)
+			return minimum;
+		return n;
+	}
 }
