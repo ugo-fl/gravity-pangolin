@@ -46,46 +46,6 @@ public class Controller {
 		keys.get(keys.put(keycode, false));
 	}
 
-	// public void leftPressed() {
-	// keys.get(keys.put(Keys.LEFT, true));
-	// }
-	//
-	// public void rightPressed() {
-	// keys.get(keys.put(Keys.RIGHT, true));
-	// }
-	//
-	// public void upPressed() {
-	// keys.get(keys.put(Keys.UP, true));
-	// }
-	//
-	// public void downPressed() {
-	// keys.get(keys.put(Keys.DOWN, true));
-	// }
-	//
-	// public void gravityChangePressed() {
-	// keys.get(keys.put(Keys.SPACE, true));
-	// }
-	//
-	// public void leftReleased() {
-	// keys.get(keys.put(Keys.LEFT, false));
-	// }
-	//
-	// public void rightReleased() {
-	// keys.get(keys.put(Keys.RIGHT, false));
-	// }
-	//
-	// public void upReleased() {
-	// keys.get(keys.put(Keys.UP, false));
-	// }
-	//
-	// public void downReleased() {
-	// keys.get(keys.put(Keys.DOWN, false));
-	// }
-	//
-	// public void gravityChangeReleased() {
-	// keys.get(keys.put(Keys.SPACE, false));
-	// }
-
 	/** The main update method **/
 	public void update(float delta) {
 		processInput();
@@ -108,21 +68,17 @@ public class Controller {
 		if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
 			pangolin.getVelocity().x = GET_ME_OUT_RATE;
 			isBlocked = true;
-			System.out.println("BLOCKED LEFT !");
 		} else if (CollisionHelper.collidesRight(pangolin, collidedEntity)) {
 			pangolin.getVelocity().x = -GET_ME_OUT_RATE;
 			isBlocked = true;
-			System.out.println("BLOCKED RIGHT !");
 		}
 
 		if (CollisionHelper.collidesUp(pangolin, collidedEntity)) {
 			pangolin.getVelocity().y = GET_ME_OUT_RATE;
 			isBlocked = true;
-			System.out.println("BLOCKED UP !");
 		} else if (CollisionHelper.collidesDown(pangolin, collidedEntity)) {
 			pangolin.getVelocity().y = -GET_ME_OUT_RATE;
 			isBlocked = true;
-			System.out.println("BLOCKED DOWN !");
 		}
 		return isBlocked;
 	}
@@ -147,12 +103,14 @@ public class Controller {
 			if (collidedEntity != null)
 				if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
+					positionCpy.x = collidedEntity.getX() + collidedEntity.getWidth();
 //					pangolin.setPosition(new Vector2(pangolin.x, collidedEntity.y));
 					if (gravityDirection == Direction.LEFT) {
 						pangolin.setLanded(true);
 					}
 				} else if (CollisionHelper.collidesRight(pangolin, collidedEntity)) {
 					pangolin.getVelocity().set(0, pangolin.getVelocity().y);
+					positionCpy.x = collidedEntity.getX() - pangolin.getWidth();
 //					pangolin.setPosition(new Vector2(pangolin.x + collidedEntity.width, collidedEntity.y));
 					if (gravityDirection == Direction.RIGHT)
 						pangolin.land(Direction.RIGHT);

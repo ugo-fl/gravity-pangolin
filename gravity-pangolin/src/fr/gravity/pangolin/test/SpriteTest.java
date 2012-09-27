@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import fr.gravity.pangolin.entity.EntityGraphic;
-import fr.gravity.pangolin.screen.AbstractScreen;
-import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.util.SpriteUtil;
 
 public class SpriteTest extends EntityGraphic { 

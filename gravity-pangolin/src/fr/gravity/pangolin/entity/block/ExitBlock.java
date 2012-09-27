@@ -10,12 +10,12 @@ import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.ExitBlockGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
+import fr.gravity.pangolin.util.Waiter;
 
 public class ExitBlock extends Entity {
 
-	// public enum ExitSide {
-	// EXIT_DOWN, EXIT_LEFT, EXIT_UP, EXIT_RIGHT
-	// }
+	private static final int STOP_PERIOD = 1000;
+	private Waiter waiter = new Waiter(STOP_PERIOD);
 
 	private PangolinWorld pangolinWorld;
 	private Pangolin pangolin;
@@ -36,7 +36,6 @@ public class ExitBlock extends Entity {
 	@Override
 	public void touchDown() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -58,10 +57,19 @@ public class ExitBlock extends Entity {
 	public Entity collides() {
 		if (!pangolin.isLanded())
 			return null;
+		
+		if (!waiter.isStarted()) {
+			pangolin.stop();
+			waiter.start();
+			return null;
+		}
+		if (!waiter.waitForIt())
+			return null;
+		
 		Direction gravityDirection = pangolinWorld.getGravity().getDirection();
-//		if (CollisionHelper.collides(pangolin, this, direction))
+		// if (CollisionHelper.collides(pangolin, this, direction))
 		if (gravityDirection == direction)
 			GravityPangolinGame.getInstance().youWin();
-		return this;
+		return null;
 	}
 }

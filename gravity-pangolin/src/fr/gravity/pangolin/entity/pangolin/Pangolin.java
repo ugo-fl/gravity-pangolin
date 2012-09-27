@@ -25,7 +25,7 @@ public class Pangolin extends Entity {
 	/* DIRECTION */
 
 	public enum Direction {
-		LEFT, RIGHT, UP, DOWN
+		LEFT, UP, RIGHT, DOWN
 	}
 
 	private Direction direction = Direction.RIGHT;
@@ -51,10 +51,11 @@ public class Pangolin extends Entity {
 
 	/* POSITION */
 
-//	private Vector2 previousPosition = new Vector2();
+	// private Vector2 previousPosition = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private Vector2 velocity = new Vector2();
-	private boolean landed;
+	private boolean landed = false;
+	private boolean stopped = false;
 
 	public Pangolin(float x, float y) {
 		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x, y));
@@ -74,13 +75,15 @@ public class Pangolin extends Entity {
 	}
 
 	public void update(float delta) {
-//		previousPosition = new Vector2(getX(), getY());
+		// previousPosition = new Vector2(getX(), getY());
 		this.delta = delta;
+		if (stopped)
+			idle();
 		translate();
 	}
 
 	public void update() {
-//		previousPosition = new Vector2(getX(), getY());
+		// previousPosition = new Vector2(getX(), getY());
 		translate();
 	}
 
@@ -128,10 +131,22 @@ public class Pangolin extends Entity {
 				direction = Direction.UP;
 	}
 
-//	public void rollBackPosition() {
-//		setX(previousPosition.x);
-//		setY(previousPosition.y);
-//	}
+	public void stop() {
+		stopped = true;
+	}
+
+	public boolean isStopped() {
+		return stopped;
+	}
+
+	public void release() {
+		stopped = false;
+	}
+
+	// public void rollBackPosition() {
+	// setX(previousPosition.x);
+	// setY(previousPosition.y);
+	// }
 
 	/** TOUCH EVENTS **/
 
@@ -180,7 +195,7 @@ public class Pangolin extends Entity {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public Actor hit(float x, float y) {
 		// TODO Auto-generated method stub

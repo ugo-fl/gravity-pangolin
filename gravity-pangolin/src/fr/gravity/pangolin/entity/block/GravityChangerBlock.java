@@ -1,7 +1,5 @@
 package fr.gravity.pangolin.entity.block;
 
-import java.util.Date;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,14 +8,16 @@ import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.GravityChangerBlockGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
+import fr.gravity.pangolin.util.Waiter;
 
 public class GravityChangerBlock extends Entity {
 
-	private static final long DEACTIVATED_PERIOD = 1000;
-
+	private static final int DEACTIVATED_PERIOD = 1000;
+	private Waiter waiter = new Waiter(DEACTIVATED_PERIOD);
+	
 	private Gravity gravity;
 
-	private long timestamp;
+//	private long timestamp;
 
 	public GravityChangerBlock(float x, float y, Gravity gravity) {
 		this.gravity = gravity;
@@ -38,21 +38,14 @@ public class GravityChangerBlock extends Entity {
 		return new Rectangle(x, y, width, height);
 	}
 
-	// @Override
-	// public void draw(SpriteBatch spriteBatch) {
-	// entityGraphic.draw(spriteBatch);
-	// }
-
 	@Override
 	public void touchDown() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void touchUp() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -62,19 +55,15 @@ public class GravityChangerBlock extends Entity {
 
 	@Override
 	public Entity collides() {
-		Date date = new Date();
-		if (date.getTime() - timestamp < DEACTIVATED_PERIOD)
+		if (!waiter.waitForIt())
 			return null;
-		timestamp = date.getTime();
-		Direction currentGravityDirection = gravity.getDirection();
-		Direction newGravityDirection = Direction.DOWN;
+		waiter.start();
 
-		if (currentGravityDirection == Direction.UP)
-			newGravityDirection = Direction.RIGHT;
-		else if (currentGravityDirection == Direction.DOWN)
-			newGravityDirection = Direction.LEFT;
-		else if (currentGravityDirection == Direction.LEFT)
-			newGravityDirection = Direction.UP;
+		Direction[] directionValues = Direction.values();
+		Direction currentGravityDirection = gravity.getDirection();
+		Direction newGravityDirection;
+		int ordinal = currentGravityDirection.ordinal() + 1;
+		newGravityDirection = directionValues[ordinal % directionValues.length];
 		gravity.setDirection(newGravityDirection);
 		return null;
 	}

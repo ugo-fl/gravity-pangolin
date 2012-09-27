@@ -9,7 +9,7 @@ import fr.gravity.pangolin.PangolinWorldRenderer;
 import fr.gravity.pangolin.TextureLoader;
 import fr.gravity.pangolin.TextureLoader.TextureId;
 
-public class GravityPangolinScreen extends AbstractScreen2 {
+public class GravityPangolinScreen extends AbstractScreen {
 
 	private PangolinWorld pangolinWorld;
 	private PangolinWorldRenderer worldRenderer;

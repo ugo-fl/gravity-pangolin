@@ -2,7 +2,7 @@ package fr.gravity.pangolin.entity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import fr.gravity.pangolin.screen.AbstractScreen2;
+import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.util.GameUtil;
 
 public abstract class EntityGraphic extends Sprite {

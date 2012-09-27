@@ -15,7 +15,7 @@ import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.exception.InvalidMapException;
-import fr.gravity.pangolin.screen.AbstractScreen2;
+import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.util.GameUtil;
 
 public class PangolinWorld {
@@ -92,7 +92,7 @@ public class PangolinWorld {
 	 */
 	public void init(Stage stage) {
 		// Checks if the screen is set first
-		AbstractScreen2 screen = GameUtil.getScreen();
+		AbstractScreen screen = GameUtil.getScreen();
 		if (screen == null)
 			throw new NullPointerException("The screen has not been initiated yet.");
 

@@ -57,11 +57,11 @@ public class GravityPangolinGame extends Game {
 	}
 
 	public void gameOver() {
-		setScreen(new GameOverScreen());
+		setScreen(new GameOverScreen(null, null));
 	}
 
 	public void youWin() {
-		setScreen(new YouWinScreen());
+		setScreen(new YouWinScreen(null, null));
 	}
 
 	public void showSelectLevelScreen() {

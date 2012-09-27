@@ -23,7 +23,7 @@ import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.tween.SpriteAccessor;
 import fr.gravity.pangolin.util.SpriteUtil;
 
-public class MainMenuScreen extends AbstractScreen2 {
+public class MainMenuScreen extends AbstractScreen {
 
 	// public static final float MAIN_MENU_SCR_WIDTH = 100;
 	// public static final float MAIN_MENU_SCR_HEIGHT = MAIN_MENU_SCR_WIDTH *
