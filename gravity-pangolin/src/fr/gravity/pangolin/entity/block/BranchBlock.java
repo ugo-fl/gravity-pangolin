@@ -1,6 +1,5 @@
 package fr.gravity.pangolin.entity.block;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
@@ -11,6 +10,7 @@ public class BranchBlock extends Entity {
 
 	public BranchBlock(float x, float y, BranchFramePosition branchFramePos) {
 		entityGraphic = new BranchBlockGraphic(x, y, branchFramePos);
+		addActor(entityGraphic);
 	}
 
 //	@Override
@@ -28,10 +28,10 @@ public class BranchBlock extends Entity {
 		
 	}
 
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		entityGraphic.draw(batch);
-	}
+//	@Override
+//	public void draw(SpriteBatch batch, float parentAlpha) {
+//		entityGraphic.draw(batch);
+//	}
 
 	@Override
 	public Entity collides() {

@@ -4,10 +4,10 @@ import java.util.Date;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import fr.gravity.pangolin.GravityPangolinGame;
-import fr.gravity.pangolin.PangolinWorld;
-import fr.gravity.pangolin.TextureLoader;
-import fr.gravity.pangolin.TextureLoader.TextureId;
+import fr.gravity.pangolin.game.GravityPangolinGame;
+import fr.gravity.pangolin.helper.TextureHelper;
+import fr.gravity.pangolin.helper.TextureHelper.TextureId;
+import fr.gravity.pangolin.world.PangolinWorld;
 
 public class YouWinScreen extends AbstractScreen {
 
@@ -28,16 +28,14 @@ public class YouWinScreen extends AbstractScreen {
 	}
 
 	private void loadBackgroundSprite() {
-		background = new Image(TextureLoader.getInstance().getSingleSprite(TextureId.YOU_WIN));
+		background = new Image(TextureHelper.getInstance().getSingleSprite(TextureId.YOU_WIN));
 		stage.addActor(background);
-//		background.setSize(width, height);
-//		background.setPosition(-width / 2, -height / 2);
 	}
 
 	@Override
 	public void render(float delta) {
 		super.render(delta);
 		if (new Date().getTime() - timestamp > DISPLAY_PERIOD)
-			GravityPangolinGame.getInstance().restart();
+			GravityPangolinGame.getInstance().nextStage();
 	}
 }

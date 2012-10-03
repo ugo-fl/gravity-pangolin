@@ -1,6 +1,7 @@
 package fr.gravity.pangolin.client;
 
-import fr.gravity.pangolin.GravityPangolinGame;
+import fr.gravity.pangolin.game.GravityPangolinGame;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;

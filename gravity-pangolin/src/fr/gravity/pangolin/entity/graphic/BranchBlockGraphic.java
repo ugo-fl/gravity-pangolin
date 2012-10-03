@@ -1,11 +1,12 @@
 package fr.gravity.pangolin.entity.graphic;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.TextureLoader;
-import fr.gravity.pangolin.TextureLoader.TextureId;
 import fr.gravity.pangolin.entity.EntityGraphic;
+import fr.gravity.pangolin.helper.TextureHelper;
+import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 
 public class BranchBlockGraphic extends EntityGraphic {
 
@@ -18,10 +19,15 @@ public class BranchBlockGraphic extends EntityGraphic {
 	}
 
 	private Sprite getSprite(BranchFramePosition branchFramePosition) {
-		TextureRegion[] textureRegions = TextureLoader.getInstance().getTextureRegions(TextureId.BRANCH);
+		TextureRegion[] textureRegions = TextureHelper.getInstance().getTextureRegions(TextureId.BRANCH);
 		return new Sprite(textureRegions[branchFramePosition.ordinal()]);
 	}
 
+	@Override
+	public void draw (SpriteBatch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+	}
+	
 	@Override
 	public void touchDown() {
 		// TODO Auto-generated method stub

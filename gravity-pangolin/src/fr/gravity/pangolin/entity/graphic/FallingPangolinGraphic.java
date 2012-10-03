@@ -3,9 +3,9 @@ package fr.gravity.pangolin.entity.graphic;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import fr.gravity.pangolin.TextureLoader;
-import fr.gravity.pangolin.TextureLoader.TextureId;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
+import fr.gravity.pangolin.helper.TextureHelper;
+import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 
 public class FallingPangolinGraphic extends PangolinGraphic {
 
@@ -14,11 +14,11 @@ public class FallingPangolinGraphic extends PangolinGraphic {
 	public FallingPangolinGraphic(Pangolin pangolin, float x, float y) {
 		super(pangolin, x, y);
 		loadAnimation();
-		set(getFrame(stateTime));
+		setRegion(getFrame(stateTime));
 	}
 
 	private void loadAnimation() {
-		animation = new Animation(0.08f, TextureLoader.getInstance()
+		animation = new Animation(0.08f, TextureHelper.getInstance()
 				.getTextureRegions(TextureId.PANGOLIN_BALLMODE));
 	}
 

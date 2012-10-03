@@ -7,7 +7,7 @@ public class IdlePangolinGraphic extends PangolinGraphic {
 
 	public IdlePangolinGraphic(Pangolin pangolin, float x, float y) {
 		super(pangolin, x, y);
-		set(getFrame(stateTime));
+		setRegion(getFrame(stateTime));
 	}
 
 	@Override

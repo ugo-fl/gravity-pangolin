@@ -1,11 +1,12 @@
 package fr.gravity.pangolin.entity;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.util.GameUtil;
 
-public abstract class EntityGraphic extends Sprite {
+public abstract class EntityGraphic extends Image {
 
 	protected float stateTime = 0;
 
@@ -16,33 +17,41 @@ public abstract class EntityGraphic extends Sprite {
 	 * @param x
 	 * @param y
 	 */
-	public void set(Sprite sprite, float x, float y) {
-		set(sprite);
+	public void set(TextureRegion region, float x, float y) {
+		setRegion(region);
+//		set(sprite);
 		setPosition(x, y);
 	}
 
-	@Override
-	public void set(Sprite sprite) {
+	public Rectangle getBoundingRectangle() {
+		return new Rectangle(x, y, width, height);
+	}
+	
+//	@Override
+//	public void set(Sprite sprite) {
+/*
 		// Get a copy of the x and y values to reset it after setting the sprite
 		// (setting a sprite resets the coordinates)
 		float xCpy = getX();
 		float yCpy = getY();
-
+*/
 		// Set the sprite and its size
-		super.set(sprite);
+//		super.set(sprite);
 //		AbstractScreen2 screen = GameUtil.getScreen();
 //		setSize(Math.abs(sprite.getWidth()) / screen.getPpuX(),
 //				Math.abs(sprite.getHeight()) / screen.getPpuY());
 
+		/*
 		// Reset the coordinates
 		setX(xCpy);
 		setY(yCpy);
-	}
+		*/
+//	}
 
-	@Override
+//	@Override
 	public void setPosition(float x, float y) {
-		setX(GameUtil.projectCoordinateX(x));
-		setY(GameUtil.projectCoordinateY(y));
+		this.x = GameUtil.projectCoordinateX(x);
+		this.y = GameUtil.projectCoordinateY(y);
 	}
 
 	public void resetStateTime() {
@@ -60,4 +69,5 @@ public abstract class EntityGraphic extends Sprite {
 	public abstract void touchUp();
 	
 	public abstract void touchUpOut();
+
 }

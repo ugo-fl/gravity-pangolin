@@ -4,13 +4,10 @@
 
 
 --------- FIRST THINGS FIRST ----------
-- All pangolin sprite need to have the same size
+[DONE] All pangolin sprite need to have the same size
 --------- ////////////////// ----------
 
-[?] The Animations (ie. for Pangolin) need to be children classes of EntityAnimation (which needs to be implemented)
-		OR
-[?] Should I use Scene2D with Stages and Actors instead of Entities ? (http://www.netthreads.co.uk/2012/01/31/libgdx-example-of-using-scene2d-actions-and-event-handling/)
-
+[DONE] Should I use Scene2D with Stages and Actors instead of Entities ? (http://www.netthreads.co.uk/2012/01/31/libgdx-example-of-using-scene2d-actions-and-event-handling/)
 [DONE] Use the SpriteLoader everywhere it's needed
 [DONE] Set the texture for every sprite
 [DONE] Cannot put blocks on the map at first line

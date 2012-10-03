@@ -1,52 +1,45 @@
 package fr.gravity.pangolin.entity.block;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.FadeOut;
 
-import fr.gravity.pangolin.CollisionHelper;
-import fr.gravity.pangolin.GravityPangolinGame;
-import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.ExitBlockGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
-import fr.gravity.pangolin.util.Waiter;
+import fr.gravity.pangolin.game.CountDown;
+import fr.gravity.pangolin.game.GravityPangolinGame;
+import fr.gravity.pangolin.world.PangolinWorld;
 
 public class ExitBlock extends Entity {
 
 	private static final int STOP_PERIOD = 1000;
-	private Waiter waiter = new Waiter(STOP_PERIOD);
+	private CountDown countDown = new CountDown(STOP_PERIOD);
 
 	private PangolinWorld pangolinWorld;
-	private Pangolin pangolin;
-	private Direction direction;
+	private Direction direction = Direction.DOWN;
 
-	public ExitBlock(float x, float y, Direction direction) {
-		entityGraphic = new ExitBlockGraphic(x, y, direction);
-		this.direction = direction;
-		pangolinWorld = GravityPangolinGame.getInstance().getPangolinWorld();
-		pangolin = pangolinWorld.getPangolin();
+	public ExitBlock(PangolinWorld pangolinWorld) {
+		this.pangolinWorld = pangolinWorld;
 	}
 
-	// @Override
-	// public void draw(SpriteBatch spriteBatch) {
-	// entityGraphic.draw(spriteBatch);
-	// }
+	public void init(float x, float y) {
+		entityGraphic = new ExitBlockGraphic(x, y, direction);
+		addActor(entityGraphic);
+	}
 
 	@Override
 	public void touchDown() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void touchUp() {
-		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		entityGraphic.draw(batch);
-	}
+//	@Override
+//	public void draw(SpriteBatch batch, float parentAlpha) {
+//		entityGraphic.draw(batch);
+//	}
 
 	@Override
 	public Actor hit(float x, float y) {
@@ -55,21 +48,26 @@ public class ExitBlock extends Entity {
 
 	@Override
 	public Entity collides() {
-		if (!pangolin.isLanded())
+		Pangolin pangolin = pangolinWorld.getPangolin();
+		Direction gravityDirection = pangolinWorld.getGravity().getDirection();
+		if (gravityDirection != direction)
 			return null;
-		
-		if (!waiter.isStarted()) {
-			pangolin.stop();
-			waiter.start();
+
+		if (!countDown.isStarted()) {
+			pangolin.disableController();
+			countDown.start();
 			return null;
 		}
-		if (!waiter.waitForIt())
-			return null;
+		FadeOut fadeOutAction = FadeOut.$(2f);
+		pangolin.action(fadeOutAction);
+//		if (!countDown.waitForIt())
+//			return null;
 		
-		Direction gravityDirection = pangolinWorld.getGravity().getDirection();
-		// if (CollisionHelper.collides(pangolin, this, direction))
-		if (gravityDirection == direction)
-			GravityPangolinGame.getInstance().youWin();
+		GravityPangolinGame.getInstance().youWin();
 		return null;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 }

@@ -4,10 +4,10 @@ import java.util.Date;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import fr.gravity.pangolin.GravityPangolinGame;
-import fr.gravity.pangolin.PangolinWorld;
-import fr.gravity.pangolin.TextureLoader;
-import fr.gravity.pangolin.TextureLoader.TextureId;
+import fr.gravity.pangolin.game.GravityPangolinGame;
+import fr.gravity.pangolin.helper.TextureHelper;
+import fr.gravity.pangolin.helper.TextureHelper.TextureId;
+import fr.gravity.pangolin.world.PangolinWorld;
 
 public class GameOverScreen extends AbstractScreen {
 
@@ -27,7 +27,7 @@ public class GameOverScreen extends AbstractScreen {
 	}
 
 	private void loadBackgroundSprite() {
-		background = new Image(TextureLoader.getInstance().getSingleSprite(TextureId.GAME_OVER));
+		background = new Image(TextureHelper.getInstance().getSingleSprite(TextureId.GAME_OVER));
 		stage.addActor(background);
 		// background.setSize(width, height);
 		// background.setPosition(-width / 2, -height / 2);

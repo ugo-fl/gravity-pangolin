@@ -5,21 +5,20 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 
-import fr.gravity.pangolin.PangolinWorld;
-import fr.gravity.pangolin.TextureLoader;
-import fr.gravity.pangolin.TextureLoader.TextureId;
 import fr.gravity.pangolin.entity.EntityGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
+import fr.gravity.pangolin.helper.TextureHelper;
+import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 import fr.gravity.pangolin.util.SpriteUtil;
+import fr.gravity.pangolin.world.PangolinWorld;
 
 public abstract class PangolinGraphic extends EntityGraphic {
 
 	protected Pangolin pangolin;
 
-	private TextureRegion[] textureRegions = TextureLoader.getInstance()
+	private TextureRegion[] textureRegions = TextureHelper.getInstance()
 			.getTextureRegions(TextureId.PANGOLIN);
 	protected Animation animation = new Animation(0.25F, textureRegions);
 
@@ -28,7 +27,7 @@ public abstract class PangolinGraphic extends EntityGraphic {
 		set(getFrame(stateTime), x, y);
 	}
 
-	public Sprite getFrame(float stateTime) {
+	protected Sprite getFrame(float stateTime) {
 		Direction direction = PangolinWorld.getInstance().getGravity().getDirection();
 		if (animation != null) {
 			Sprite sprite = new Sprite(animation.getKeyFrame(stateTime, true));
@@ -54,14 +53,15 @@ public abstract class PangolinGraphic extends EntityGraphic {
 
 	protected void updateFrame() {
 		Sprite frame = getFrame(stateTime);
+		stateTime += Gdx.graphics.getDeltaTime();
 		if (frame != null)
-			set(frame);
+			setRegion(frame);
 	}
 
-	public void draw(SpriteBatch spriteBatch) {
-		stateTime += Gdx.graphics.getDeltaTime();
+	@Override
+	public void draw(SpriteBatch spriteBatch, float stateTime) {
 		process();
-		super.draw(spriteBatch);
+		super.draw(spriteBatch, stateTime);
 	}
 
 	/**

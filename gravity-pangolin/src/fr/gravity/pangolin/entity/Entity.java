@@ -3,44 +3,42 @@ package fr.gravity.pangolin.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
 import fr.gravity.pangolin.util.SpriteUtil;
 
-public abstract class Entity extends Actor {
+public abstract class Entity extends Group {
 
 	protected EntityGraphic entityGraphic;
 
 	public Rectangle getBoundingRectangle() {
-//		Rectangle r = new Rectangle(entityGraphic.getX(), entityGraphic.getY(), entityGraphic.getWidth(), entityGraphic.getHeight());
-//		return r;
 		return entityGraphic.getBoundingRectangle();
 	}
 
 	public float getX() {
-		return entityGraphic.getX();
+		return entityGraphic.x;
 	}
 
 	public void setX(float x) {
 		this.x = x;
-		entityGraphic.setX(x);
+		entityGraphic.x = x;
 	}
 
 	public float getY() {
-		return entityGraphic.getY();
+		return entityGraphic.y;
 	}
 
 	public void setY(float y) {
 		this.y = y;
-		entityGraphic.setY(y);
+		entityGraphic.y = y;
 	}
 
 	public float getWidth() {
-		return entityGraphic.getWidth();
+		return entityGraphic.width;
 	}
 	
 	public float getHeight() {
-		return entityGraphic.getHeight();
+		return entityGraphic.height;
 	}
 	
 	public Vector2 getPosition() {
@@ -56,13 +54,7 @@ public abstract class Entity extends Actor {
 		return entityGraphic;
 	}
 
-	@Override
-	public void draw(SpriteBatch spriteBatch, float alphaModulation) {
-		entityGraphic.draw(spriteBatch, alphaModulation);
-	}
-	
 	public abstract Entity collides();
-//	public abstract void draw(SpriteBatch spriteBatch);
 
 	/* TOUCH EVENTS */
 

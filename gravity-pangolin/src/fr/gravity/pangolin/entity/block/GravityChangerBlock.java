@@ -4,16 +4,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import fr.gravity.pangolin.Gravity;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.GravityChangerBlockGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
-import fr.gravity.pangolin.util.Waiter;
+import fr.gravity.pangolin.game.CountDown;
+import fr.gravity.pangolin.world.Gravity;
 
 public class GravityChangerBlock extends Entity {
 
 	private static final int DEACTIVATED_PERIOD = 1000;
-	private Waiter waiter = new Waiter(DEACTIVATED_PERIOD);
+	private CountDown waiter = new CountDown(DEACTIVATED_PERIOD);
 	
 	private Gravity gravity;
 
@@ -30,10 +30,10 @@ public class GravityChangerBlock extends Entity {
 	 */
 	@Override
 	public Rectangle getBoundingRectangle() {
-		final float width = entityGraphic.getWidth() / 5;
-		final float height = entityGraphic.getHeight() / 5;
-		final float x = entityGraphic.getX() + (entityGraphic.getWidth() / 2) - (width / 2);
-		final float y = entityGraphic.getY() + (entityGraphic.getHeight() / 2) - (height / 2);
+		final float width = entityGraphic.width / 5;
+		final float height = entityGraphic.height / 5;
+		final float x = entityGraphic.x + (entityGraphic.width / 2) - (width / 2);
+		final float y = entityGraphic.y + (entityGraphic.height / 2) - (height / 2);
 
 		return new Rectangle(x, y, width, height);
 	}
@@ -48,10 +48,10 @@ public class GravityChangerBlock extends Entity {
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		entityGraphic.draw(batch);
-	}
+//	@Override
+//	public void draw(SpriteBatch batch, float parentAlpha) {
+//		entityGraphic.draw(batch);
+//	}
 
 	@Override
 	public Entity collides() {

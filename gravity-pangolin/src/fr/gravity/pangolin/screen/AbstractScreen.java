@@ -12,15 +12,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
-import fr.gravity.pangolin.GravityPangolinGame;
-import fr.gravity.pangolin.PangolinWorld;
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.EntityGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
+import fr.gravity.pangolin.game.CustomStage;
+import fr.gravity.pangolin.game.GravityPangolinGame;
+import fr.gravity.pangolin.util.GameUtil;
+import fr.gravity.pangolin.world.PangolinWorld;
 
 public abstract class AbstractScreen implements Screen {
 	// the fixed viewport dimensions (ratio: 1.6)
@@ -30,7 +32,7 @@ public abstract class AbstractScreen implements Screen {
 
 	protected final GravityPangolinGame game;
 	protected final PangolinWorld pangolinWorld;
-	protected final Stage stage;
+	protected final CustomStage stage;
 
 	private BitmapFont font;
 	private SpriteBatch batch;
@@ -49,7 +51,7 @@ public abstract class AbstractScreen implements Screen {
 		// width = (isGameScreen() ? GAME_VIEWPORT_WIDTH : MENU_VIEWPORT_WIDTH);
 		// height = (isGameScreen() ? GAME_VIEWPORT_HEIGHT :
 		// MENU_VIEWPORT_HEIGHT);
-		this.stage = new Stage(width, height, true);
+		this.stage = new CustomStage(game, width, height, true);
 	}
 
 	protected String getName() {
@@ -77,10 +79,11 @@ public abstract class AbstractScreen implements Screen {
 	// }
 
 	public Skin getSkin() {
-		if (skin == null) {
+		// Disabled because does not seem to work when hiding/showing a screen
+//		if (skin == null) {
 			FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
 			skin = new Skin(skinFile);
-		}
+//		}
 		return skin;
 	}
 
@@ -93,6 +96,17 @@ public abstract class AbstractScreen implements Screen {
 		return table;
 	}
 
+	protected void loadBackButton(ClickListener clickListener) {
+		TextButton backButton = new TextButton(getSkin());
+		backButton.setText("Back");
+		backButton.x = 400;
+		backButton.y = GameUtil.getScreen().getHeight() - 60;
+		backButton.width = 50;
+		backButton.height = 50;
+		backButton.setClickListener(clickListener);
+		stage.addActor(backButton);
+	}
+	
 	// Screen implementation
 
 	@Override

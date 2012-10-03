@@ -1,0 +1,14 @@
+******** HOW TO MAKE A MAP ********
+
+	+ The map file must have .pm extension.
+	+ On top of the file are different options:
+		PANGOLINDIR : Our Pangolin's direction when the game starts (0 (LEFT), 1 (UP), 2 (RIGHT), 3 (DOWN))
+		FINISHDIR : The finish spot's direction (0 (LEFT), 1 (UP), 2 (RIGHT), 3 (DOWN))
+		MAPSIZE : The size of the map you are drawing, considering one symbol per unit
+	+ Then comes the map itself which is designed using different symbols as for:
+		X : block
+		S : start point
+		E : exit spot
+		O : gravity changer
+
+***********************************

@@ -2,7 +2,7 @@ package fr.gravity.pangolin.util;
 
 import com.badlogic.gdx.math.Rectangle;
 
-import fr.gravity.pangolin.GravityPangolinGame;
+import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.screen.AbstractScreen;
 
 public class GameUtil {
@@ -20,19 +20,19 @@ public class GameUtil {
 	}
 
 	public static boolean isOutOfScreen(Rectangle rectangle) {
-		AbstractScreen screen = GameUtil.getScreen();
-
-		final float DEEP_SPACE_MARGIN = screen.getWidth() / 20;
-
-		float x = rectangle.getX();
-		float y = rectangle.getY();
-		float width = rectangle.getWidth();
-		float height = rectangle.getHeight();
-
-		if (x < -width - DEEP_SPACE_MARGIN || x > screen.getWidth() + DEEP_SPACE_MARGIN)
-			return true;
-		if (y < -height - DEEP_SPACE_MARGIN || y > screen.getHeight() + DEEP_SPACE_MARGIN)
-			return true;
+//		AbstractScreen screen = GameUtil.getScreen();
+//
+//		final float DEEP_SPACE_MARGIN = screen.getWidth() / 20;
+//
+//		float x = rectangle.getX();
+//		float y = rectangle.getY();
+//		float width = rectangle.getWidth();
+//		float height = rectangle.getHeight();
+//
+//		if (x < -width - DEEP_SPACE_MARGIN || x > screen.getWidth() + DEEP_SPACE_MARGIN)
+//			return true;
+//		if (y < -height - DEEP_SPACE_MARGIN || y > screen.getHeight() + DEEP_SPACE_MARGIN)
+//			return true;
 
 		return false;
 	}

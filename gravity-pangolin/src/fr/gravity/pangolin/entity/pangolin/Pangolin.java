@@ -4,20 +4,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import fr.gravity.pangolin.Controller;
-import fr.gravity.pangolin.GravityPangolinGame;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.DyingPangolinGraphic;
 import fr.gravity.pangolin.entity.graphic.FallingPangolinGraphic;
 import fr.gravity.pangolin.entity.graphic.IdlePangolinGraphic;
 import fr.gravity.pangolin.entity.graphic.PangolinGraphic;
 import fr.gravity.pangolin.entity.graphic.WalkingPangolinGraphic;
+import fr.gravity.pangolin.game.Controller;
+import fr.gravity.pangolin.game.GravityPangolinGame;
 
 public class Pangolin extends Entity {
 
 	public static final float SPEED = 150; // unit per second
-	public static final float FALLING_SPEED = SPEED * 2F; // unit per second
-	public static final float JUMP_VELOCITY = 4f;
+	public static final float FALLING_SPEED = SPEED * 1.8F; // unit per second
 
 	private Controller controller;
 	private float delta;
@@ -42,8 +41,8 @@ public class Pangolin extends Entity {
 		}
 
 		public void setPosition(float x, float y) {
-			pangolinGraphic.setX(x);
-			pangolinGraphic.setY(y);
+			pangolinGraphic.x = x;
+			pangolinGraphic.y = y;
 		}
 	}
 
@@ -51,13 +50,15 @@ public class Pangolin extends Entity {
 
 	/* POSITION */
 
-	// private Vector2 previousPosition = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private Vector2 velocity = new Vector2();
 	private boolean landed = false;
-	private boolean stopped = false;
+	private boolean controllerEnabled = true;
 
-	public Pangolin(float x, float y) {
+	public Pangolin() {
+	}
+
+	public void init(float x, float y) {
 		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x, y));
 		PangolinState.WALKING.setPangolinGraphic(new WalkingPangolinGraphic(this, x, y));
 		PangolinState.FALLING.setPangolinGraphic(new FallingPangolinGraphic(this, x, y));
@@ -70,20 +71,18 @@ public class Pangolin extends Entity {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		controller.update(delta);
+		if (controllerEnabled)
+			controller.update(delta);
 		update(delta);
+		entityGraphic = pangolinState.pangolinGraphic;
 	}
 
 	public void update(float delta) {
-		// previousPosition = new Vector2(getX(), getY());
 		this.delta = delta;
-		if (stopped)
-			idle();
 		translate();
 	}
 
 	public void update() {
-		// previousPosition = new Vector2(getX(), getY());
 		translate();
 	}
 
@@ -108,47 +107,51 @@ public class Pangolin extends Entity {
 		if (landed)
 			pangolinState = PangolinState.WALKING;
 		this.direction = direction;
-		move(direction);
+		move(direction, false);
 	}
 
 	public void fall(Direction direction) {
 		if (!landed)
 			pangolinState = PangolinState.FALLING;
-		move(direction);
+		move(direction, true);
 	}
 
-	private void move(Direction direction) {
+	private void move(Direction direction, boolean falling) {
+		float speed = (falling ? FALLING_SPEED : SPEED);
+
 		if (direction == Direction.LEFT || direction == Direction.RIGHT)
-			velocity.x = direction == Direction.LEFT ? -SPEED : SPEED;
+			velocity.x = direction == Direction.LEFT ? -speed : speed;
 		else if (direction == Direction.UP || direction == Direction.DOWN)
-			velocity.y = direction == Direction.UP ? -SPEED : SPEED;
+			velocity.y = direction == Direction.UP ? -speed : speed;
 	}
 
-	public void land(Direction gravitySide) {
-		landed = true;
-		if (gravitySide == Direction.RIGHT)
-			if (direction == Direction.RIGHT || direction == Direction.UP)
-				direction = Direction.UP;
+	public void disableController() {
+		controllerEnabled = true;
 	}
 
-	public void stop() {
-		stopped = true;
+	/** EVENTS **/
+
+	@Override
+	public Entity collides() {
+		return null;
 	}
 
-	public boolean isStopped() {
-		return stopped;
+	@Override
+	public Actor hit(float x, float y) {
+		return null;
 	}
 
-	public void release() {
-		stopped = false;
+	@Override
+	public boolean keyDown(int keycode) {
+		controller.keyDown(keycode);
+		return true;
 	}
 
-	// public void rollBackPosition() {
-	// setX(previousPosition.x);
-	// setY(previousPosition.y);
-	// }
-
-	/** TOUCH EVENTS **/
+	@Override
+	public boolean keyUp(int keycode) {
+		controller.keyUp(keycode);
+		return true;
+	}
 
 	@Override
 	public void touchDown() {
@@ -180,38 +183,12 @@ public class Pangolin extends Entity {
 		this.landed = landed;
 	}
 
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
 	public Direction getDirection() {
 		return direction;
-	}
-
-	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		entityGraphic = pangolinState.pangolinGraphic;
-		entityGraphic.draw(batch);
-	}
-
-	@Override
-	public Entity collides() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Actor hit(float x, float y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		controller.keyDown(keycode);
-		return true;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		controller.keyUp(keycode);
-		return true;
 	}
 
 }

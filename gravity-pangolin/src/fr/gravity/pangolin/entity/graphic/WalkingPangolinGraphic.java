@@ -6,7 +6,7 @@ public class WalkingPangolinGraphic extends PangolinGraphic {
 
 	public WalkingPangolinGraphic(Pangolin pangolin, float x, float y) {
 		super(pangolin, x, y);
-		set(getFrame(stateTime));
+		setRegion(getFrame(stateTime));
 	}
 
 	@Override
