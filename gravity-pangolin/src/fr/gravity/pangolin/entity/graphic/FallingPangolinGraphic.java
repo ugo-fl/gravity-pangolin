@@ -14,7 +14,7 @@ public class FallingPangolinGraphic extends PangolinGraphic {
 	public FallingPangolinGraphic(Pangolin pangolin, float x, float y) {
 		super(pangolin, x, y);
 		loadAnimation();
-		setRegion(getFrame(stateTime));
+//		setRegion(getFrame(stateTime));
 	}
 
 	private void loadAnimation() {

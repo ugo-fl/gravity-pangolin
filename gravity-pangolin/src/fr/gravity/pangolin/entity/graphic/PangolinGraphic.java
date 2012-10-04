@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.entity.EntityGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.helper.TextureHelper;
@@ -23,8 +22,8 @@ public abstract class PangolinGraphic extends EntityGraphic {
 	protected Animation animation = new Animation(0.25F, textureRegions);
 
 	public PangolinGraphic(Pangolin pangolin, float x, float y) {
+		super(TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN)[0], x, y);
 		this.pangolin = pangolin;
-		set(getFrame(stateTime), x, y);
 	}
 
 	protected Sprite getFrame(float stateTime) {

@@ -13,11 +13,6 @@ public class BranchBlock extends Entity {
 		addActor(entityGraphic);
 	}
 
-//	@Override
-//	public void draw(SpriteBatch spriteBatch) {
-//		entityGraphic.draw(spriteBatch);
-//	}
-
 	@Override
 	public void touchDown() {
 		
@@ -27,11 +22,6 @@ public class BranchBlock extends Entity {
 	public void touchUp() {
 		
 	}
-
-//	@Override
-//	public void draw(SpriteBatch batch, float parentAlpha) {
-//		entityGraphic.draw(batch);
-//	}
 
 	@Override
 	public Entity collides() {

@@ -64,8 +64,8 @@ public class GravityPangolinGame extends Game {
 		// Loads all the levels
 		loadLevels();
 		
-		// start(Gdx.files.internal("map/map1.pm"));
-		setScreen(mainMenuScreen);
+		 start(0, 1);
+//		setScreen(mainMenuScreen);
 	}
 
 	private void loadScreens() {

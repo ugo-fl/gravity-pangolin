@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.game.CustomStage;
 import fr.gravity.pangolin.game.GravityPangolinGame;
@@ -80,10 +82,10 @@ public abstract class AbstractScreen implements Screen {
 
 	public Skin getSkin() {
 		// Disabled because does not seem to work when hiding/showing a screen
-//		if (skin == null) {
-			FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
-			skin = new Skin(skinFile);
-//		}
+		// if (skin == null) {
+		FileHandle skinFile = Gdx.files.internal("skin/uiskin.json");
+		skin = new Skin(skinFile);
+		// }
 		return skin;
 	}
 
@@ -106,7 +108,7 @@ public abstract class AbstractScreen implements Screen {
 		backButton.setClickListener(clickListener);
 		stage.addActor(backButton);
 	}
-	
+
 	// Screen implementation
 
 	@Override
@@ -137,7 +139,7 @@ public abstract class AbstractScreen implements Screen {
 
 		// draw the actors
 		stage.draw();
-//		drawDebugView();
+		drawDebugView();
 
 		// draw the table debug lines
 		Table.drawDebug(stage);
@@ -160,10 +162,15 @@ public abstract class AbstractScreen implements Screen {
 			Rectangle bounds = ((Entity) actor).getBoundingRectangle();
 
 			// Draws actors
-			debugRenderer.begin(ShapeType.Rectangle);
-			debugRenderer.setColor(new Color(0, 1, 0, 1));
-			debugRenderer.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-			debugRenderer.end();
+			if (actor instanceof ExitBlock) {
+//				BoundingBox bb = ((ExitBlock) actor).getEntityGraphic().getBoundingBox();
+//				debugRenderer.begin(ShapeType.Line);
+			} else {
+				debugRenderer.begin(ShapeType.Rectangle);
+				debugRenderer.setColor(new Color(0, 1, 0, 1));
+				debugRenderer.rect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+				debugRenderer.end();
+			}
 
 			// Draws collision points
 			debugRenderer.begin(ShapeType.Circle);

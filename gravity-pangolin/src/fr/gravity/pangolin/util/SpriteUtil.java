@@ -3,7 +3,7 @@ package fr.gravity.pangolin.util;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.entity.EntityGraphic;
+import fr.gravity.pangolin.entity.graphic.EntityGraphic;
 import fr.gravity.pangolin.screen.AbstractScreen;
 
 public class SpriteUtil {

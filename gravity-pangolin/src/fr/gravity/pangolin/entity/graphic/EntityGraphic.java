@@ -1,7 +1,9 @@
-package fr.gravity.pangolin.entity;
+package fr.gravity.pangolin.entity.graphic;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import fr.gravity.pangolin.util.GameUtil;
@@ -9,6 +11,18 @@ import fr.gravity.pangolin.util.GameUtil;
 public abstract class EntityGraphic extends Image {
 
 	protected float stateTime = 0;
+	
+	public EntityGraphic() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public EntityGraphic(TextureRegion region, float x, float y) {
+		super(region);
+		setPosition(x, y);
+//		width = GameUtil.getScreen().getPpuX();
+//		height = GameUtil.getScreen().getPpuY();
+	}
+	
 
 	/**
 	 * Sets the sprite with position
@@ -25,6 +39,14 @@ public abstract class EntityGraphic extends Image {
 
 	public Rectangle getBoundingRectangle() {
 		return new Rectangle(x, y, width, height);
+	}
+	
+	public BoundingBox getBoundingBox() {
+		BoundingBox boundingBox = new BoundingBox();
+		Vector3 minimum = new Vector3(x, y, 0);
+		Vector3 maximum = new Vector3(x + width, y + height, 0);
+		boundingBox.set(minimum, maximum);
+		return boundingBox;
 	}
 	
 //	@Override

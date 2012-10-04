@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
+import fr.gravity.pangolin.entity.graphic.EntityGraphic;
 import fr.gravity.pangolin.util.SpriteUtil;
 
 public abstract class Entity extends Group {
@@ -20,7 +21,6 @@ public abstract class Entity extends Group {
 	}
 
 	public void setX(float x) {
-		this.x = x;
 		entityGraphic.x = x;
 	}
 
@@ -29,7 +29,6 @@ public abstract class Entity extends Group {
 	}
 
 	public void setY(float y) {
-		this.y = y;
 		entityGraphic.y = y;
 	}
 

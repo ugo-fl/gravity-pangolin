@@ -12,6 +12,8 @@ import fr.gravity.pangolin.entity.graphic.PangolinGraphic;
 import fr.gravity.pangolin.entity.graphic.WalkingPangolinGraphic;
 import fr.gravity.pangolin.game.Controller;
 import fr.gravity.pangolin.game.GravityPangolinGame;
+import fr.gravity.pangolin.util.GameUtil;
+import fr.gravity.pangolin.world.PangolinWorld;
 
 public class Pangolin extends Entity {
 
@@ -74,7 +76,10 @@ public class Pangolin extends Entity {
 		if (controllerEnabled)
 			controller.update(delta);
 		update(delta);
+		
+		clear();
 		entityGraphic = pangolinState.pangolinGraphic;
+		addActor(entityGraphic);
 	}
 
 	public void update(float delta) {

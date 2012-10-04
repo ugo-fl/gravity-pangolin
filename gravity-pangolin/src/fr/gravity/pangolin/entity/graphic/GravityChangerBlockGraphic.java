@@ -3,7 +3,6 @@ package fr.gravity.pangolin.entity.graphic;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import fr.gravity.pangolin.entity.EntityGraphic;
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 
