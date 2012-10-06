@@ -1,17 +1,18 @@
 PANGOLINDIR=0
 EXITDIR=3
 MAPSIZE=20;14
-                    
-                    
-                    
-                    
-                    
-      X             
-                    
-                    
-                    
-                    
-                     
-                    
-                    
-                    
+/////////////       
+XXXXXXXXXXXXXXXXXXXX              
+XXXXXXXXXXXXXXXX   X
+X        XXXXXXX   X
+X        XXXXXXX   X 
+X        XXXXXXX   X
+X        XXXXXXX   X
+X        XXXXXXX   X
+X        XXXXXXX   X
+X        XXXXXXX   X
+X   S              X 
+X                  X
+XXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXX

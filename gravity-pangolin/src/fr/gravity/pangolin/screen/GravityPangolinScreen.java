@@ -14,7 +14,7 @@ public class GravityPangolinScreen extends AbstractScreen {
 	private PangolinWorld pangolinWorld;
 
 	public GravityPangolinScreen(GravityPangolinGame gravityPangolinGame, PangolinWorld pangolinWorld) {
-		super(gravityPangolinGame, pangolinWorld);
+		super(gravityPangolinGame, pangolinWorld, pangolinWorld.getSizeX(), pangolinWorld.getSizeY());
 		this.pangolinWorld = pangolinWorld;
 	}
 

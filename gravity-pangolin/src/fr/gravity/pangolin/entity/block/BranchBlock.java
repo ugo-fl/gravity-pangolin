@@ -15,10 +15,8 @@ import fr.gravity.pangolin.util.GameUtil;
 
 public class BranchBlock extends Entity {
 
-	private static final String BODY_NAME = "branch";
-	
 	public BranchBlock(World world, float x, float y) {
-		super(world, x, y);
+		super(world, x, y, 1);
 	}
 
 	@Override
@@ -48,7 +46,7 @@ public class BranchBlock extends Entity {
 
 	@Override
 	protected String getBodyName() {
-		return BODY_NAME;
+		return "wall_block";
 	}
 
 	// @Override

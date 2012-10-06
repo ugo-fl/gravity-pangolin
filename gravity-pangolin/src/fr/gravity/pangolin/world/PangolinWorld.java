@@ -24,20 +24,20 @@ public class PangolinWorld {
 
 	// Options
 	private static final int GRAVITY = -10;
-	
+
 	// Singleton instance
 	private static PangolinWorld instance;
 
 	// The game world
 	private World world;
-	
+
 	private int sizeX = 0;
 	private int sizeY = 0;
 
 	private final static String OPTION_PANGOLIN_DIRECTION = "PANGOLINDIR";
 	private final static String OPTION_EXIT_DIRECTION = "EXITDIR";
 	private final static String OPTION_MAP_SIZE = "MAPSIZE";
-	
+
 	private final static String SYM_BLOCK = "X";
 	private final static String SYM_GRAVITY_CHANGER = "O";
 	private final static String SYM_START = "S";
@@ -50,13 +50,13 @@ public class PangolinWorld {
 	private Array<Entity> entities = new Array<Entity>();
 
 	/** Our controlled hero **/
-//	private Pangolin pangolin = new Pangolin();
+	// private Pangolin pangolin = new Pangolin();
 	private Pangolin pangolin;
 
 	/** Finish spot **/
-//	private ExitBlock exitBlock = new ExitBlock(this);
+	// private ExitBlock exitBlock = new ExitBlock(this);
 	private ExitBlock exitBlock;
-	
+
 	private Gravity gravity = new Gravity(Direction.DOWN);
 
 	/**
@@ -87,7 +87,7 @@ public class PangolinWorld {
 		readOptions(pangolinMap);
 		world = new World(new Vector2(0, GRAVITY), true);
 	}
-	
+
 	private void readOptions(FileHandle pangolinMap) {
 		try {
 			mapFile = new BufferedReader(pangolinMap.reader());
@@ -95,15 +95,15 @@ public class PangolinWorld {
 			while (true) {
 				String[] option = line.split("=");
 				if (option.length != 2)
-					break ;
+					break;
 				String optionName = option[0];
 				String optionValue = option[1];
 				if (OPTION_MAP_SIZE.equals(optionName))
 					readOptionMapSize(optionValue);
-//				else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
-//					readOptionPangolinDirection(optionValue);
-//				else if (OPTION_EXIT_DIRECTION.equals(optionName))
-//					readOptionFinishDirection(optionValue);
+				// else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
+				// readOptionPangolinDirection(optionValue);
+				// else if (OPTION_EXIT_DIRECTION.equals(optionName))
+				// readOptionFinishDirection(optionValue);
 				line = mapFile.readLine();
 			}
 			if (sizeX <= 0 || sizeY <= 0)
@@ -124,10 +124,11 @@ public class PangolinWorld {
 	private void readOptionMapSize(String optionValue) {
 		String[] size = optionValue.split(";");
 		if (size.length != 2)
-			throw new InvalidMapException("Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
+			throw new InvalidMapException(
+					"Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
 		sizeX = Integer.valueOf(size[0]);
 		sizeY = Integer.valueOf(size[1]);
-		
+
 	}
 
 	/**
@@ -151,25 +152,26 @@ public class PangolinWorld {
 					if (SYM_BLOCK.equalsIgnoreCase(sym)) {
 						BranchBlock branchBlock = new BranchBlock(world, x, y);
 						addEntity(stage, branchBlock);
-					} 
-					
-//					else if (SYM_START.equalsIgnoreCase(sym)) {
-//						pangolin.init(x, y);
-//					} else if (SYM_GRAVITY_CHANGER.equalsIgnoreCase(sym)) {
-//						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(x, y, gravity);
-//						addEntity(stage, gravityChangerBlock);
-//					} else if (SYM_EXIT.equalsIgnoreCase(sym)) {
-//						exitBlock.init(x, y);
-//					}
+					} else if (SYM_START.equalsIgnoreCase(sym)) {
+						pangolin = new Pangolin(world, x, y);
+						addEntity(stage, pangolin);
+					}
+					// else if (SYM_GRAVITY_CHANGER.equalsIgnoreCase(sym)) {
+					// GravityChangerBlock gravityChangerBlock = new
+					// GravityChangerBlock(x, y, gravity);
+					// addEntity(stage, gravityChangerBlock);
+					// } else if (SYM_EXIT.equalsIgnoreCase(sym)) {
+					// exitBlock.init(x, y);
+					// }
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// We add the Exit and the Pangolin at the end 
+		// We add the Exit and the Pangolin at the end
 		// in order to put their graphics above the rest
-//		addEntity(stage, exitBlock);
-//		addEntity(stage, pangolin);
+		// addEntity(stage, exitBlock);
+		// addEntity(stage, pangolin);
 	}
 
 	private void addEntity(Stage stage, Entity entity) {
@@ -197,13 +199,13 @@ public class PangolinWorld {
 	public void step(float timeStep, int velocityIterations, int positionIterations) {
 		world.step(timeStep, velocityIterations, positionIterations);
 	}
-	
+
 	// Getters/Setters
 
 	public World getWorld() {
 		return world;
 	}
-	
+
 	public Array<Entity> getBlocks() {
 		return entities;
 	}

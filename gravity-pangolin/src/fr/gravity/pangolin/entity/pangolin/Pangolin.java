@@ -1,8 +1,10 @@
 package fr.gravity.pangolin.entity.pangolin;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
@@ -49,7 +51,7 @@ public class Pangolin extends Entity {
 		}
 	}
 
-	private PangolinState pangolinState = PangolinState.IDLE;
+	private PangolinState pangolinState;
 
 	/* POSITION */
 
@@ -58,24 +60,36 @@ public class Pangolin extends Entity {
 	private boolean landed = false;
 	private boolean controllerEnabled = true;
 
-	public Pangolin() {
-		super(null);
+	public Pangolin(World world, float x, float y) {
+		super(world, x, y, 2);
+		body.setType(BodyType.DynamicBody);
 	}
 
-	public void init(float x, float y) {
+//	public void init(float x, float y) {
+//		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x, y));
+//		PangolinState.WALKING.setPangolinGraphic(new WalkingPangolinGraphic(this, x, y));
+//		PangolinState.FALLING.setPangolinGraphic(new FallingPangolinGraphic(this, x, y));
+//		PangolinState.DYING.setPangolinGraphic(new DyingPangolinGraphic(this, x, y));
+//
+//		entityGraphic = pangolinState.pangolinGraphic;
+//		controller = new Controller(GravityPangolinGame.getInstance().getPangolinWorld(), this);
+//	}
+
+	@Override
+	public void createGraphic(float x, float y) {
 		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x, y));
 		PangolinState.WALKING.setPangolinGraphic(new WalkingPangolinGraphic(this, x, y));
 		PangolinState.FALLING.setPangolinGraphic(new FallingPangolinGraphic(this, x, y));
 		PangolinState.DYING.setPangolinGraphic(new DyingPangolinGraphic(this, x, y));
 
+		pangolinState = PangolinState.IDLE;
 		entityGraphic = pangolinState.pangolinGraphic;
 		controller = new Controller(GravityPangolinGame.getInstance().getPangolinWorld(), this);
 	}
 
 	@Override
-	public void createBody(World world) {
-		// TODO Auto-generated method stub
-		
+	protected String getBodyName() {
+		return "pangolin";
 	}
 	
 	@Override
@@ -103,9 +117,10 @@ public class Pangolin extends Entity {
 	}
 
 	public void translate(Vector2 translation) {
-		for (PangolinState pangolinState : PangolinState.values()) {
-			pangolinState.setPosition(getX() + translation.x, getY() - translation.y);
-		}
+		body.getPosition().add(translation);
+//		for (PangolinState pangolinState : PangolinState.values()) {
+//			pangolinState.setPosition(getX() + translation.x, getY() - translation.y);
+//		}
 	}
 
 	public void idle() {

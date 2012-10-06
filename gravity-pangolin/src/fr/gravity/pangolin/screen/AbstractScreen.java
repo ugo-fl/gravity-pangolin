@@ -68,14 +68,14 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 	private TextureAtlas atlas;
 	private Table table;
 
-	protected int width;
-	protected int height;
+	protected float width;
+	protected float height;
 
-	public AbstractScreen(GravityPangolinGame game, PangolinWorld pangolinWorld) {
+	public AbstractScreen(GravityPangolinGame game, PangolinWorld pangolinWorld, float sizeX, float sizeY) {
 		this.game = game;
 		this.pangolinWorld = pangolinWorld;
-		width = GAME_VIEWPORT_WIDTH;
-		height = GAME_VIEWPORT_HEIGHT;
+		width = sizeX;
+		height = sizeY;
 	}
 
 	// Screen implementation
@@ -88,12 +88,16 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// meter scale, pixels won't do it. So we use
 		// an orthographic camera with a viewport of
 		// 48 meters in width and 32 meters in height.
-		camera = new OrthographicCamera(48, 32);
+		camera = new OrthographicCamera(width, height);
+		camera.setToOrtho(false, width, height);
+//		camera.position.set(0, 5, 0);
+		
 		batch = new SpriteBatch();
 		stage = new CustomStage(game, width, height, true);
 		stage.setCamera(camera);
 		font = new BitmapFont(Gdx.files.internal("data/arial-15.fnt"), false);
-
+		font.setColor(new Color(1, 1, 0, 1));
+		
 		// Debug renderer
 		debugRenderer = new DebugRenderer();
 
@@ -120,6 +124,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// update the world with a fixed time step
 		long startTime = TimeUtils.nanoTime();
 		pangolinWorld.step(Gdx.app.getGraphics().getDeltaTime(), 3, 3);
+		stage.act(delta);
 		float updateTime = (TimeUtils.nanoTime() - startTime) / 1000000000.0f;
 
 		startTime = TimeUtils.nanoTime();
@@ -154,7 +159,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 
 	private void drawGround(World world) {
 		EdgeShape shape = new EdgeShape();
-		shape.set(new Vector2(-40.0f, 0), new Vector2(40, 0));
+		shape.set(new Vector2(0, 0), new Vector2(width, 0));
 
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
@@ -300,11 +305,11 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		stage.addActor(backButton);
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return width;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 

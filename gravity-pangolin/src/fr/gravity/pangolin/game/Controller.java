@@ -51,8 +51,8 @@ public class Controller {
 	/** The main update method **/
 	public void update(float delta) {
 		processInput();
-		if (!isBlocked())
-			controlPangolinMovement(delta);
+//		if (!isBlocked())
+//			controlPangolinMovement(delta);
 	}
 
 	/**
