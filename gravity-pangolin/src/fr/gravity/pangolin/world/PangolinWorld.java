@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
@@ -20,12 +22,15 @@ import fr.gravity.pangolin.util.GameUtil;
 
 public class PangolinWorld {
 
+	// Options
+	private static final int GRAVITY = -10;
+	
+	// Singleton instance
 	private static PangolinWorld instance;
 
-	enum GravityAxis {
-		X_AXIS, Y_AXIS
-	}
-
+	// The game world
+	private World world;
+	
 	private int sizeX = 0;
 	private int sizeY = 0;
 
@@ -45,10 +50,12 @@ public class PangolinWorld {
 	private Array<Entity> entities = new Array<Entity>();
 
 	/** Our controlled hero **/
-	private Pangolin pangolin = new Pangolin();
+//	private Pangolin pangolin = new Pangolin();
+	private Pangolin pangolin;
 
 	/** Finish spot **/
-	private ExitBlock exitBlock = new ExitBlock(this);
+//	private ExitBlock exitBlock = new ExitBlock(this);
+	private ExitBlock exitBlock;
 	
 	private Gravity gravity = new Gravity(Direction.DOWN);
 
@@ -78,6 +85,7 @@ public class PangolinWorld {
 
 	public PangolinWorld(FileHandle pangolinMap) {
 		readOptions(pangolinMap);
+		world = new World(new Vector2(0, GRAVITY), true);
 	}
 	
 	private void readOptions(FileHandle pangolinMap) {
@@ -92,10 +100,10 @@ public class PangolinWorld {
 				String optionValue = option[1];
 				if (OPTION_MAP_SIZE.equals(optionName))
 					readOptionMapSize(optionValue);
-				else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
-					readOptionPangolinDirection(optionValue);
-				else if (OPTION_EXIT_DIRECTION.equals(optionName))
-					readOptionFinishDirection(optionValue);
+//				else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
+//					readOptionPangolinDirection(optionValue);
+//				else if (OPTION_EXIT_DIRECTION.equals(optionName))
+//					readOptionFinishDirection(optionValue);
 				line = mapFile.readLine();
 			}
 			if (sizeX <= 0 || sizeY <= 0)
@@ -141,16 +149,18 @@ public class PangolinWorld {
 					String sym = String.valueOf(line.charAt(x));
 
 					if (SYM_BLOCK.equalsIgnoreCase(sym)) {
-						BranchBlock branchBlock = new BranchBlock(x, y, getBranchFramePosition(x, y, line));
+						BranchBlock branchBlock = new BranchBlock(world, x, y);
 						addEntity(stage, branchBlock);
-					} else if (SYM_START.equalsIgnoreCase(sym)) {
-						pangolin.init(x, y);
-					} else if (SYM_GRAVITY_CHANGER.equalsIgnoreCase(sym)) {
-						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(x, y, gravity);
-						addEntity(stage, gravityChangerBlock);
-					} else if (SYM_EXIT.equalsIgnoreCase(sym)) {
-						exitBlock.init(x, y);
-					}
+					} 
+					
+//					else if (SYM_START.equalsIgnoreCase(sym)) {
+//						pangolin.init(x, y);
+//					} else if (SYM_GRAVITY_CHANGER.equalsIgnoreCase(sym)) {
+//						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(x, y, gravity);
+//						addEntity(stage, gravityChangerBlock);
+//					} else if (SYM_EXIT.equalsIgnoreCase(sym)) {
+//						exitBlock.init(x, y);
+//					}
 				}
 			}
 		} catch (IOException e) {
@@ -158,8 +168,8 @@ public class PangolinWorld {
 		}
 		// We add the Exit and the Pangolin at the end 
 		// in order to put their graphics above the rest
-		addEntity(stage, exitBlock);
-		addEntity(stage, pangolin);
+//		addEntity(stage, exitBlock);
+//		addEntity(stage, pangolin);
 	}
 
 	private void addEntity(Stage stage, Entity entity) {
@@ -184,6 +194,16 @@ public class PangolinWorld {
 		return branchFramePos;
 	}
 
+	public void step(float timeStep, int velocityIterations, int positionIterations) {
+		world.step(timeStep, velocityIterations, positionIterations);
+	}
+	
+	// Getters/Setters
+
+	public World getWorld() {
+		return world;
+	}
+	
 	public Array<Entity> getBlocks() {
 		return entities;
 	}

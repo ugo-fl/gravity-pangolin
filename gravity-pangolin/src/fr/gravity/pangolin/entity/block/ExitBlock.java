@@ -1,5 +1,6 @@
 package fr.gravity.pangolin.entity.block;
 
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.FadeOut;
 
@@ -20,14 +21,20 @@ public class ExitBlock extends Entity {
 	private Direction direction = Direction.DOWN;
 
 	public ExitBlock(PangolinWorld pangolinWorld) {
+		super(pangolinWorld.getWorld());
 		this.pangolinWorld = pangolinWorld;
 	}
 
 	public void init(float x, float y) {
 		entityGraphic = new ExitBlockGraphic(x, y, direction);
-		addActor(entityGraphic);
 	}
 
+	@Override
+	public void createBody(World world) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void touchDown() {
 	}
@@ -70,4 +77,5 @@ public class ExitBlock extends Entity {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
+
 }

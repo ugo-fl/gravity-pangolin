@@ -34,8 +34,8 @@ public class SpriteUtil {
 		x = GameUtil.projectCoordinateX(x / screen.getPpuX()); 
 		y = -GameUtil.projectCoordinateY(y / screen.getPpuY());
 		
-		if (x >= entityGraphic.x && x <= entityGraphic.x + entityGraphic.width)
-			if (y >= entityGraphic.y && y <= entityGraphic.y + entityGraphic.height)
+		if (x >= entityGraphic.getX() && x <= entityGraphic.getX() + entityGraphic.getWidth())
+			if (y >= entityGraphic.getY() && y <= entityGraphic.getY() + entityGraphic.getHeight())
 			return true;
 		return false;
 	}

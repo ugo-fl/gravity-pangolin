@@ -17,15 +17,15 @@ public class TextureHelper {
 	 * Texture ids containing texture and size
 	 */
 	public enum TextureId {
-		PANGOLIN(new Texture("images/sprite_pangolin.png"), 1, 2),
-		BACKGROUND(new Texture("images/background.png"), 1, 1),
-		BUTTONS(new Texture("images/buttons_sprite.png"), 1, 2), 
-		BRANCH(new Texture("images/branche.png"), 1, 3),
-		GRAVITY_CHANGER(new Texture("images/gravity_changer.png"), 1, 1),
-		PANGOLIN_BALLMODE(new Texture("images/sprite_pangolin_ballmode.png"), 1, 4),
-		EXIT(new Texture("images/exit.png"), 1, 1),
-		YOU_WIN(new Texture("images/you_win.png"), 1, 1),
-		GAME_OVER(new Texture("images/game_over.png"), 1, 1);
+		PANGOLIN(new Texture("image/sprite_pangolin.png"), 1, 2),
+		BACKGROUND(new Texture("image/background.png"), 1, 1),
+		BUTTONS(new Texture("image/buttons_sprite.png"), 1, 2), 
+		BRANCH(new Texture("image/wall_block.png"), 1, 1),
+		GRAVITY_CHANGER(new Texture("image/gravity_changer.png"), 1, 1),
+		PANGOLIN_BALLMODE(new Texture("image/sprite_pangolin_ballmode.png"), 1, 4),
+		EXIT(new Texture("image/exit.png"), 1, 1),
+		YOU_WIN(new Texture("image/you_win.png"), 1, 1),
+		GAME_OVER(new Texture("image/game_over.png"), 1, 1);
 
 		private final Texture texture;
 		private final int frameRows;

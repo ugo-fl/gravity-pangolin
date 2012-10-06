@@ -13,20 +13,20 @@ public class ExitBlockGraphic extends EntityGraphic {
 	public ExitBlockGraphic(float x, float y, Direction direction) {
 		super(TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN)[0], x, y);
 
-		this.originX = this.width / 2;
-		this.originY = this.height / 2;
-		
-		if (direction == Direction.LEFT)
-			ImageUtil.rotate90(this, false);
-		else if (direction == Direction.RIGHT) {
-//			ImageUtil.rotate90(this, true);
-			action(RotateBy.$(360, 5F));
-			
-//			this.x = GameUtil.projectCoordinateX(x + 1);
-		} else if (direction == Direction.UP) {
-			rotation = 180;
-			this.y++;
-		}
+//		this.originX = this.width / 2;
+//		this.originY = this.height / 2;
+//		
+//		if (direction == Direction.LEFT)
+//			ImageUtil.rotate90(this, false);
+//		else if (direction == Direction.RIGHT) {
+////			ImageUtil.rotate90(this, true);
+//			action(RotateBy.$(360, 5F));
+//			
+////			this.x = GameUtil.projectCoordinateX(x + 1);
+//		} else if (direction == Direction.UP) {
+//			rotation = 180;
+//			this.y++;
+//		}
 
 		// Sprite sprite = new
 		// Sprite(TextureHelper.getInstance().getTextureRegions(TextureId.EXIT)[0]);

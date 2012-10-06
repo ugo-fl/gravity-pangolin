@@ -2,6 +2,7 @@ package fr.gravity.pangolin.entity.pangolin;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
@@ -43,8 +44,8 @@ public class Pangolin extends Entity {
 		}
 
 		public void setPosition(float x, float y) {
-			pangolinGraphic.x = x;
-			pangolinGraphic.y = y;
+			pangolinGraphic.setX(x);
+			pangolinGraphic.setY(y);
 		}
 	}
 
@@ -58,6 +59,7 @@ public class Pangolin extends Entity {
 	private boolean controllerEnabled = true;
 
 	public Pangolin() {
+		super(null);
 	}
 
 	public void init(float x, float y) {
@@ -71,6 +73,12 @@ public class Pangolin extends Entity {
 	}
 
 	@Override
+	public void createBody(World world) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void act(float delta) {
 		super.act(delta);
 		if (controllerEnabled)
@@ -79,7 +87,6 @@ public class Pangolin extends Entity {
 		
 		clear();
 		entityGraphic = pangolinState.pangolinGraphic;
-		addActor(entityGraphic);
 	}
 
 	public void update(float delta) {

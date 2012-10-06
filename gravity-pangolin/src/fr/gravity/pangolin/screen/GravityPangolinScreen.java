@@ -22,7 +22,7 @@ public class GravityPangolinScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 		
-		loadBackground();
+//		loadBackground();
 		pangolinWorld.init(stage);
 		
 		loadBackButton(new ClickListener() {
@@ -40,6 +40,5 @@ public class GravityPangolinScreen extends AbstractScreen {
 		background.setFillParent(true);
 		stage.addActor(background);
 	}
-
 
 }

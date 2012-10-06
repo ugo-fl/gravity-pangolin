@@ -11,8 +11,8 @@ public class BranchBlockGraphic extends EntityGraphic {
 		START, MIDDLE, END
 	}
 
-	public BranchBlockGraphic(float x, float y, BranchFramePosition branchFramePosition) {
-		super(TextureHelper.getInstance().getTextureRegions(TextureId.BRANCH)[branchFramePosition.ordinal()], x, y);
+	public BranchBlockGraphic(float x, float y) {
+		super(TextureHelper.getInstance().getTextureRegions(TextureId.BRANCH)[0], x, y);
 	}
 
 	@Override

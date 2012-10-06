@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.screen.GameOverScreen;
 import fr.gravity.pangolin.screen.GravityPangolinScreen;
+import fr.gravity.pangolin.screen.TestBox2DScreen;
 import fr.gravity.pangolin.screen.YouWinScreen;
 import fr.gravity.pangolin.screen.menu.MainMenuScreen;
 import fr.gravity.pangolin.screen.menu.SelectLevelScreen;
@@ -59,12 +60,13 @@ public class GravityPangolinGame extends Game {
 		TextureHelper.getInstance();
 
 		// Loads all the screens
-		loadScreens();
+//		loadScreens();
 		
 		// Loads all the levels
 		loadLevels();
 		
-		 start(0, 1);
+		start(0, 0);
+//		setScreen(new TestBox2DScreen());
 //		setScreen(mainMenuScreen);
 	}
 

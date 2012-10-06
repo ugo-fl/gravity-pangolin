@@ -2,6 +2,7 @@ package fr.gravity.pangolin.entity.block;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
@@ -20,6 +21,7 @@ public class GravityChangerBlock extends Entity {
 //	private long timestamp;
 
 	public GravityChangerBlock(float x, float y, Gravity gravity) {
+		super(null);
 		this.gravity = gravity;
 		entityGraphic = new GravityChangerBlockGraphic(x, y);
 	}
@@ -28,15 +30,15 @@ public class GravityChangerBlock extends Entity {
 	 * Change the gravity on collision. On the first collision the
 	 * GravityChanger is deactivated for DEACTIVATED_PERIOD milliseconds.
 	 */
-	@Override
-	public Rectangle getBoundingRectangle() {
-		final float width = entityGraphic.width / 5;
-		final float height = entityGraphic.height / 5;
-		final float x = entityGraphic.x + (entityGraphic.width / 2) - (width / 2);
-		final float y = entityGraphic.y + (entityGraphic.height / 2) - (height / 2);
-
-		return new Rectangle(x, y, width, height);
-	}
+//	@Override
+//	public Rectangle getBoundingRectangle() {
+//		final float width = entityGraphic.width / 5;
+//		final float height = entityGraphic.height / 5;
+//		final float x = entityGraphic.x + (entityGraphic.width / 2) - (width / 2);
+//		final float y = entityGraphic.y + (entityGraphic.height / 2) - (height / 2);
+//
+//		return new Rectangle(x, y, width, height);
+//	}
 
 	@Override
 	public void touchDown() {
@@ -71,5 +73,11 @@ public class GravityChangerBlock extends Entity {
 	@Override
 	public Actor hit(float x, float y) {
 		return null;
+	}
+
+	@Override
+	public void createBody(World world) {
+		// TODO Auto-generated method stub
+		
 	}
 }
