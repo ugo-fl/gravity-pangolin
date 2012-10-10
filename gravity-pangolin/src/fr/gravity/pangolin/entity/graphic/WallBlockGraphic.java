@@ -5,13 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 
-public class BranchBlockGraphic extends EntityGraphic {
+public class WallBlockGraphic extends EntityGraphic {
 
 	public enum BranchFramePosition {
 		START, MIDDLE, END
 	}
 
-	public BranchBlockGraphic(float x, float y) {
+	public WallBlockGraphic(float x, float y) {
 		super(TextureHelper.getInstance().getTextureRegions(TextureId.BRANCH)[0], x, y);
 	}
 

@@ -15,11 +15,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import fr.gravity.pangolin.entity.graphic.EntityGraphic;
+import fr.gravity.pangolin.entity.graphic.pangolin.PangolinGraphic;
 import fr.gravity.pangolin.screen.TestBox2DScreen;
 import fr.gravity.pangolin.util.SpriteUtil;
 
 public abstract class Entity extends Group {
 
+	protected World world;
+	
 	// The graphic part of the entity
 	protected EntityGraphic entityGraphic;
 	
@@ -33,37 +36,20 @@ public abstract class Entity extends Group {
 	protected Vector2 origin;
 	
 	public Entity(World world, float x, float y, float scale) {
+		this.world = world;
 		this.scale = scale;
 		
 		createGraphic(x, y);
 		createBody(world, x, y);
-		if (body == null)
-			throw new NullPointerException("The " + getName() + "'s body cannot be null.");
-		if (origin == null)
-			throw new NullPointerException("The " + getName() + "'s origin cannot be null.");
+//		if (body == null)
+//			throw new NullPointerException("The " + getName() + "'s body cannot be null.");
+//		if (origin == null)
+//			throw new NullPointerException("The " + getName() + "'s origin cannot be null.");
 	}
 	
 	public abstract void createGraphic(float x, float y);
 	
-	private void createBody(World world, float x, float y) {
-	    BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("data/body.json"));
-	 
-	    BodyDef bd = new BodyDef();
-	    bd.position.set(x, y);
-	    bd.type = BodyType.StaticBody;
-	 
-	    FixtureDef fd = new FixtureDef();
-	    fd.density = 1;
-	    fd.friction = 0.5f;
-	    fd.restitution = 0.3f;
-	 
-	    body = world.createBody(bd);
-	    
-	    loader.attachFixture(body, getBodyName(), fd, scale);
-	    origin = loader.getOrigin(getBodyName(), scale).cpy();
-	}
-	
-	protected abstract String getBodyName();
+	protected abstract void createBody(World world, float x, float y);
 	
 	@Override
 	public void draw (SpriteBatch batch, float parentAlpha) {
@@ -114,6 +100,10 @@ public abstract class Entity extends Group {
 		setY(position.y);
 	}
 
+	public Body getBody() {
+		return body;
+	}
+
 	public EntityGraphic getEntityGraphic() {
 		return entityGraphic;
 	}
@@ -122,7 +112,7 @@ public abstract class Entity extends Group {
 		return getClass().getSimpleName();
 	}
 	
-	public abstract Entity collides();
+//	public abstract Entity collides();
 	
 	/* TOUCH EVENTS */
 

@@ -1,4 +1,4 @@
-package fr.gravity.pangolin.entity.graphic;
+package fr.gravity.pangolin.entity.graphic.pangolin;
 
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 

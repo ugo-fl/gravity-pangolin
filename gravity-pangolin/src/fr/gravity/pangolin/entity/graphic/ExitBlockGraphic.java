@@ -1,5 +1,6 @@
 package fr.gravity.pangolin.entity.graphic;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateBy;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateTo;
 
@@ -11,8 +12,12 @@ import fr.gravity.pangolin.util.ImageUtil;
 public class ExitBlockGraphic extends EntityGraphic {
 
 	public ExitBlockGraphic(float x, float y, Direction direction) {
-		super(TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN)[0], x, y);
+		super(TextureHelper.getInstance().getTextureRegions(TextureId.EXIT)[0], x, y);
 
+//		if (direction == Direction.UP) {
+//			flip(false, true);
+//		}
+		
 //		this.originX = this.width / 2;
 //		this.originY = this.height / 2;
 //		

@@ -1,4 +1,4 @@
-package fr.gravity.pangolin.entity.graphic;
+package fr.gravity.pangolin.entity.graphic.pangolin;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,7 +34,7 @@ public class FallingPangolinGraphic extends PangolinGraphic {
 
 	@Override
 	protected void updateFrame() {
-		setRegion(getFrame(stateTime));
+		set(getFrame(stateTime));
 	}
 
 	@Override
@@ -65,10 +65,5 @@ public class FallingPangolinGraphic extends PangolinGraphic {
 		// TODO Auto-generated method stub
 
 	}
-
-	// @Override
-	// public Rectangle getBoundingRectangle(){
-	// return new Rectangle(0, 0, 1, 1);
-	// }
 
 }

@@ -1,27 +1,37 @@
 package fr.gravity.pangolin.entity.pangolin;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import test.BodyEditorLoader;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.graphic.DyingPangolinGraphic;
-import fr.gravity.pangolin.entity.graphic.FallingPangolinGraphic;
-import fr.gravity.pangolin.entity.graphic.IdlePangolinGraphic;
-import fr.gravity.pangolin.entity.graphic.PangolinGraphic;
-import fr.gravity.pangolin.entity.graphic.WalkingPangolinGraphic;
+import fr.gravity.pangolin.entity.graphic.pangolin.PangolinGraphic;
 import fr.gravity.pangolin.game.Controller;
 import fr.gravity.pangolin.game.GravityPangolinGame;
-import fr.gravity.pangolin.util.GameUtil;
-import fr.gravity.pangolin.world.PangolinWorld;
 
 public class Pangolin extends Entity {
 
-	public static final float SPEED = 150; // unit per second
-	public static final float FALLING_SPEED = SPEED * 1.8F; // unit per second
+	public static final float SPEED = 0.8F; // unit per second
+	public static final float FALLING_SPEED = SPEED / 1.8F; // unit per second
+
+	public static final float MAX_VELOCITY = 8;
 
 	private Controller controller;
 	private float delta;
@@ -60,77 +70,113 @@ public class Pangolin extends Entity {
 	private boolean landed = false;
 	private boolean controllerEnabled = true;
 
+	private Fixture feetSensorFixture;
+
 	public Pangolin(World world, float x, float y) {
 		super(world, x, y, 2);
-		body.setType(BodyType.DynamicBody);
+		createFeetSensor();
 	}
 
-//	public void init(float x, float y) {
-//		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x, y));
-//		PangolinState.WALKING.setPangolinGraphic(new WalkingPangolinGraphic(this, x, y));
-//		PangolinState.FALLING.setPangolinGraphic(new FallingPangolinGraphic(this, x, y));
-//		PangolinState.DYING.setPangolinGraphic(new DyingPangolinGraphic(this, x, y));
-//
-//		entityGraphic = pangolinState.pangolinGraphic;
-//		controller = new Controller(GravityPangolinGame.getInstance().getPangolinWorld(), this);
-//	}
+	@Override
+	protected void createBody(World world, float x, float y) {
+		BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("data/body.json"));
+
+		BodyDef bd = new BodyDef();
+		bd.position.set(x, y);
+		bd.type = BodyType.DynamicBody;
+
+		FixtureDef bodyFixtureDef = new FixtureDef();
+		bodyFixtureDef.density = 1;
+		bodyFixtureDef.friction = 0;
+		bodyFixtureDef.restitution = 0;
+
+		body = world.createBody(bd);
+
+		loader.attachFixture(body, "pangolin", bodyFixtureDef, scale);
+		origin = loader.getOrigin("pangolin", scale).cpy();
+
+		body.setFixedRotation(true);
+		body.setUserData(this);
+
+		body.getFixtureList().get(0);
+	}
+
+	// The fixtures that come in contact with the feet
+	private List<Fixture> contactFixtures = new ArrayList<Fixture>();
+
+	/**
+	 * Initiate the feet sensor
+	 */
+	private void createFeetSensor() {
+		PolygonShape polygonShape = new PolygonShape();
+		FixtureDef myFixtureDef = new FixtureDef();
+		myFixtureDef.shape = polygonShape;
+		myFixtureDef.density = 1;
+
+		polygonShape.setAsBox(0.8f, 0.2f, body.getLocalCenter().add(new Vector2(-0.1F, -0.3F)), 0);
+		myFixtureDef.isSensor = true;
+		feetSensorFixture = body.createFixture(myFixtureDef);
+		feetSensorFixture.setUserData(3);
+
+		world.setContactListener(new ContactListener() {
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
+			}
+
+			@Override
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+			}
+
+			@Override
+			public void endContact(Contact contact) {
+				Fixture fixtureA = contact.getFixtureA();
+				Fixture fixtureB = contact.getFixtureB();
+
+				if (fixtureA == feetSensorFixture || fixtureB == feetSensorFixture) {
+					Fixture contactFixture = (feetSensorFixture == fixtureA ? fixtureB : fixtureA);
+					contactFixtures.remove(contactFixture);
+				}
+			}
+
+			@Override
+			public void beginContact(Contact contact) {
+				Fixture fixtureA = contact.getFixtureA();
+				Fixture fixtureB = contact.getFixtureB();
+
+				if (fixtureA == feetSensorFixture || fixtureB == feetSensorFixture) {
+					Fixture contactFixture = (feetSensorFixture == fixtureA ? fixtureB : fixtureA);
+					contactFixtures.add(contactFixture);
+				}
+			}
+		});
+	}
 
 	@Override
 	public void createGraphic(float x, float y) {
-		PangolinState.IDLE.setPangolinGraphic(new IdlePangolinGraphic(this, x, y));
-		PangolinState.WALKING.setPangolinGraphic(new WalkingPangolinGraphic(this, x, y));
-		PangolinState.FALLING.setPangolinGraphic(new FallingPangolinGraphic(this, x, y));
-		PangolinState.DYING.setPangolinGraphic(new DyingPangolinGraphic(this, x, y));
-
-		pangolinState = PangolinState.IDLE;
-		entityGraphic = pangolinState.pangolinGraphic;
+		entityGraphic = new PangolinGraphic(this, x, y);
 		controller = new Controller(GravityPangolinGame.getInstance().getPangolinWorld(), this);
 	}
 
-	@Override
-	protected String getBodyName() {
-		return "pangolin";
-	}
-	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
 		if (controllerEnabled)
 			controller.update(delta);
-		update(delta);
-		
 		clear();
-		entityGraphic = pangolinState.pangolinGraphic;
-	}
-
-	public void update(float delta) {
-		this.delta = delta;
-		translate();
-	}
-
-	public void update() {
-		translate();
-	}
-
-	public void translate() {
-		translate(velocity.tmp().mul(delta));
-	}
-
-	public void translate(Vector2 translation) {
-		body.getPosition().add(translation);
-//		for (PangolinState pangolinState : PangolinState.values()) {
-//			pangolinState.setPosition(getX() + translation.x, getY() - translation.y);
-//		}
+		((PangolinGraphic) entityGraphic).updateFrame();
 	}
 
 	public void idle() {
+		((PangolinGraphic) entityGraphic).idle();
 		pangolinState = PangolinState.IDLE;
 		getAcceleration().x = 0;
 		getVelocity().x = 0;
 		getVelocity().y = 0;
+		body.setLinearVelocity(new Vector2());
 	}
 
 	public void go(Direction direction) {
+		((PangolinGraphic) entityGraphic).move();
 		if (landed)
 			pangolinState = PangolinState.WALKING;
 		this.direction = direction;
@@ -138,18 +184,26 @@ public class Pangolin extends Entity {
 	}
 
 	public void fall(Direction direction) {
-		if (!landed)
-			pangolinState = PangolinState.FALLING;
-		move(direction, true);
+		landed = false;
+		pangolinState = PangolinState.FALLING;
+
+		// TODO this code might not be real clean
+		body.setTransform(body.getWorldCenter().add(direction == Direction.DOWN ? -1 : 1, direction == Direction.DOWN ? -0.5F : 0.5F),
+				(float) Math.toRadians(direction == Direction.DOWN ? 0 : 180));
 	}
 
 	private void move(Direction direction, boolean falling) {
-		float speed = (falling ? FALLING_SPEED : SPEED);
-
-		if (direction == Direction.LEFT || direction == Direction.RIGHT)
-			velocity.x = direction == Direction.LEFT ? -speed : speed;
-		else if (direction == Direction.UP || direction == Direction.DOWN)
-			velocity.y = direction == Direction.UP ? -speed : speed;
+		Vector2 movement = null;
+		Vector2 velocity = body.getLinearVelocity();
+		float speed = (pangolinState == PangolinState.FALLING ? FALLING_SPEED : SPEED);
+		if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+			speed *= (Math.abs(MAX_VELOCITY) - Math.abs(velocity.x));
+			movement = new Vector2(direction == Direction.LEFT ? -speed : speed, 0);
+		} else if (direction == Direction.UP || direction == Direction.DOWN) {
+			speed *= (Math.abs(MAX_VELOCITY) - Math.abs(velocity.y));
+			movement = new Vector2(0, direction == Direction.DOWN ? -speed : speed);
+		}
+		body.applyLinearImpulse(movement, body.getWorldCenter());
 	}
 
 	public void disableController() {
@@ -158,10 +212,10 @@ public class Pangolin extends Entity {
 
 	/** EVENTS **/
 
-	@Override
-	public Entity collides() {
-		return null;
-	}
+//	@Override
+//	public Entity collides() {
+//		return null;
+//	}
 
 	@Override
 	public Actor hit(float x, float y) {
@@ -203,11 +257,7 @@ public class Pangolin extends Entity {
 	}
 
 	public boolean isLanded() {
-		return landed;
-	}
-
-	public void setLanded(boolean landed) {
-		this.landed = landed;
+		return contactFixtures.size() > 0;
 	}
 
 	public void setDirection(Direction direction) {

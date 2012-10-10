@@ -10,10 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.block.BranchBlock;
+import fr.gravity.pangolin.entity.block.WallBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock;
-import fr.gravity.pangolin.entity.block.GravityChangerBlock;
-import fr.gravity.pangolin.entity.graphic.BranchBlockGraphic.BranchFramePosition;
+import fr.gravity.pangolin.entity.graphic.WallBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.exception.InvalidMapException;
@@ -23,7 +22,7 @@ import fr.gravity.pangolin.util.GameUtil;
 public class PangolinWorld {
 
 	// Options
-	private static final int GRAVITY = -10;
+	private static final int GRAVITY = 50;
 
 	// Singleton instance
 	private static PangolinWorld instance;
@@ -56,8 +55,23 @@ public class PangolinWorld {
 	/** Finish spot **/
 	// private ExitBlock exitBlock = new ExitBlock(this);
 	private ExitBlock exitBlock;
+	private Direction exitDirection;
 
-	private Gravity gravity = new Gravity(Direction.DOWN);
+	private Gravity gravity = Gravity.DOWN;
+
+	public enum Gravity {
+		LEFT(Direction.LEFT, new Vector2(-GRAVITY, 0)), UP(Direction.UP, new Vector2(0, GRAVITY)), RIGHT(Direction.RIGHT, new Vector2(GRAVITY, 0)), DOWN(
+				Direction.DOWN, new Vector2(0, -GRAVITY));
+
+		public Direction direction;
+		public Vector2 force;
+
+		private Gravity(Direction direction, Vector2 force) {
+			this.direction = direction;
+			this.force = force;
+		}
+
+	}
 
 	/**
 	 * Singleton accessor.
@@ -85,7 +99,7 @@ public class PangolinWorld {
 
 	public PangolinWorld(FileHandle pangolinMap) {
 		readOptions(pangolinMap);
-		world = new World(new Vector2(0, GRAVITY), true);
+		world = new World(gravity.force, true);
 	}
 
 	private void readOptions(FileHandle pangolinMap) {
@@ -102,8 +116,8 @@ public class PangolinWorld {
 					readOptionMapSize(optionValue);
 				// else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
 				// readOptionPangolinDirection(optionValue);
-				// else if (OPTION_EXIT_DIRECTION.equals(optionName))
-				// readOptionFinishDirection(optionValue);
+				else if (OPTION_EXIT_DIRECTION.equals(optionName))
+					readOptionExitDirection(optionValue);
 				line = mapFile.readLine();
 			}
 			if (sizeX <= 0 || sizeY <= 0)
@@ -113,8 +127,8 @@ public class PangolinWorld {
 		}
 	}
 
-	private void readOptionFinishDirection(String optionValue) {
-		exitBlock.setDirection(Direction.values()[Integer.valueOf(optionValue)]);
+	private void readOptionExitDirection(String optionValue) {
+		exitDirection = Direction.valueOf(optionValue);
 	}
 
 	private void readOptionPangolinDirection(String optionValue) {
@@ -124,8 +138,7 @@ public class PangolinWorld {
 	private void readOptionMapSize(String optionValue) {
 		String[] size = optionValue.split(";");
 		if (size.length != 2)
-			throw new InvalidMapException(
-					"Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
+			throw new InvalidMapException("Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
 		sizeX = Integer.valueOf(size[0]);
 		sizeY = Integer.valueOf(size[1]);
 
@@ -150,7 +163,7 @@ public class PangolinWorld {
 					String sym = String.valueOf(line.charAt(x));
 
 					if (SYM_BLOCK.equalsIgnoreCase(sym)) {
-						BranchBlock branchBlock = new BranchBlock(world, x, y);
+						WallBlock branchBlock = new WallBlock(world, x, y);
 						addEntity(stage, branchBlock);
 					} else if (SYM_START.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(world, x, y);
@@ -160,9 +173,11 @@ public class PangolinWorld {
 					// GravityChangerBlock gravityChangerBlock = new
 					// GravityChangerBlock(x, y, gravity);
 					// addEntity(stage, gravityChangerBlock);
-					// } else if (SYM_EXIT.equalsIgnoreCase(sym)) {
-					// exitBlock.init(x, y);
 					// }
+					else if (SYM_EXIT.equalsIgnoreCase(sym)) {
+						exitBlock = new ExitBlock(this, x, y, exitDirection);
+						addEntity(stage, exitBlock);
+					}
 				}
 			}
 		} catch (IOException e) {
@@ -222,8 +237,37 @@ public class PangolinWorld {
 		return sizeY;
 	}
 
+	public void setGravity(Gravity gravity) {
+		this.gravity = gravity;
+		world.setGravity(gravity.force);
+	}
+
 	public Gravity getGravity() {
 		return gravity;
 	}
+
+	public Direction getExitDirection() {
+		return exitDirection;
+	}
+	
+	/**
+	 * 
+	 * @return the direction of the new gravity
+	 */
+	public Direction invertGravity() {
+		int length = Gravity.values().length;
+		Gravity newGravity = Gravity.values()[(getGravity().ordinal() + length / 2) % length];
+		System.out.println("INVERT GRAVITY !");
+		setGravity(newGravity);
+		return newGravity.direction;
+	}
+
+	public void nextGravity() {
+
+	}
+
+	// public Gravity getGravity() {
+	// return gravity;
+	// }
 
 }

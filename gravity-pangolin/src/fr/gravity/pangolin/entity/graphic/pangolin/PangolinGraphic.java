@@ -1,4 +1,4 @@
-package fr.gravity.pangolin.entity.graphic;
+package fr.gravity.pangolin.entity.graphic.pangolin;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import fr.gravity.pangolin.entity.graphic.EntityGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.helper.TextureHelper;
@@ -13,12 +14,12 @@ import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 import fr.gravity.pangolin.util.SpriteUtil;
 import fr.gravity.pangolin.world.PangolinWorld;
 
-public abstract class PangolinGraphic extends EntityGraphic {
+public class PangolinGraphic extends EntityGraphic {
 
 	protected Pangolin pangolin;
+	private boolean idle = false;
 
-	private TextureRegion[] textureRegions = TextureHelper.getInstance()
-			.getTextureRegions(TextureId.PANGOLIN);
+	private TextureRegion[] textureRegions = TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN);
 	protected Animation animation = new Animation(0.25F, textureRegions);
 
 	public PangolinGraphic(Pangolin pangolin, float x, float y) {
@@ -27,7 +28,7 @@ public abstract class PangolinGraphic extends EntityGraphic {
 	}
 
 	protected Sprite getFrame(float stateTime) {
-		Direction direction = PangolinWorld.getInstance().getGravity().getDirection();
+		Direction direction = PangolinWorld.getInstance().getGravity().direction;
 		if (animation != null) {
 			Sprite sprite = new Sprite(animation.getKeyFrame(stateTime, true));
 			adjustSpriteSide(sprite, direction, pangolin.getDirection());
@@ -38,35 +39,58 @@ public abstract class PangolinGraphic extends EntityGraphic {
 
 	private void adjustSpriteSide(Sprite sprite, Direction gravityDirection, Direction pangolinDirection) {
 		if (gravityDirection == Direction.RIGHT) {
-			sprite.flip(pangolinDirection == Direction.UP, true);
-			SpriteUtil.rotate(sprite, true);
+			sprite.flip(pangolinDirection == Direction.UP, false);
+			// SpriteUtil.rotate(sprite, false);
 		} else if (gravityDirection == Direction.LEFT) {
-			sprite.flip(pangolinDirection == Direction.DOWN, true);
-			SpriteUtil.rotate(sprite, false);
+			sprite.flip(pangolinDirection == Direction.DOWN, false);
+			// SpriteUtil.rotate(sprite, false);
 		} else if (gravityDirection == Direction.UP) {
-			sprite.flip(pangolinDirection == Direction.LEFT, true);
+			sprite.flip(pangolinDirection == Direction.RIGHT, false);
 		} else if (gravityDirection == Direction.DOWN) {
 			sprite.flip(pangolinDirection == Direction.LEFT, false);
 		}
 	}
 
-	protected void updateFrame() {
+	public void updateFrame() {
 		Sprite frame = getFrame(stateTime);
-		stateTime += Gdx.graphics.getDeltaTime();
+		if (idle)
+			stateTime = 0;
+		else
+			stateTime += Gdx.graphics.getDeltaTime();
 		if (frame != null)
-			setRegion(frame);
+			set(frame);
+	}
+
+	public void idle() {
+		idle = true;
+	}
+	
+	public void move() {
+		idle = false;
+	}
+	
+	@Override
+	public void touchDown() {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public void draw(SpriteBatch spriteBatch, float stateTime) {
-		process();
-		super.draw(spriteBatch, stateTime);
+	public void touchDownOut() {
+		// TODO Auto-generated method stub
+
 	}
 
-	/**
-	 * Abstract methods
-	 */
+	@Override
+	public void touchUp() {
+		// TODO Auto-generated method stub
 
-	public abstract void process();
+	}
+
+	@Override
+	public void touchUpOut() {
+		// TODO Auto-generated method stub
+
+	}
 
 }

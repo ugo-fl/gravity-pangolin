@@ -51,7 +51,7 @@ import fr.gravity.pangolin.world.PangolinWorld;
 public abstract class AbstractScreen implements Screen, InputProcessor {
 
 	// Options
-	public static final boolean DEBUG_ACTIVATED = true;
+	private boolean debug = true;
 	public static final int GAME_VIEWPORT_WIDTH = 480, GAME_VIEWPORT_HEIGHT = 320;
 
 	// Game logic
@@ -108,7 +108,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		groundBody = world.createBody(bodyDef);
 
 		// set the stage as the input processor
-		Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// draw the actors
 		stage.draw();
 
-		if (DEBUG_ACTIVATED)
+		if (debug)
 			drawDebug(startTime, updateTime);
 
 	}
@@ -145,7 +145,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		debugRenderer.render(pangolinWorld.getWorld(), camera.combined);
 		float renderTime = (TimeUtils.nanoTime() - startTime) / 1000000000.0f;
 
-		drawGround(pangolinWorld.getWorld());
+//		drawGround(pangolinWorld.getWorld());
 
 		// Sprite pangolinSprite = new
 		// Sprite(TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN)[0]);
@@ -156,20 +156,26 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond() + ", update: " + updateTime + ", render: " + renderTime, 0, 20);
 		batch.end();
 	}
-
-	private void drawGround(World world) {
-		EdgeShape shape = new EdgeShape();
-		shape.set(new Vector2(0, 0), new Vector2(width, 0));
-
-		FixtureDef fd = new FixtureDef();
-		fd.shape = shape;
-		fd.friction = 0.3f;
-
-		BodyDef bd = new BodyDef();
-		Body ground = world.createBody(bd);
-		ground.createFixture(fd);
-		shape.dispose();
+	
+	/**
+	 * Turns on/off the debug view
+	 */
+	public void switchDebug() {
+		debug = (debug ? false : true);
 	}
+//	private void drawGround(World world) {
+//		EdgeShape shape = new EdgeShape();
+//		shape.set(new Vector2(0, 0), new Vector2(width, 0));
+//
+//		FixtureDef fd = new FixtureDef();
+//		fd.shape = shape;
+//		fd.friction = 0.3f;
+//
+//		BodyDef bd = new BodyDef();
+//		Body ground = world.createBody(bd);
+//		ground.createFixture(fd);
+//		shape.dispose();
+//	}
 
 	// private void drawDebugView() {
 	// ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -314,10 +320,10 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 	}
 
 	public float getPpuX() {
-		if (pangolinWorld == null)
-			return 1;
-		float sizeX = pangolinWorld.getSizeX();
-		return width / sizeX;
+//		if (pangolinWorld == null)
+//			return 1;
+//		float sizeX = pangolinWorld.getSizeX();
+		return Gdx.graphics.getPpcX();
 	}
 
 	public float getPpuY() {
@@ -438,4 +444,5 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }
