@@ -70,6 +70,16 @@ public class WallBlock extends Entity {
 		return null;
 	}
 
+	@Override
+	public void beginContact(Object entity) {
+		
+	}
+
+	@Override
+	public void endContact(Object entity) {
+		
+	}
+
 	// @Override
 	// public Rectangle getBoundingRectangle() {
 	// float gapX = 0F;

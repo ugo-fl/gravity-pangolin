@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
+import fr.gravity.pangolin.collision.ContactDispatcher;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
@@ -101,6 +102,7 @@ public class GravityPangolinWorld {
 	public GravityPangolinWorld(FileHandle pangolinMap) {
 		readOptions(pangolinMap);
 		world = new World(gravity.force, true);
+		world.setContactListener(new ContactDispatcher());
 	}
 
 	private void readOptions(FileHandle pangolinMap) {
@@ -138,7 +140,7 @@ public class GravityPangolinWorld {
 	}
 
 	private void readOptionPangolinDirection(String optionValue) {
-		pangolin.setDirection(Direction.values()[Integer.valueOf(optionValue)]);
+//		pangolin.setDirection(Direction.values()[Integer.valueOf(optionValue)]);
 	}
 
 	private void readOptionMapSize(String optionValue) {
@@ -155,9 +157,9 @@ public class GravityPangolinWorld {
 	 */
 	public void init(Stage stage) {
 		// Checks if the screen is set first
-		IScreen screen = (IScreen) GameUtil.getScreen();
-		if (screen == null)
-			throw new NullPointerException("The screen has not been initiated yet.");
+//		IScreen screen = (IScreen) GameUtil.getScreen();
+//		if (screen == null)
+//			throw new NullPointerException("The screen has not been initiated yet.");
 
 		try {
 			int y = sizeY - 1;
@@ -260,13 +262,14 @@ public class GravityPangolinWorld {
 	public Direction invertGravity() {
 		int length = Gravity.values().length;
 		Gravity newGravity = Gravity.values()[(getGravity().ordinal() + length / 2) % length];
-		System.out.println("INVERT GRAVITY !");
 		setGravity(newGravity);
 		return newGravity.direction;
 	}
 
 	public void nextGravity() {
-
+		int length = Gravity.values().length;
+		Gravity newGravity = Gravity.values()[(getGravity().ordinal() + 1) % length];
+		setGravity(newGravity);
 	}
 
 	// public Gravity getGravity() {

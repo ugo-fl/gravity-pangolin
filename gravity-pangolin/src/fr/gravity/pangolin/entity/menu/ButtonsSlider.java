@@ -149,7 +149,6 @@ public class ButtonsSlider extends Group implements InputProcessor {
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		super.touchDown(x, y, pointer);
-		System.out.println("DOWN " + x);
 		touchDownX = x;
 		return false;
 	}

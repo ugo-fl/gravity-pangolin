@@ -15,12 +15,20 @@ public class ContactDispatcher implements ContactListener {
 		Object userDataB = contact.getFixtureB().getUserData();
 		
 		if (userDataA instanceof Entity)
-			((Entity) userDataA).collidesWith(userDataB);
+			((Entity) userDataA).beginContact(userDataB);
+		if (userDataB instanceof Entity)
+			((Entity) userDataB).beginContact(userDataA);
 	}
 
 	@Override
 	public void endContact(Contact contact) {
+		Object userDataA = contact.getFixtureA().getUserData();
+		Object userDataB = contact.getFixtureB().getUserData();
 		
+		if (userDataA instanceof Entity)
+			((Entity) userDataA).endContact(userDataB);
+		if (userDataB instanceof Entity)
+			((Entity) userDataB).endContact(userDataA);
 	}
 
 	@Override

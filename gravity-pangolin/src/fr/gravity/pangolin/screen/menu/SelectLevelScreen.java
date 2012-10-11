@@ -24,12 +24,6 @@ public class SelectLevelScreen extends MenuScreen {
 	public SelectLevelScreen(GravityPangolinGame game, int packId) {
 		super(game, null);
 		this.packId = packId;
-	}
-
-	@Override
-	public void show() {
-		super.show();
-
 		loadBackButton(new ClickListener() {
 			@Override
 			public void click(Actor actor, float x, float y) {

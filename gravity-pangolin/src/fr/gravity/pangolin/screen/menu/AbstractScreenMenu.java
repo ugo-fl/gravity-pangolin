@@ -52,6 +52,8 @@ public abstract class AbstractScreenMenu implements IScreen {
 		// height = (isGameScreen() ? GAME_VIEWPORT_HEIGHT :
 		// MENU_VIEWPORT_HEIGHT);
 		this.stage = new CustomStage(game, width, height, true);
+		// set the stage as the input processor
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	protected String getName() {
@@ -112,9 +114,6 @@ public abstract class AbstractScreenMenu implements IScreen {
 	@Override
 	public void show() {
 		Gdx.app.log(GravityPangolinGame.LOG, "Showing screen: " + getName());
-
-		// set the stage as the input processor
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -161,8 +160,9 @@ public abstract class AbstractScreenMenu implements IScreen {
 
 			// Draws actors
 			if (actor instanceof ExitBlock) {
-//				BoundingBox bb = ((ExitBlock) actor).getEntityGraphic().getBoundingBox();
-//				debugRenderer.begin(ShapeType.Line);
+				// BoundingBox bb = ((ExitBlock)
+				// actor).getEntityGraphic().getBoundingBox();
+				// debugRenderer.begin(ShapeType.Line);
 			} else {
 				debugRenderer.begin(ShapeType.Rectangle);
 				debugRenderer.setColor(new Color(0, 1, 0, 1));

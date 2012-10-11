@@ -1,8 +1,8 @@
-package fr.gravity.pangolin.helper;
+package fr.gravity.pangolin.util;
 
 import java.util.Date;
 
-public class CountDownHelper {
+public class CountDown {
 
 	private final int duration;
 	private long startTimestamp = 0;
@@ -12,7 +12,7 @@ public class CountDownHelper {
 	 * 
 	 * @param waitingPeriod in milliseconds
 	 */
-	public CountDownHelper(int waitingPeriod) {
+	public CountDown(int waitingPeriod) {
 		this.duration = waitingPeriod;
 	}
 	
@@ -25,7 +25,7 @@ public class CountDownHelper {
 		return started;
 	}
 	
-	public boolean waitForIt() {
+	public boolean isFinished() {
 		if (new Date().getTime() - startTimestamp < duration)
 			return false;
 		started = false;
@@ -38,6 +38,10 @@ public class CountDownHelper {
 	
 	public float getDuration() {
 		return duration;
+	}
+
+	public void finish() {
+		startTimestamp = new Date().getTime() - duration;
 	}
 	
 }

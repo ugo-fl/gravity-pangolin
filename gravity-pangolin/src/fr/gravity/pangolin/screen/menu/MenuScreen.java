@@ -38,11 +38,6 @@ public class MenuScreen extends AbstractScreenMenu {
 
 	public MenuScreen(GravityPangolinGame game, GravityPangolinWorld pangolinWorld) {
 		super(game, pangolinWorld);
-	}
-
-	@Override
-	public void show() {
-		super.show();
 		loadBackground();
 		if (herbSprites[0] == null) {
 			loadHerbs();

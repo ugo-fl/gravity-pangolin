@@ -19,9 +19,12 @@ public class FadeOutTransition extends Transition {
 
 	@Override
 	public void render(IScreen current, IScreen next) {
+		if (current == null) {
+			countDownHelper.finish();
+			return ;
+		}
 		current.render(Gdx.graphics.getDeltaTime());
 		color.set(0f, 0f, 0f, 1F - ((1F / countDownHelper.getDuration()) * countDownHelper.getTimeRemaining()));
-		System.out.println("FADE OUT ALPHA = " + color.a);
 		
 		Gdx.gl20.glEnable(GL20.GL_BLEND);
 		ShapeRenderer shapeRenderer = new ShapeRenderer();

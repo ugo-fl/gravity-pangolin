@@ -64,22 +64,23 @@ public class GravityPangolinGame extends Game {
 		// Loads all the textures (by getting TextureLoader's instance)
 		TextureHelper.getInstance();
 
-		// Loads all the screens
-		 loadScreens();
-
 		// Loads all the levels
 		loadLevels();
 
-		// start(0, 0);
+		// Loads all the screens
+		loadScreens();
+
+//		showSelectPackScreen();
+		start(0, 0);
 		// setScreen(new TestBox2DScreen());
-		 setScreen(mainMenuScreen);
+		// setScreen(mainMenuScreen);
 	}
 
 	private void loadScreens() {
 		mainMenuScreen = new MainMenuScreen(this);
 		selectPackScreen = new SelectPackScreen(this);
-//		youWinScreen = new YouWinScreen(null, null);
-//		gameOverScreen = new GameOverScreen(null, null);
+		// youWinScreen = new YouWinScreen(null, null);
+		// gameOverScreen = new GameOverScreen(null, null);
 	}
 
 	private void loadLevels() {
@@ -88,7 +89,8 @@ public class GravityPangolinGame extends Game {
 
 		int index = 0;
 		for (FileHandle packDirectory : packDirectories) {
-			packs[index++] = new Pack(packDirectory.nameWithoutExtension().substring(2).replace(' ', '\n'), packDirectory);
+			packs[index++] = new Pack(packDirectory.nameWithoutExtension().substring(2).replace(' ', '\n'),
+					packDirectory);
 		}
 	}
 
@@ -98,14 +100,9 @@ public class GravityPangolinGame extends Game {
 
 		pangolinWorld = GravityPangolinWorld.getInstance(getLevelMap(packId, levelId));
 		gravityPangolinScreen = new GravityPangolinScreen(this, pangolinWorld);
-		
-		ArrayList<Transition> transitionEffects = new ArrayList<Transition>();
-		transitionEffects.add(new FadeOutTransition(1000));
-		transitionEffects.add(new FadeInTransition(1000));
 
-		TransitionScreen transitionScreen = new TransitionScreen(this, (IScreen) getScreen(), gravityPangolinScreen, transitionEffects);
-		setScreen(transitionScreen);
-		
+		fadeInScreen(gravityPangolinScreen);
+
 		GameProgress.getInstance().setProgress(packId, levelId);
 	}
 
@@ -118,10 +115,14 @@ public class GravityPangolinGame extends Game {
 	}
 
 	public void nextStage() {
+		// Avoid transition repeat
+		if (getScreen() instanceof TransitionScreen)
+			return;
+
 		levelId++;
 		if (levelId >= packs[packId].getMaps().length) {
 			levelId = 0;
-			showSelectPackScreen();
+			showSelectLevelScreen();
 		} else
 			start(packId, levelId);
 	}
@@ -148,7 +149,7 @@ public class GravityPangolinGame extends Game {
 	}
 
 	public void showSelectPackScreen() {
-		setScreen(new SelectPackScreen(this));
+		fadeInScreen(selectPackScreen);
 	}
 
 	public void showSelectLevelScreen(Screen selectLevelScreen) {
@@ -157,14 +158,24 @@ public class GravityPangolinGame extends Game {
 	}
 
 	public void showSelectLevelScreen() {
-		// TODO Why isn't that working ?
-		// setScreen(selectLevelScreen);
-
-		setScreen(new SelectLevelScreen(this, packId));
+		fadeInScreen(new SelectLevelScreen(this, packId));
 	}
 
 	public void showMainMenuScreen() {
-		setScreen(mainMenuScreen);
+		fadeInScreen(mainMenuScreen);
+	}
+
+	public void fadeInScreen(Screen screen) {
+		if (getScreen() instanceof TransitionScreen)
+			return ;
+		
+		ArrayList<Transition> transitionEffects = new ArrayList<Transition>();
+		transitionEffects.add(new FadeOutTransition(1000));
+		transitionEffects.add(new FadeInTransition(1000));
+
+		TransitionScreen transitionScreen = new TransitionScreen(this, (IScreen) getScreen(), (IScreen) screen,
+				transitionEffects);
+		super.setScreen(transitionScreen);
 	}
 
 	/**

@@ -6,11 +6,9 @@ import java.util.List;
 import test.BodyEditorLoader;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -26,7 +24,6 @@ import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.graphic.pangolin.PangolinGraphic;
 import fr.gravity.pangolin.game.Controller;
 import fr.gravity.pangolin.game.GravityPangolinGame;
-import fr.gravity.pangolin.util.GameUtil;
 
 public class Pangolin extends Entity {
 
@@ -104,7 +101,7 @@ public class Pangolin extends Entity {
 	}
 
 	// The fixtures that come in contact with the feet
-	private List<Fixture> contactFixtures = new ArrayList<Fixture>();
+	private List<Entity> inContactEntities = new ArrayList<Entity>();
 
 	/**
 	 * Initiate the feet sensor
@@ -118,43 +115,43 @@ public class Pangolin extends Entity {
 		polygonShape.setAsBox(0.8f, 0.2f, body.getLocalCenter().add(new Vector2(-0.1F, -0.3F)), 0);
 		myFixtureDef.isSensor = true;
 		feetSensorFixture = body.createFixture(myFixtureDef);
-		feetSensorFixture.setUserData(3);
+		feetSensorFixture.setUserData(this);
 
-		world.setContactListener(new ContactListener() {
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-			}
-
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-			}
-
-			@Override
-			public void endContact(Contact contact) {
-				Fixture fixtureA = contact.getFixtureA();
-				Fixture fixtureB = contact.getFixtureB();
-
-				if (fixtureA == feetSensorFixture || fixtureB == feetSensorFixture) {
-					Fixture contactFixture = (feetSensorFixture == fixtureA ? fixtureB : fixtureA);
-					contactFixtures.remove(contactFixture);
-				}
-			}
-
-			@Override
-			public void beginContact(Contact contact) {
-				Fixture fixtureA = contact.getFixtureA();
-				Fixture fixtureB = contact.getFixtureB();
-
-				if (fixtureA == feetSensorFixture || fixtureB == feetSensorFixture) {
-					Fixture contactFixture = (feetSensorFixture == fixtureA ? fixtureB : fixtureA);
-					
-					if (contactFixture.getUserData() instanceof ExitBlock) {
-						GravityPangolinGame.getInstance().nextStage();
-					}
-					contactFixtures.add(contactFixture);
-				}
-			}
-		});
+//		world.setContactListener(new ContactListener() {
+//			@Override
+//			public void preSolve(Contact contact, Manifold oldManifold) {
+//			}
+//
+//			@Override
+//			public void postSolve(Contact contact, ContactImpulse impulse) {
+//			}
+//
+//			@Override
+//			public void endContact(Contact contact) {
+//				Fixture fixtureA = contact.getFixtureA();
+//				Fixture fixtureB = contact.getFixtureB();
+//
+//				if (fixtureA == feetSensorFixture || fixtureB == feetSensorFixture) {
+//					Fixture contactFixture = (feetSensorFixture == fixtureA ? fixtureB : fixtureA);
+//					inContactEntities.remove(contactFixture);
+//				}
+//			}
+//
+//			@Override
+//			public void beginContact(Contact contact) {
+//				Fixture fixtureA = contact.getFixtureA();
+//				Fixture fixtureB = contact.getFixtureB();
+//
+//				if (fixtureA == feetSensorFixture || fixtureB == feetSensorFixture) {
+//					Fixture contactFixture = (feetSensorFixture == fixtureA ? fixtureB : fixtureA);
+//					
+//					if (contactFixture.getUserData() instanceof ExitBlock) {
+//						GravityPangolinGame.getInstance().nextStage();
+//					}
+//					inContactEntities.add(contactFixture);
+//				}
+//			}
+//		});
 	}
 
 	@Override
@@ -212,8 +209,14 @@ public class Pangolin extends Entity {
 		body.applyLinearImpulse(movement, body.getWorldCenter());
 	}
 
-	public void disableController() {
-		controllerEnabled = true;
+	@Override
+	public void beginContact(Object entity) {
+		inContactEntities.add((Entity) entity);
+	}
+	
+	@Override
+	public void endContact(Object entity) {
+		inContactEntities.remove((Entity) entity);
 	}
 
 	/** EVENTS **/
@@ -263,7 +266,7 @@ public class Pangolin extends Entity {
 	}
 
 	public boolean isLanded() {
-		return contactFixtures.size() > 0;
+		return inContactEntities.size() > 0;
 	}
 
 	public void setDirection(Direction direction) {

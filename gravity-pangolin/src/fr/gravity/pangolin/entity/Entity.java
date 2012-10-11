@@ -108,7 +108,8 @@ public abstract class Entity extends Group {
 		return entityGraphic;
 	}
 
-	public abstract void collidesWith(Object entity);
+	public abstract void beginContact(Object entity);
+	public abstract void endContact(Object entity);
 	
 	/* TOUCH EVENTS */
 

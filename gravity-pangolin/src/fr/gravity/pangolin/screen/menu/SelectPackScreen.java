@@ -20,14 +20,9 @@ import fr.gravity.pangolin.game.Pack;
 
 public class SelectPackScreen extends MenuScreen {
 
+	private ButtonsSlider buttonSlider;
 	public SelectPackScreen(GravityPangolinGame game) {
 		super(game, null);
-	}
-
-	@Override
-	public void show() {
-		super.show();
-		
 		drawButtonsSlider();
 		loadBackButton(new ClickListener() {
 			@Override
@@ -35,8 +30,14 @@ public class SelectPackScreen extends MenuScreen {
 				GravityPangolinGame.getInstance().showMainMenuScreen();
 			}
 		});
+		Gdx.input.setInputProcessor(buttonSlider);
 	}
 
+	@Override
+	public void show() {
+		Gdx.input.setInputProcessor(buttonSlider);
+	}
+	
 	private void drawButtonsSlider() {
 		// FileHandle[] packs = Gdx.files.internal("./bin/map").list();
 		Pack[] packs = game.getPacks();
@@ -74,7 +75,8 @@ public class SelectPackScreen extends MenuScreen {
 
 			textButtons.add(textButton);
 		}
-		stage.addActor(new ButtonsSlider(textButtons, stage, this));
+		buttonSlider = new ButtonsSlider(textButtons, stage, this);
+		stage.addActor(buttonSlider);
 	}
 
 }

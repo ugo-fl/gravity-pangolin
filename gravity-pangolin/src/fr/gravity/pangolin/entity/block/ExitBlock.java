@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -13,13 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.ExitBlockGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
-import fr.gravity.pangolin.helper.CountDownHelper;
+import fr.gravity.pangolin.game.GravityPangolinGame;
+import fr.gravity.pangolin.util.CountDown;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class ExitBlock extends Entity {
 
 	private static final int STOP_PERIOD = 1000;
-	private CountDownHelper countDown = new CountDownHelper(STOP_PERIOD);
+	private CountDown countDown = new CountDown(STOP_PERIOD);
 
 	private GravityPangolinWorld pangolinWorld;
 	private Direction direction = Direction.DOWN;
@@ -111,6 +113,17 @@ public class ExitBlock extends Entity {
 
 	public void setDirection(Direction direction) {
 		this.direction = direction;
+	}
+
+	@Override
+	public void beginContact(Object entity) {
+		GravityPangolinGame.getInstance().nextStage();
+	}
+
+	@Override
+	public void endContact(Object entity) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

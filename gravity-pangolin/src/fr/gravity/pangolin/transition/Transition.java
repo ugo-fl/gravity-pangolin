@@ -1,18 +1,18 @@
 package fr.gravity.pangolin.transition;
 
-import fr.gravity.pangolin.helper.CountDownHelper;
 import fr.gravity.pangolin.screen.IScreen;
+import fr.gravity.pangolin.util.CountDown;
 
 public abstract class Transition {
 
-	protected CountDownHelper countDownHelper;
+	protected CountDown countDownHelper;
 
 	/**
 	 * 
 	 * @param duration in milliseconds
 	 */
 	public Transition(int duration) {
-		countDownHelper = new CountDownHelper(duration);
+		countDownHelper = new CountDown(duration);
 	}
 	
 	public void start() {
@@ -28,7 +28,7 @@ public abstract class Transition {
 	public abstract void render(IScreen current, IScreen next);
 
 	public boolean isFinished() {
-		return countDownHelper.waitForIt();
+		return countDownHelper.isFinished();
 	}
 
 }
