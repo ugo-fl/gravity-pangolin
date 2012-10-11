@@ -10,22 +10,23 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.block.WallBlock;
 import fr.gravity.pangolin.entity.block.ExitBlock;
+import fr.gravity.pangolin.entity.block.GravityChangerBlock;
+import fr.gravity.pangolin.entity.block.WallBlock;
 import fr.gravity.pangolin.entity.graphic.WallBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.exception.InvalidMapException;
-import fr.gravity.pangolin.screen.AbstractScreen;
+import fr.gravity.pangolin.screen.IScreen;
 import fr.gravity.pangolin.util.GameUtil;
 
-public class PangolinWorld {
+public class GravityPangolinWorld {
 
 	// Options
 	private static final int GRAVITY = 50;
 
 	// Singleton instance
-	private static PangolinWorld instance;
+	private static GravityPangolinWorld instance;
 
 	// The game world
 	private World world;
@@ -60,8 +61,8 @@ public class PangolinWorld {
 	private Gravity gravity = Gravity.DOWN;
 
 	public enum Gravity {
-		LEFT(Direction.LEFT, new Vector2(-GRAVITY, 0)), UP(Direction.UP, new Vector2(0, GRAVITY)), RIGHT(
-				Direction.RIGHT, new Vector2(GRAVITY, 0)), DOWN(Direction.DOWN, new Vector2(0, -GRAVITY));
+		LEFT(Direction.LEFT, new Vector2(-GRAVITY, 0)), UP(Direction.UP, new Vector2(0, GRAVITY)), RIGHT(Direction.RIGHT, new Vector2(GRAVITY, 0)), DOWN(
+				Direction.DOWN, new Vector2(0, -GRAVITY));
 
 		public Direction direction;
 		public Vector2 force;
@@ -80,8 +81,8 @@ public class PangolinWorld {
 	 * @return
 	 * @throws InvalidMapException
 	 */
-	public static PangolinWorld getInstance(FileHandle pangolinMap) {
-		instance = new PangolinWorld(pangolinMap);
+	public static GravityPangolinWorld getInstance(FileHandle pangolinMap) {
+		instance = new GravityPangolinWorld(pangolinMap);
 		return instance;
 	}
 
@@ -91,13 +92,13 @@ public class PangolinWorld {
 	 * 
 	 * @return
 	 */
-	public static PangolinWorld getInstance() {
+	public static GravityPangolinWorld getInstance() {
 		if (instance == null)
 			throw new NullPointerException("The Pangolin World has not been initiated yet.");
 		return instance;
 	}
 
-	public PangolinWorld(FileHandle pangolinMap) {
+	public GravityPangolinWorld(FileHandle pangolinMap) {
 		readOptions(pangolinMap);
 		world = new World(gravity.force, true);
 	}
@@ -115,9 +116,8 @@ public class PangolinWorld {
 				if (OPTION_MAP_SIZE.equals(optionName)) {
 					readOptionMapSize(optionValue);
 					System.out.println("YO " + optionValue);
-				}
-				// else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
-				// readOptionPangolinDirection(optionValue);
+				} else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
+					readOptionPangolinDirection(optionValue);
 				else if (OPTION_EXIT_DIRECTION.equals(optionName))
 					readOptionExitDirection(optionValue);
 				line = mapFile.readLine();
@@ -133,8 +133,7 @@ public class PangolinWorld {
 		try {
 			exitDirection = Direction.valueOf(optionValue);
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException(
-					"This exit direction does not exist (please see the README file inside android project's assets/map directory).");
+			throw new IllegalArgumentException("This exit direction does not exist (please see the README file inside android project's assets/map directory).");
 		}
 	}
 
@@ -145,8 +144,7 @@ public class PangolinWorld {
 	private void readOptionMapSize(String optionValue) {
 		String[] size = optionValue.split(";");
 		if (size.length != 2)
-			throw new InvalidMapException(
-					"Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
+			throw new InvalidMapException("Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
 		sizeX = Integer.valueOf(size[0]);
 		sizeY = Integer.valueOf(size[1]);
 
@@ -157,7 +155,7 @@ public class PangolinWorld {
 	 */
 	public void init(Stage stage) {
 		// Checks if the screen is set first
-		AbstractScreen screen = GameUtil.getScreen();
+		IScreen screen = (IScreen) GameUtil.getScreen();
 		if (screen == null)
 			throw new NullPointerException("The screen has not been initiated yet.");
 
@@ -176,13 +174,10 @@ public class PangolinWorld {
 					} else if (SYM_START.equalsIgnoreCase(sym)) {
 						pangolin = new Pangolin(world, x, y);
 						addEntity(stage, pangolin);
-					}
-					// else if (SYM_GRAVITY_CHANGER.equalsIgnoreCase(sym)) {
-					// GravityChangerBlock gravityChangerBlock = new
-					// GravityChangerBlock(x, y, gravity);
-					// addEntity(stage, gravityChangerBlock);
-					// }
-					else if (SYM_EXIT.equalsIgnoreCase(sym)) {
+					} else if (SYM_GRAVITY_CHANGER.equalsIgnoreCase(sym)) {
+						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(world, x, y);
+						addEntity(stage, gravityChangerBlock);
+					} else if (SYM_EXIT.equalsIgnoreCase(sym)) {
 						exitBlock = new ExitBlock(this, x, y, exitDirection);
 						addEntity(stage, exitBlock);
 					}

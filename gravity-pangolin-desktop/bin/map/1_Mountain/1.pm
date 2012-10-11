@@ -7,7 +7,7 @@ XXXXXXXXXXXXXXXX E X
 X          XXXXX   X
 X          XXXXX   X 
 X        XXXXXXX   X
-X        XXXXXXX   X
+X    O   XXXXXXX   X
 X        XXXXXXX   X
 X        XXXXXXX   X
 X        XXXXXXX   X

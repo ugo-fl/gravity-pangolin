@@ -4,7 +4,7 @@ MAPSIZE=20;14
 /////////////       
 XXXXXXXXXXXXXXXXXXXX              
 XXXXXXXXXXXXXXXX   X
-X                  X
+X S                X
 XXXXX              X 
 XXXXX              X
 X                  X

@@ -5,45 +5,47 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import fr.gravity.pangolin.screen.AbstractScreen;
+import fr.gravity.pangolin.screen.IScreen;
 import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.util.NumbersUtil;
 
 public class ButtonsSlider extends Group implements InputProcessor {
 
-	private static final float MIDDLE_SCR = GameUtil.getScreen().getWidth() / 2;
-
 	private static final float FOCUS_RATE = 0.3F;
 
-	private static final float FOCUSED_BUTTON_WIDTH = 0.5F;
-	private static final float FOCUSED_BUTTON_HEIGHT = 0.5F;
-	private static final float BUTTON_WIDTH = FOCUSED_BUTTON_WIDTH * 70 / 100;
-	private static final float BUTTON_HEIGHT = FOCUSED_BUTTON_HEIGHT * 70 / 100;
+	private static final int FOCUSED_BUTTON_WIDTH = 100;
+	private static final int FOCUSED_BUTTON_HEIGHT = 100;
+	private static final int BUTTON_WIDTH = FOCUSED_BUTTON_WIDTH * 70 / 100;
+	private static final int BUTTON_HEIGHT = FOCUSED_BUTTON_HEIGHT * 70 / 100;
 
-	private static final float SELECTED_X = MIDDLE_SCR - (FOCUSED_BUTTON_WIDTH / 2);
-	private static final float SELECTED_Y = (GameUtil.getScreen().getHeight() / 2) - (FOCUSED_BUTTON_HEIGHT / 2);
 	private static final int PADDING = 5;
 
-	private float startX = SELECTED_X;
+	private final float middleScreen;
+	private final float selectedX;
+	private final float selectedY;
+	
+	private float startX;
 
 	private List<TextButton> buttons = new ArrayList<TextButton>();
 
-	public ButtonsSlider(List<TextButton> buttons, Stage stage) {
+	public ButtonsSlider(List<TextButton> buttons, Stage stage, IScreen screen) {
 		this.buttons = buttons;
 		this.stage = stage;
 
-		this.width = GameUtil.getScreen().getWidth();
-		this.height = GameUtil.getScreen().getHeight();
-
+		this.width = screen.getWidth();
+		this.height = screen.getHeight();
+		 
+		this.middleScreen = screen.getWidth() / 2;
+		this.selectedX = middleScreen - (FOCUSED_BUTTON_WIDTH / 2);
+		this.selectedY = (screen.getHeight() / 2) - (FOCUSED_BUTTON_HEIGHT / 2);
+		this.startX = selectedX;
+		
 		placeButtons(startX);
 		addButtons();
 
@@ -61,11 +63,11 @@ public class ButtonsSlider extends Group implements InputProcessor {
 			TextButton textButton = buttons.get(i);
 
 			textButton.x = startX + (i * (PADDING + FOCUSED_BUTTON_WIDTH));
-			textButton.y = SELECTED_Y;
+			textButton.y = selectedY;
 
-			textButton.width = NumbersUtil.limit(FOCUSED_BUTTON_WIDTH - Math.abs(MIDDLE_SCR - (textButton.x + textButton.width / 2)) * FOCUS_RATE,
+			textButton.width = NumbersUtil.limit(FOCUSED_BUTTON_WIDTH - Math.abs(middleScreen - (textButton.x + textButton.width / 2)) * FOCUS_RATE,
 					FOCUSED_BUTTON_WIDTH, BUTTON_WIDTH);
-			textButton.height = NumbersUtil.limit(FOCUSED_BUTTON_HEIGHT - Math.abs(MIDDLE_SCR - (textButton.x + textButton.width / 2)) * FOCUS_RATE,
+			textButton.height = NumbersUtil.limit(FOCUSED_BUTTON_HEIGHT - Math.abs(middleScreen - (textButton.x + textButton.width / 2)) * FOCUS_RATE,
 					FOCUSED_BUTTON_HEIGHT, BUTTON_HEIGHT);
 
 			textButton.x += (FOCUSED_BUTTON_WIDTH - textButton.width) / 2;
@@ -86,7 +88,7 @@ public class ButtonsSlider extends Group implements InputProcessor {
 		shift = Float.MAX_VALUE;
 		for (int i = 0; i < buttons.size(); i++) {
 			TextButton textButton = buttons.get(i);
-			float tmpShift = MIDDLE_SCR - (textButton.x + textButton.width / 2);
+			float tmpShift = middleScreen - (textButton.x + textButton.width / 2);
 			if (tmpShift == 0)
 				return;
 			if (Math.abs(tmpShift) < Math.abs(shift)) {

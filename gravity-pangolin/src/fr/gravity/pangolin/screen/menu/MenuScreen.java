@@ -24,9 +24,9 @@ import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.tween.SpriteAccessor;
 import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.util.SpriteUtil;
-import fr.gravity.pangolin.world.PangolinWorld;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
-public class MenuScreen extends AbstractScreen {
+public class MenuScreen extends AbstractScreenMenu {
 
 	private static final int HERBS_FRAME_COLS = 2;
 	private static final int HERBS_FRAME_ROWS = 1;
@@ -36,8 +36,8 @@ public class MenuScreen extends AbstractScreen {
 	private static TweenManager tweenManager = new TweenManager();
 	private static Sprite[] herbSprites = new Sprite[MAX_HERBS];
 
-	public MenuScreen(GravityPangolinGame game, PangolinWorld pangolinWorld) {
-		super(game, pangolinWorld, 10, 10);
+	public MenuScreen(GravityPangolinGame game, GravityPangolinWorld pangolinWorld) {
+		super(game, pangolinWorld);
 	}
 
 	@Override
@@ -84,17 +84,17 @@ public class MenuScreen extends AbstractScreen {
 		}
 
 		// Herbs on the floor
-		herbSprites[3] = SpriteUtil.generateSprite(frames[1], 20, 0, false);
-		herbSprites[4] = SpriteUtil.generateSprite(frames[0], 70, 0, false);
-		herbSprites[5] = SpriteUtil.generateSprite(frames[1], 110, 0, false);
+		herbSprites[3] = SpriteUtil.generateSprite(frames[1], 20, 0, false, this);
+		herbSprites[4] = SpriteUtil.generateSprite(frames[0], 70, 0, false, this);
+		herbSprites[5] = SpriteUtil.generateSprite(frames[1], 110, 0, false, this);
 
-		herbSprites[0] = SpriteUtil.generateSprite(frames[0], 200, 0, false);
-		herbSprites[1] = SpriteUtil.generateSprite(frames[1], 250, 0, false);
-		herbSprites[2] = SpriteUtil.generateSprite(frames[0], 320, 0, false);
+		herbSprites[0] = SpriteUtil.generateSprite(frames[0], 200, 0, false, this);
+		herbSprites[1] = SpriteUtil.generateSprite(frames[1], 250, 0, false, this);
+		herbSprites[2] = SpriteUtil.generateSprite(frames[0], 320, 0, false, this);
 
 		// Herbs on the left
-		herbSprites[6] = SpriteUtil.generateSprite(frames[0], 0, 160, true);
-		herbSprites[7] = SpriteUtil.generateSprite(frames[1], 0, 100, true);
+		herbSprites[6] = SpriteUtil.generateSprite(frames[0], 0, 160, true, this);
+		herbSprites[7] = SpriteUtil.generateSprite(frames[1], 0, 100, true, this);
 
 	}
 

@@ -1,29 +1,22 @@
 package fr.gravity.pangolin.entity.block;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.GravityChangerBlockGraphic;
-import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
-import fr.gravity.pangolin.game.CountDown;
-import fr.gravity.pangolin.world.Gravity;
+import fr.gravity.pangolin.helper.CountDownHelper;
+import fr.gravity.pangolin.world.GravityPangolinWorld.Gravity;
 
 public class GravityChangerBlock extends Entity {
 
 	private static final int DEACTIVATED_PERIOD = 1000;
-	private CountDown waiter = new CountDown(DEACTIVATED_PERIOD);
+	private CountDownHelper waiter = new CountDownHelper(DEACTIVATED_PERIOD);
 	
-	private Gravity gravity;
-
 //	private long timestamp;
 
-	public GravityChangerBlock(float x, float y, Gravity gravity) {
-		super(null);
-		this.gravity = gravity;
-		entityGraphic = new GravityChangerBlockGraphic(x, y);
+	public GravityChangerBlock(World world, float x, float y) {
+		super(world, x, y, 1);
 	}
 
 	/**
@@ -41,6 +34,16 @@ public class GravityChangerBlock extends Entity {
 //	}
 
 	@Override
+	public void createGraphic(float x, float y) {
+		entityGraphic = new GravityChangerBlockGraphic(x, y);
+	}
+
+	@Override
+	protected void createBody(World world, float x, float y) {
+		
+	}
+	
+	@Override
 	public void touchDown() {
 		// TODO Auto-generated method stub
 	}
@@ -55,29 +58,24 @@ public class GravityChangerBlock extends Entity {
 //		entityGraphic.draw(batch);
 //	}
 
-	@Override
-	public Entity collides() {
-		if (!waiter.waitForIt())
-			return null;
-		waiter.start();
-
-		Direction[] directionValues = Direction.values();
-		Direction currentGravityDirection = gravity.getDirection();
-		Direction newGravityDirection;
-		int ordinal = currentGravityDirection.ordinal() + 1;
-		newGravityDirection = directionValues[ordinal % directionValues.length];
-		gravity.setDirection(newGravityDirection);
-		return null;
-	}
+//	@Override
+//	public Entity collides() {
+//		if (!waiter.waitForIt())
+//			return null;
+//		waiter.start();
+//
+//		Direction[] directionValues = Direction.values();
+//		Direction currentGravityDirection = gravity.getDirection();
+//		Direction newGravityDirection;
+//		int ordinal = currentGravityDirection.ordinal() + 1;
+//		newGravityDirection = directionValues[ordinal % directionValues.length];
+//		gravity.setDirection(newGravityDirection);
+//		return null;
+//	}
 
 	@Override
 	public Actor hit(float x, float y) {
 		return null;
 	}
 
-	@Override
-	public void createBody(World world) {
-		// TODO Auto-generated method stub
-		
-	}
 }

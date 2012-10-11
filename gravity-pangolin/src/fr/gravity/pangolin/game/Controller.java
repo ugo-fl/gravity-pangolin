@@ -4,23 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.Vector2;
 
-import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
-import fr.gravity.pangolin.helper.CollisionHelper;
+import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.util.GameUtil;
-import fr.gravity.pangolin.world.PangolinWorld;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class Controller {
 
-	private PangolinWorld pangolinWorld;
+	private GravityPangolinWorld pangolinWorld;
 	private Pangolin pangolin;
 
 	static Map<Integer, Boolean> keys = new HashMap<Integer, Boolean>();
 
-	public Controller(PangolinWorld world, Pangolin pangolin) {
+	public Controller(GravityPangolinWorld world, Pangolin pangolin) {
 		this.pangolinWorld = world;
 		this.pangolin = pangolin;
 		initKeys();
@@ -43,7 +41,7 @@ public class Controller {
 
 	public void keyUp(int keycode) {
 		if (keycode == Keys.BACKSPACE)
-			GameUtil.getScreen().switchDebug();
+			((AbstractScreen) GameUtil.getScreen()).switchDebug();
 		else if (keycode == Keys.PLUS)
 			GravityPangolinGame.getInstance().nextStage();
 		else if (keycode == Keys.MINUS)

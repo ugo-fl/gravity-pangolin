@@ -74,7 +74,7 @@ public class SelectPackScreen extends MenuScreen {
 
 			textButtons.add(textButton);
 		}
-		stage.addActor(new ButtonsSlider(textButtons, stage));
+		stage.addActor(new ButtonsSlider(textButtons, stage, this));
 	}
 
 }

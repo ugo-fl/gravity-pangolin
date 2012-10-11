@@ -12,7 +12,7 @@ import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 import fr.gravity.pangolin.util.SpriteUtil;
-import fr.gravity.pangolin.world.PangolinWorld;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class PangolinGraphic extends EntityGraphic {
 
@@ -28,7 +28,7 @@ public class PangolinGraphic extends EntityGraphic {
 	}
 
 	protected Sprite getFrame(float stateTime) {
-		Direction direction = PangolinWorld.getInstance().getGravity().direction;
+		Direction direction = GravityPangolinWorld.getInstance().getGravity().direction;
 		if (animation != null) {
 			Sprite sprite = new Sprite(animation.getKeyFrame(stateTime, true));
 			adjustSpriteSide(sprite, direction, pangolin.getDirection());

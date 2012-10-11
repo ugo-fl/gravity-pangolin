@@ -108,11 +108,7 @@ public abstract class Entity extends Group {
 		return entityGraphic;
 	}
 
-	private String getName() {
-		return getClass().getSimpleName();
-	}
-	
-//	public abstract Entity collides();
+	public abstract void collidesWith(Object entity);
 	
 	/* TOUCH EVENTS */
 

@@ -4,12 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import fr.gravity.pangolin.entity.graphic.EntityGraphic;
-import fr.gravity.pangolin.screen.AbstractScreen;
+import fr.gravity.pangolin.screen.IScreen;
 
 public class SpriteUtil {
 
-	public static Sprite generateSprite(TextureRegion frame, float x, float y, boolean rotate) {
-		AbstractScreen screen = GameUtil.getScreen();
+	public static Sprite generateSprite(TextureRegion frame, float x, float y, boolean rotate, IScreen screen) {
+//		IScreen screen = (IScreen) GameUtil.getScreen();
 		
 		Sprite sprite = new Sprite(frame);
 		sprite.setSize(sprite.getWidth() / screen.getPpuX(), sprite.getHeight() / screen.getPpuY());
@@ -29,7 +29,7 @@ public class SpriteUtil {
 	}
 	
 	public static boolean isTouched(EntityGraphic entityGraphic, float x, float y) {
-		AbstractScreen screen = GameUtil.getScreen();
+		IScreen screen = (IScreen) GameUtil.getScreen();
 		
 		x = GameUtil.projectCoordinateX(x / screen.getPpuX()); 
 		y = -GameUtil.projectCoordinateY(y / screen.getPpuY());

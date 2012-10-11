@@ -13,25 +13,25 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.ExitBlockGraphic;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
-import fr.gravity.pangolin.game.CountDown;
-import fr.gravity.pangolin.world.PangolinWorld;
+import fr.gravity.pangolin.helper.CountDownHelper;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class ExitBlock extends Entity {
 
 	private static final int STOP_PERIOD = 1000;
-	private CountDown countDown = new CountDown(STOP_PERIOD);
+	private CountDownHelper countDown = new CountDownHelper(STOP_PERIOD);
 
-	private PangolinWorld pangolinWorld;
+	private GravityPangolinWorld pangolinWorld;
 	private Direction direction = Direction.DOWN;
 
-	public ExitBlock(PangolinWorld pangolinWorld, float x, float y, Direction direction) {
+	public ExitBlock(GravityPangolinWorld pangolinWorld, float x, float y, Direction direction) {
 		super(pangolinWorld.getWorld(), x, y, 1);
 		this.pangolinWorld = pangolinWorld;
 	}
 
 	@Override
 	public void createGraphic(float x, float y) {
-		direction = PangolinWorld.getInstance().getExitDirection();
+		direction = GravityPangolinWorld.getInstance().getExitDirection();
 		entityGraphic = new ExitBlockGraphic(x, y, direction);
 	}
 
@@ -50,6 +50,7 @@ public class ExitBlock extends Entity {
 		edgeShape.set(0, 0, 1, 0);
 		if (direction == Direction.UP) {
 			bd.position.set(x, y + 0.75F);
+			edgeShape.set(0, 0.25F, 1, 0.25F);
 		} else if (direction == Direction.LEFT)
 			edgeShape.set(0, 0, 0, 1);
 		else if (direction == Direction.RIGHT) {

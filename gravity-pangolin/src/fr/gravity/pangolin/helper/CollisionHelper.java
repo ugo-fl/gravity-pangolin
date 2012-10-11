@@ -85,32 +85,32 @@ public class CollisionHelper {
 	 * @return the {@link Entity} that entity collides with. If there is none,
 	 *         returns null.
 	 */
-	public static Entity collidesAny(Entity entity, Array<Entity> entities) {
-		Rectangle entityBounds = entity.getBoundingRectangle();
-		float entityPosX = entityBounds.x;
-		float entityPosY = entityBounds.y;
-		float entityWidth = entityBounds.width;
-		float entityHeight = entityBounds.height;
-
-		Entity collidedEntity = null;
-		for (Entity any : entities) {
-			if (any == entity)
-				continue;
-
-			Rectangle blockBounds = any.getBoundingRectangle();
-			float blockPosX = blockBounds.getX();
-			float blockPosY = blockBounds.getY();
-			float blockWidth = blockBounds.getWidth();
-			float blockHeight = blockBounds.getHeight();
-
-			if (NumbersUtil.betweenStrict(entityPosX, blockPosX - entityWidth, blockPosX + blockWidth)) {
-				if (NumbersUtil.betweenStrict(entityPosY, blockPosY - entityHeight, blockPosY + blockHeight)) {
-					Entity returnedCollidedEntity = any.collides();
-					if (returnedCollidedEntity != null)
-						collidedEntity = returnedCollidedEntity;
-				}
-			}
-		}
-		return collidedEntity;
-	}
+//	public static Entity collidesAny(Entity entity, Array<Entity> entities) {
+//		Rectangle entityBounds = entity.getBoundingRectangle();
+//		float entityPosX = entityBounds.x;
+//		float entityPosY = entityBounds.y;
+//		float entityWidth = entityBounds.width;
+//		float entityHeight = entityBounds.height;
+//
+//		Entity collidedEntity = null;
+//		for (Entity any : entities) {
+//			if (any == entity)
+//				continue;
+//
+//			Rectangle blockBounds = any.getBoundingRectangle();
+//			float blockPosX = blockBounds.getX();
+//			float blockPosY = blockBounds.getY();
+//			float blockWidth = blockBounds.getWidth();
+//			float blockHeight = blockBounds.getHeight();
+//
+//			if (NumbersUtil.betweenStrict(entityPosX, blockPosX - entityWidth, blockPosX + blockWidth)) {
+//				if (NumbersUtil.betweenStrict(entityPosY, blockPosY - entityHeight, blockPosY + blockHeight)) {
+//					Entity returnedCollidedEntity = any.collides();
+//					if (returnedCollidedEntity != null)
+//						collidedEntity = returnedCollidedEntity;
+//				}
+//			}
+//		}
+//		return collidedEntity;
+//	}
 }

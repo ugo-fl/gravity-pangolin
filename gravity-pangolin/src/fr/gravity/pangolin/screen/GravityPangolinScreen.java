@@ -7,20 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.helper.TextureHelper.TextureId;
-import fr.gravity.pangolin.world.PangolinWorld;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class GravityPangolinScreen extends AbstractScreen {
 
-	private PangolinWorld pangolinWorld;
+	private GravityPangolinWorld pangolinWorld;
 
-	public GravityPangolinScreen(GravityPangolinGame gravityPangolinGame, PangolinWorld pangolinWorld) {
+	public GravityPangolinScreen(GravityPangolinGame gravityPangolinGame, GravityPangolinWorld pangolinWorld) {
 		super(gravityPangolinGame, pangolinWorld, pangolinWorld.getSizeX(), pangolinWorld.getSizeY());
 		this.pangolinWorld = pangolinWorld;
-	}
-
-	@Override
-	public void show() {
-		super.show();
 		
 //		loadBackground();
 		pangolinWorld.init(stage);

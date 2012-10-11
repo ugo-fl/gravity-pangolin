@@ -1,26 +1,31 @@
 package fr.gravity.pangolin.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 
 import fr.gravity.pangolin.helper.TextureHelper;
-import fr.gravity.pangolin.screen.GameOverScreen;
 import fr.gravity.pangolin.screen.GravityPangolinScreen;
-import fr.gravity.pangolin.screen.TestBox2DScreen;
-import fr.gravity.pangolin.screen.YouWinScreen;
+import fr.gravity.pangolin.screen.IScreen;
+import fr.gravity.pangolin.screen.TransitionScreen;
 import fr.gravity.pangolin.screen.menu.MainMenuScreen;
 import fr.gravity.pangolin.screen.menu.SelectLevelScreen;
 import fr.gravity.pangolin.screen.menu.SelectPackScreen;
-import fr.gravity.pangolin.world.PangolinWorld;
+import fr.gravity.pangolin.transition.FadeInTransition;
+import fr.gravity.pangolin.transition.FadeOutTransition;
+import fr.gravity.pangolin.transition.Transition;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class GravityPangolinGame extends Game {
 
 	public static final String LOG = GravityPangolinGame.class.getSimpleName();;
 	private static GravityPangolinGame instance;
 
-	private PangolinWorld pangolinWorld;
+	private GravityPangolinWorld pangolinWorld;
+	private GravityPangolinScreen gravityPangolinScreen;
 
 	/*
 	 * SCREENS
@@ -30,7 +35,7 @@ public class GravityPangolinGame extends Game {
 	private Screen selectLevelScreen;
 	private Screen youWinScreen;
 	private Screen gameOverScreen;
-	
+
 	/**
 	 * THIS IS ONLY FOR DESKTOP APP
 	 */
@@ -38,10 +43,10 @@ public class GravityPangolinGame extends Game {
 	/**
 	 * FOR ANDROID PHONES
 	 */
-//	public static final String MAP_DIRECTORY = "map";
-	
+	// public static final String MAP_DIRECTORY = "map";
+
 	private Pack[] packs;
-	
+
 	private int packId;
 	private int levelId;
 
@@ -60,27 +65,27 @@ public class GravityPangolinGame extends Game {
 		TextureHelper.getInstance();
 
 		// Loads all the screens
-//		loadScreens();
-		
+		 loadScreens();
+
 		// Loads all the levels
 		loadLevels();
-		
-		start(0, 0);
-//		setScreen(new TestBox2DScreen());
-//		setScreen(mainMenuScreen);
+
+		// start(0, 0);
+		// setScreen(new TestBox2DScreen());
+		 setScreen(mainMenuScreen);
 	}
 
 	private void loadScreens() {
 		mainMenuScreen = new MainMenuScreen(this);
 		selectPackScreen = new SelectPackScreen(this);
-		youWinScreen = new YouWinScreen(null, null);
-		gameOverScreen = new GameOverScreen(null, null);
+//		youWinScreen = new YouWinScreen(null, null);
+//		gameOverScreen = new GameOverScreen(null, null);
 	}
 
 	private void loadLevels() {
 		FileHandle[] packDirectories = Gdx.files.internal(MAP_DIRECTORY).list();
 		packs = new Pack[packDirectories.length];
-		
+
 		int index = 0;
 		for (FileHandle packDirectory : packDirectories) {
 			packs[index++] = new Pack(packDirectory.nameWithoutExtension().substring(2).replace(' ', '\n'), packDirectory);
@@ -91,8 +96,16 @@ public class GravityPangolinGame extends Game {
 		this.packId = packId;
 		this.levelId = levelId;
 
-		pangolinWorld = PangolinWorld.getInstance(getLevelMap(packId, levelId));
-		setScreen(new GravityPangolinScreen(this, pangolinWorld));
+		pangolinWorld = GravityPangolinWorld.getInstance(getLevelMap(packId, levelId));
+		gravityPangolinScreen = new GravityPangolinScreen(this, pangolinWorld);
+		
+		ArrayList<Transition> transitionEffects = new ArrayList<Transition>();
+		transitionEffects.add(new FadeOutTransition(1000));
+		transitionEffects.add(new FadeInTransition(1000));
+
+		TransitionScreen transitionScreen = new TransitionScreen(this, (IScreen) getScreen(), gravityPangolinScreen, transitionEffects);
+		setScreen(transitionScreen);
+		
 		GameProgress.getInstance().setProgress(packId, levelId);
 	}
 
@@ -109,25 +122,23 @@ public class GravityPangolinGame extends Game {
 		if (levelId >= packs[packId].getMaps().length) {
 			levelId = 0;
 			showSelectPackScreen();
-		}
-		else
+		} else
 			start(packId, levelId);
 	}
-	
+
 	public void previousStage() {
 		levelId--;
 		if (levelId < 0) {
 			levelId = 0;
 			showSelectPackScreen();
-		}
-		else
+		} else
 			start(packId, levelId);
 	}
-	
+
 	/*
 	 * METHOD FOR SHOWING SCREENS
 	 */
-	
+
 	public void gameOver() {
 		setScreen(gameOverScreen);
 	}
@@ -139,28 +150,28 @@ public class GravityPangolinGame extends Game {
 	public void showSelectPackScreen() {
 		setScreen(new SelectPackScreen(this));
 	}
-	
+
 	public void showSelectLevelScreen(Screen selectLevelScreen) {
 		this.selectLevelScreen = selectLevelScreen;
 		showSelectLevelScreen();
 	}
-	
+
 	public void showSelectLevelScreen() {
 		// TODO Why isn't that working ?
-//		setScreen(selectLevelScreen);
-		
+		// setScreen(selectLevelScreen);
+
 		setScreen(new SelectLevelScreen(this, packId));
 	}
-	
+
 	public void showMainMenuScreen() {
 		setScreen(mainMenuScreen);
 	}
-	
+
 	/**
 	 * GETTERS
 	 */
 
-	public PangolinWorld getPangolinWorld() {
+	public GravityPangolinWorld getPangolinWorld() {
 		return pangolinWorld;
 	}
 

@@ -4,51 +4,33 @@ import test.DebugRenderer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.block.ExitBlock;
-import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.game.CustomStage;
 import fr.gravity.pangolin.game.GravityPangolinGame;
-import fr.gravity.pangolin.helper.TextureHelper;
-import fr.gravity.pangolin.helper.TextureHelper.TextureId;
-import fr.gravity.pangolin.util.GameUtil;
-import fr.gravity.pangolin.world.PangolinWorld;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
-public abstract class AbstractScreen implements Screen, InputProcessor {
+public abstract class AbstractScreen implements IScreen, InputProcessor {
 
 	// Options
 	private boolean debug = true;
@@ -56,7 +38,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 
 	// Game logic
 	protected final GravityPangolinGame game;
-	protected final PangolinWorld pangolinWorld;
+	protected final GravityPangolinWorld pangolinWorld;
 	protected CustomStage stage;
 	protected OrthographicCamera camera;
 
@@ -71,18 +53,11 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 	protected float width;
 	protected float height;
 
-	public AbstractScreen(GravityPangolinGame game, PangolinWorld pangolinWorld, float sizeX, float sizeY) {
+	public AbstractScreen(GravityPangolinGame game, GravityPangolinWorld pangolinWorld, float sizeX, float sizeY) {
 		this.game = game;
 		this.pangolinWorld = pangolinWorld;
 		width = sizeX;
 		height = sizeY;
-	}
-
-	// Screen implementation
-
-	@Override
-	public void show() {
-		Gdx.app.log(GravityPangolinGame.LOG, "Showing screen: " + getName());
 
 		// setup the camera. In Box2D we operate on a
 		// meter scale, pixels won't do it. So we use
@@ -106,6 +81,13 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 
 		// set the stage as the input processor
 		Gdx.input.setInputProcessor(stage);
+	}
+
+	// Screen implementation
+
+	@Override
+	public void show() {
+		Gdx.app.log(GravityPangolinGame.LOG, "Showing screen: " + getName());
 	}
 
 	@Override
@@ -151,8 +133,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// pangolinSprite);
 
 		batch.begin();
-		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond() + ", update: " + updateTime + ", render: "
-				+ renderTime, 0, 20);
+		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond() + ", update: " + updateTime + ", render: " + renderTime, 0, 20);
 		batch.end();
 	}
 
@@ -304,7 +285,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		TextButton backButton = new TextButton(getSkin());
 		backButton.setText("Back");
 		backButton.x = 400;
-		backButton.y = GameUtil.getScreen().getHeight() - 60;
+		backButton.y = height - 60;
 		backButton.width = 50;
 		backButton.height = 50;
 		backButton.setClickListener(clickListener);
@@ -365,8 +346,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// ask the world which bodies are within the given
 		// bounding box around the mouse pointer
 		hitBody = null;
-		world.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f, testPoint.x + 0.0001f,
-				testPoint.y + 0.0001f);
+		world.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f, testPoint.x + 0.0001f, testPoint.y + 0.0001f);
 
 		if (hitBody == groundBody)
 			hitBody = null;

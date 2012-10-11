@@ -5,19 +5,20 @@ import com.badlogic.gdx.math.Rectangle;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.screen.AbstractScreen;
+import fr.gravity.pangolin.screen.IScreen;
 
 public class GameUtil {
 
-	public static AbstractScreen getScreen() {
-		return (AbstractScreen) GravityPangolinGame.getInstance().getScreen();
+	public static IScreen getScreen() {
+		return (IScreen) GravityPangolinGame.getInstance().getScreen();
 	}
 
 	public static float projectCoordinateX(float x) {
-		return x * getScreen().getPpuX();
+		return x * ((AbstractScreen) getScreen()).getPpuX();
 	}
 
 	public static float projectCoordinateY(float y) {
-		return y * getScreen().getPpuY();
+		return y * ((AbstractScreen) getScreen()).getPpuY();
 	}
 
 	public static boolean isOutOfScreen(Rectangle rectangle) {
