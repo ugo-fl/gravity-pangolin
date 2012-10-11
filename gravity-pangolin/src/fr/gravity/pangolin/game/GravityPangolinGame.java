@@ -114,6 +114,16 @@ public class GravityPangolinGame extends Game {
 			start(packId, levelId);
 	}
 	
+	public void previousStage() {
+		levelId--;
+		if (levelId < 0) {
+			levelId = 0;
+			showSelectPackScreen();
+		}
+		else
+			start(packId, levelId);
+	}
+	
 	/*
 	 * METHOD FOR SHOWING SCREENS
 	 */
@@ -127,7 +137,7 @@ public class GravityPangolinGame extends Game {
 	}
 
 	public void showSelectPackScreen() {
-		setScreen(selectPackScreen);
+		setScreen(new SelectPackScreen(this));
 	}
 	
 	public void showSelectLevelScreen(Screen selectLevelScreen) {

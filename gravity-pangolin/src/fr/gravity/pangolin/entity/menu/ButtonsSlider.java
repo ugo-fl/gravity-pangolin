@@ -20,17 +20,17 @@ import fr.gravity.pangolin.util.NumbersUtil;
 
 public class ButtonsSlider extends Group implements InputProcessor {
 
-	private static final int MIDDLE_SCR = GameUtil.getScreen().getWidth() / 2;
+	private static final float MIDDLE_SCR = GameUtil.getScreen().getWidth() / 2;
 
 	private static final float FOCUS_RATE = 0.3F;
 
-	private static final int FOCUSED_BUTTON_WIDTH = 100;
-	private static final int FOCUSED_BUTTON_HEIGHT = 100;
-	private static final int BUTTON_WIDTH = FOCUSED_BUTTON_WIDTH * 70 / 100;
-	private static final int BUTTON_HEIGHT = FOCUSED_BUTTON_HEIGHT * 70 / 100;
+	private static final float FOCUSED_BUTTON_WIDTH = 0.5F;
+	private static final float FOCUSED_BUTTON_HEIGHT = 0.5F;
+	private static final float BUTTON_WIDTH = FOCUSED_BUTTON_WIDTH * 70 / 100;
+	private static final float BUTTON_HEIGHT = FOCUSED_BUTTON_HEIGHT * 70 / 100;
 
-	private static final int SELECTED_X = MIDDLE_SCR - (FOCUSED_BUTTON_WIDTH / 2);
-	private static final int SELECTED_Y = (GameUtil.getScreen().getHeight() / 2) - (FOCUSED_BUTTON_HEIGHT / 2);
+	private static final float SELECTED_X = MIDDLE_SCR - (FOCUSED_BUTTON_WIDTH / 2);
+	private static final float SELECTED_Y = (GameUtil.getScreen().getHeight() / 2) - (FOCUSED_BUTTON_HEIGHT / 2);
 	private static final int PADDING = 5;
 
 	private float startX = SELECTED_X;

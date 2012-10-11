@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import fr.gravity.pangolin.constant.DirectoryConstant;
 import fr.gravity.pangolin.entity.menu.ButtonsSlider;
 import fr.gravity.pangolin.game.GameProgress;
 import fr.gravity.pangolin.game.GravityPangolinGame;
@@ -66,7 +67,7 @@ public class SelectPackScreen extends MenuScreen {
 				}
 			});
 			if (isLocked) {
-				Image lockImage = new Image(new Texture(Gdx.files.internal("images/lock.png")));
+				Image lockImage = new Image(new Texture(Gdx.files.internal(DirectoryConstant.IMAGE_DIR + "lock.png")));
 				lockImage.setFillParent(true);
 				textButton.addActor(lockImage);
 			}

@@ -60,8 +60,8 @@ public class PangolinWorld {
 	private Gravity gravity = Gravity.DOWN;
 
 	public enum Gravity {
-		LEFT(Direction.LEFT, new Vector2(-GRAVITY, 0)), UP(Direction.UP, new Vector2(0, GRAVITY)), RIGHT(Direction.RIGHT, new Vector2(GRAVITY, 0)), DOWN(
-				Direction.DOWN, new Vector2(0, -GRAVITY));
+		LEFT(Direction.LEFT, new Vector2(-GRAVITY, 0)), UP(Direction.UP, new Vector2(0, GRAVITY)), RIGHT(
+				Direction.RIGHT, new Vector2(GRAVITY, 0)), DOWN(Direction.DOWN, new Vector2(0, -GRAVITY));
 
 		public Direction direction;
 		public Vector2 force;
@@ -112,8 +112,10 @@ public class PangolinWorld {
 					break;
 				String optionName = option[0];
 				String optionValue = option[1];
-				if (OPTION_MAP_SIZE.equals(optionName))
+				if (OPTION_MAP_SIZE.equals(optionName)) {
 					readOptionMapSize(optionValue);
+					System.out.println("YO " + optionValue);
+				}
 				// else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
 				// readOptionPangolinDirection(optionValue);
 				else if (OPTION_EXIT_DIRECTION.equals(optionName))
@@ -121,14 +123,19 @@ public class PangolinWorld {
 				line = mapFile.readLine();
 			}
 			if (sizeX <= 0 || sizeY <= 0)
-				throw new InvalidMapException("Invalid definition of size (size should be > 0 for both X and Y)");
+				throw new InvalidMapException("Invalid definition of map size (size should be > 0 for both X and Y)");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void readOptionExitDirection(String optionValue) {
-		exitDirection = Direction.valueOf(optionValue);
+		try {
+			exitDirection = Direction.valueOf(optionValue);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(
+					"This exit direction does not exist (please see the README file inside android project's assets/map directory).");
+		}
 	}
 
 	private void readOptionPangolinDirection(String optionValue) {
@@ -138,7 +145,8 @@ public class PangolinWorld {
 	private void readOptionMapSize(String optionValue) {
 		String[] size = optionValue.split(";");
 		if (size.length != 2)
-			throw new InvalidMapException("Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
+			throw new InvalidMapException(
+					"Invalid definition of size (size should be placed on the first line of the map file as sizeX;sizeY)");
 		sizeX = Integer.valueOf(size[0]);
 		sizeY = Integer.valueOf(size[1]);
 
@@ -249,7 +257,7 @@ public class PangolinWorld {
 	public Direction getExitDirection() {
 		return exitDirection;
 	}
-	
+
 	/**
 	 * 
 	 * @return the direction of the new gravity

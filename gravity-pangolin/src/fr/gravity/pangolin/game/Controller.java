@@ -44,6 +44,11 @@ public class Controller {
 	public void keyUp(int keycode) {
 		if (keycode == Keys.BACKSPACE)
 			GameUtil.getScreen().switchDebug();
+		else if (keycode == Keys.PLUS)
+			GravityPangolinGame.getInstance().nextStage();
+		else if (keycode == Keys.MINUS)
+			GravityPangolinGame.getInstance().previousStage();
+		
 		if (keys.containsKey(keycode))
 			keys.get(keys.put(keycode, false));
 	}

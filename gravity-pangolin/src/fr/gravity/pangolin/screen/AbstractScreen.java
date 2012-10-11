@@ -90,22 +90,19 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// 48 meters in width and 32 meters in height.
 		camera = new OrthographicCamera(width, height);
 		camera.setToOrtho(false, width, height);
-//		camera.position.set(0, 5, 0);
-		
+		// camera.position.set(0, 5, 0);
+
 		batch = new SpriteBatch();
 		stage = new CustomStage(game, width, height, true);
 		stage.setCamera(camera);
 		font = new BitmapFont(Gdx.files.internal("data/arial-15.fnt"), false);
 		font.setColor(new Color(1, 1, 0, 1));
-		
+
 		// Debug renderer
 		debugRenderer = new DebugRenderer();
 
-		// TEST
-		world = pangolinWorld.getWorld();
-
-		BodyDef bodyDef = new BodyDef();
-		groundBody = world.createBody(bodyDef);
+		if (pangolinWorld != null)
+			world = pangolinWorld.getWorld();
 
 		// set the stage as the input processor
 		Gdx.input.setInputProcessor(stage);
@@ -123,7 +120,8 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 
 		// update the world with a fixed time step
 		long startTime = TimeUtils.nanoTime();
-		pangolinWorld.step(Gdx.app.getGraphics().getDeltaTime(), 3, 3);
+		if (pangolinWorld != null)
+			pangolinWorld.step(Gdx.app.getGraphics().getDeltaTime(), 3, 3);
 		stage.act(delta);
 		float updateTime = (TimeUtils.nanoTime() - startTime) / 1000000000.0f;
 
@@ -135,7 +133,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// draw the actors
 		stage.draw();
 
-		if (debug)
+		if (debug && pangolinWorld != null)
 			drawDebug(startTime, updateTime);
 
 	}
@@ -145,7 +143,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		debugRenderer.render(pangolinWorld.getWorld(), camera.combined);
 		float renderTime = (TimeUtils.nanoTime() - startTime) / 1000000000.0f;
 
-//		drawGround(pangolinWorld.getWorld());
+		// drawGround(pangolinWorld.getWorld());
 
 		// Sprite pangolinSprite = new
 		// Sprite(TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN)[0]);
@@ -153,29 +151,31 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// pangolinSprite);
 
 		batch.begin();
-		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond() + ", update: " + updateTime + ", render: " + renderTime, 0, 20);
+		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond() + ", update: " + updateTime + ", render: "
+				+ renderTime, 0, 20);
 		batch.end();
 	}
-	
+
 	/**
 	 * Turns on/off the debug view
 	 */
 	public void switchDebug() {
 		debug = (debug ? false : true);
 	}
-//	private void drawGround(World world) {
-//		EdgeShape shape = new EdgeShape();
-//		shape.set(new Vector2(0, 0), new Vector2(width, 0));
-//
-//		FixtureDef fd = new FixtureDef();
-//		fd.shape = shape;
-//		fd.friction = 0.3f;
-//
-//		BodyDef bd = new BodyDef();
-//		Body ground = world.createBody(bd);
-//		ground.createFixture(fd);
-//		shape.dispose();
-//	}
+
+	// private void drawGround(World world) {
+	// EdgeShape shape = new EdgeShape();
+	// shape.set(new Vector2(0, 0), new Vector2(width, 0));
+	//
+	// FixtureDef fd = new FixtureDef();
+	// fd.shape = shape;
+	// fd.friction = 0.3f;
+	//
+	// BodyDef bd = new BodyDef();
+	// Body ground = world.createBody(bd);
+	// ground.createFixture(fd);
+	// shape.dispose();
+	// }
 
 	// private void drawDebugView() {
 	// ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -320,9 +320,9 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 	}
 
 	public float getPpuX() {
-//		if (pangolinWorld == null)
-//			return 1;
-//		float sizeX = pangolinWorld.getSizeX();
+		// if (pangolinWorld == null)
+		// return 1;
+		// float sizeX = pangolinWorld.getSizeX();
 		return Gdx.graphics.getPpcX();
 	}
 
@@ -365,7 +365,8 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		// ask the world which bodies are within the given
 		// bounding box around the mouse pointer
 		hitBody = null;
-		world.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f, testPoint.x + 0.0001f, testPoint.y + 0.0001f);
+		world.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f, testPoint.x + 0.0001f,
+				testPoint.y + 0.0001f);
 
 		if (hitBody == groundBody)
 			hitBody = null;
@@ -414,7 +415,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub

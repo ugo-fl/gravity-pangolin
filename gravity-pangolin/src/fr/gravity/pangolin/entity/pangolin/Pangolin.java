@@ -22,9 +22,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.graphic.pangolin.PangolinGraphic;
 import fr.gravity.pangolin.game.Controller;
 import fr.gravity.pangolin.game.GravityPangolinGame;
+import fr.gravity.pangolin.util.GameUtil;
 
 public class Pangolin extends Entity {
 
@@ -145,6 +147,10 @@ public class Pangolin extends Entity {
 
 				if (fixtureA == feetSensorFixture || fixtureB == feetSensorFixture) {
 					Fixture contactFixture = (feetSensorFixture == fixtureA ? fixtureB : fixtureA);
+					
+					if (contactFixture.getUserData() instanceof ExitBlock) {
+						GravityPangolinGame.getInstance().nextStage();
+					}
 					contactFixtures.add(contactFixture);
 				}
 			}

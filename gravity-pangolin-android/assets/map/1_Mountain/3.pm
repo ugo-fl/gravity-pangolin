@@ -1,17 +1,18 @@
 PANGOLINDIR=0
-EXITDIR=2
+EXITDIR=DOWN
 MAPSIZE=20;14
-                    
-                    
+/////////////       
+XXXXXXXXXXXXXXXXXXXX              
+XXXXXXXXXXXXXXXX   X
+X                  X
+XXXXX              X 
+XXXXX              X
+X                  X
+X     XXXX    XX   X
+X     XXXX    XX   X
+X     XXXX    XX   X
+X     XXXX    XX   X 
+X     XXXX    XX  EX
 XXXXXXXXXXXXXXXXXXXX
-X     X          E X
-X     X            X
-X     X            X
-X     X            X
-X     X            X
-X X        O       X
-X    XX            X
-X S  XX            X
-X    XX            X
-XXXXXXXXXXX        X
-           XXXXXXX X
+XXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXX

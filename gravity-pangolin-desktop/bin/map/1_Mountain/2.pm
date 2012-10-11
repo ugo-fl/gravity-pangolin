@@ -1,17 +1,18 @@
 PANGOLINDIR=0
-EXITDIR=2
+EXITDIR=UP
 MAPSIZE=20;14
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-            EX        
-   S                
-   X               X
-                    
-                      
+/////////////       
+XXXXXXXXXXXXXXXXXXXX              
+XXXXXXXXXXXXXXXX   X
+X  S        XXXX   X
+XXXXXXXXXX         X 
+XXXXXXXXXXXXXXXX   X
+X                  X
+X   XXXXXXXXXXX    X
+X             EX   X
+X              X   X
+X              X   X 
+X              X   X
+XXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXX

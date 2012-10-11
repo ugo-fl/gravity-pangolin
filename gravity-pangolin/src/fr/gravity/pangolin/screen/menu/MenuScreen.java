@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import fr.gravity.pangolin.constant.DirectoryConstant;
 import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.tween.SpriteAccessor;
@@ -36,7 +37,7 @@ public class MenuScreen extends AbstractScreen {
 	private static Sprite[] herbSprites = new Sprite[MAX_HERBS];
 
 	public MenuScreen(GravityPangolinGame game, PangolinWorld pangolinWorld) {
-		super(game, pangolinWorld);
+		super(game, pangolinWorld, 10, 10);
 	}
 
 	@Override
@@ -65,13 +66,13 @@ public class MenuScreen extends AbstractScreen {
 	}
 
 	private void loadBackground() {
-		Image background = new Image(new Texture("images/splash.png"));
+		Image background = new Image(new Texture(DirectoryConstant.IMAGE_DIR + "splash.png"));
 		background.setFillParent(true);
 		stage.addActor(background);
 	}
 
 	private void loadHerbs() {
-		Texture herbsTexture = new Texture("images/herbs_sprite.png");
+		Texture herbsTexture = new Texture(DirectoryConstant.IMAGE_DIR + "herbs_sprite.png");
 		TextureRegion[][] tmp = TextureRegion.split(herbsTexture, herbsTexture.getWidth() / HERBS_FRAME_COLS, herbsTexture.getHeight() / HERBS_FRAME_ROWS);
 		TextureRegion[] frames = new TextureRegion[HERBS_FRAME_COLS * HERBS_FRAME_ROWS];
 		int index = 0;

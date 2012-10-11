@@ -3,19 +3,17 @@ package fr.gravity.pangolin.entity.block;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.FadeOut;
 
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.ExitBlockGraphic;
-import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.game.CountDown;
-import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.world.PangolinWorld;
 
 public class ExitBlock extends Entity {
@@ -43,35 +41,34 @@ public class ExitBlock extends Entity {
 		BodyDef bd = new BodyDef();
 		bd.type = BodyType.KinematicBody;
 		bd.position.set(x, y);
-		
+
 		FixtureDef def = new FixtureDef();
 		def.shape = edgeShape;
 		def.density = 1;
 		def.filter.groupIndex = 99;
 
-		if (direction == Direction.DOWN) {
-			edgeShape.set(0, 0, 1, 0);
-		}
-		else if (direction == Direction.UP) {
-			edgeShape.set(0, 1, 1, 1);
-			bd.position.set(x, y + 1F);
-		}
-		else if (direction == Direction.LEFT)
+		edgeShape.set(0, 0, 1, 0);
+		if (direction == Direction.UP) {
+			bd.position.set(x, y + 0.75F);
+		} else if (direction == Direction.LEFT)
 			edgeShape.set(0, 0, 0, 1);
-		else if (direction == Direction.RIGHT)
-			edgeShape.set(1, 0, 1, 1);
+		else if (direction == Direction.RIGHT) {
+			edgeShape.set(0, 0, 0, 1);
+			bd.position.set(x + 1F, y);
+		}
 
 		body = world.createBody(bd);
-		body.createFixture(def);
+		Fixture fixture = body.createFixture(def);
+		fixture.setUserData(this);
+
 		origin = new Vector2(0, 0);
-		
 	}
 
 	@Override
-	public void draw (SpriteBatch batch, float parentAlpha) {
+	public void draw(SpriteBatch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 	}
-	
+
 	@Override
 	public void touchDown() {
 	}
