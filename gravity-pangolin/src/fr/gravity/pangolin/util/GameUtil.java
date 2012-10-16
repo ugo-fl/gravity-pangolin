@@ -54,4 +54,9 @@ public class GameUtil {
 		}
 		return 0;
 	}
+
+	public static boolean isOppositeDirection(Direction direction1, Direction direction2) {
+		Direction[] directionValues = Direction.values();
+		return directionValues[(direction1.ordinal() + 2) % directionValues.length] == direction2;
+	}
 }

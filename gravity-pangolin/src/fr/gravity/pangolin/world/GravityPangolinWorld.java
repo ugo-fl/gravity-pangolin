@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.ContactFilter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -35,7 +37,7 @@ public class GravityPangolinWorld {
 	private int sizeX = 0;
 	private int sizeY = 0;
 
-	private final static String OPTION_PANGOLIN_DIRECTION = "PANGOLINDIR";
+	private final static String OPTION_GRAVITY = "GRAVITY";
 	private final static String OPTION_EXIT_DIRECTION = "EXITDIR";
 	private final static String OPTION_MAP_SIZE = "MAPSIZE";
 
@@ -53,6 +55,7 @@ public class GravityPangolinWorld {
 	/** Our controlled hero **/
 	// private Pangolin pangolin = new Pangolin();
 	private Pangolin pangolin;
+	private Direction pangolinDirection;
 
 	/** Finish spot **/
 	// private ExitBlock exitBlock = new ExitBlock(this);
@@ -117,9 +120,8 @@ public class GravityPangolinWorld {
 				String optionValue = option[1];
 				if (OPTION_MAP_SIZE.equals(optionName)) {
 					readOptionMapSize(optionValue);
-					System.out.println("YO " + optionValue);
-				} else if (OPTION_PANGOLIN_DIRECTION.equals(optionName))
-					readOptionPangolinDirection(optionValue);
+				} else if (OPTION_GRAVITY.equals(optionName))
+					readOptionGravity(optionValue);
 				else if (OPTION_EXIT_DIRECTION.equals(optionName))
 					readOptionExitDirection(optionValue);
 				line = mapFile.readLine();
@@ -139,8 +141,8 @@ public class GravityPangolinWorld {
 		}
 	}
 
-	private void readOptionPangolinDirection(String optionValue) {
-//		pangolin.setDirection(Direction.values()[Integer.valueOf(optionValue)]);
+	private void readOptionGravity(String optionValue) {
+		setGravity(Gravity.values()[Integer.valueOf(optionValue)]);
 	}
 
 	private void readOptionMapSize(String optionValue) {
@@ -157,9 +159,10 @@ public class GravityPangolinWorld {
 	 */
 	public void init(Stage stage) {
 		// Checks if the screen is set first
-//		IScreen screen = (IScreen) GameUtil.getScreen();
-//		if (screen == null)
-//			throw new NullPointerException("The screen has not been initiated yet.");
+		// IScreen screen = (IScreen) GameUtil.getScreen();
+		// if (screen == null)
+		// throw new
+		// NullPointerException("The screen has not been initiated yet.");
 
 		try {
 			int y = sizeY - 1;
@@ -259,17 +262,18 @@ public class GravityPangolinWorld {
 	 * 
 	 * @return the direction of the new gravity
 	 */
-	public Direction invertGravity() {
+	public void invertGravity() {
 		int length = Gravity.values().length;
 		Gravity newGravity = Gravity.values()[(getGravity().ordinal() + length / 2) % length];
 		setGravity(newGravity);
-		return newGravity.direction;
+		pangolin.fall(newGravity.direction);
 	}
 
 	public void nextGravity() {
 		int length = Gravity.values().length;
 		Gravity newGravity = Gravity.values()[(getGravity().ordinal() + 1) % length];
 		setGravity(newGravity);
+		pangolin.fall(newGravity.direction);
 	}
 
 	// public Gravity getGravity() {

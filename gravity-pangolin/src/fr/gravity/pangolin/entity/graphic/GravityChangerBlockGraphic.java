@@ -9,13 +9,13 @@ import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 public class GravityChangerBlockGraphic extends EntityGraphic {
 
 	public GravityChangerBlockGraphic(float x, float y) {
-		set(getSprite(), x, y);
+		super(TextureHelper.getInstance().getTextureRegions(TextureId.GRAVITY_CHANGER)[0], x, y);
 	}
 
-	private Sprite getSprite() {
-		TextureRegion[] textureRegions = TextureHelper.getInstance().getTextureRegions(TextureId.GRAVITY_CHANGER);
-		return new Sprite(textureRegions[0]);
-	}
+//	private Sprite getSprite() {
+//		TextureRegion[] textureRegions = TextureHelper.getInstance().getTextureRegions(TextureId.GRAVITY_CHANGER);
+//		return new Sprite(textureRegions[0]);
+//	}
 	
 	@Override
 	public void touchDown() {

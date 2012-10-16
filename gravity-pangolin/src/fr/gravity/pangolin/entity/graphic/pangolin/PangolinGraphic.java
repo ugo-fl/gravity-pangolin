@@ -39,10 +39,10 @@ public class PangolinGraphic extends EntityGraphic {
 
 	private void adjustSpriteSide(Sprite sprite, Direction gravityDirection, Direction pangolinDirection) {
 		if (gravityDirection == Direction.RIGHT) {
-			sprite.flip(pangolinDirection == Direction.UP, false);
+			sprite.flip(pangolinDirection == Direction.DOWN, false);
 			// SpriteUtil.rotate(sprite, false);
 		} else if (gravityDirection == Direction.LEFT) {
-			sprite.flip(pangolinDirection == Direction.DOWN, false);
+			sprite.flip(pangolinDirection == Direction.UP, false);
 			// SpriteUtil.rotate(sprite, false);
 		} else if (gravityDirection == Direction.UP) {
 			sprite.flip(pangolinDirection == Direction.RIGHT, false);

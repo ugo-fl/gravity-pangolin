@@ -80,36 +80,10 @@ public class ExitBlock extends Entity {
 	public void touchUp() {
 	}
 
-	// @Override
-	// public void draw(SpriteBatch batch, float parentAlpha) {
-	// entityGraphic.draw(batch);
-	// }
-
 	@Override
 	public Actor hit(float x, float y) {
 		return null;
 	}
-
-	// @Override
-	// public Entity collides() {
-	// Pangolin pangolin = pangolinWorld.getPangolin();
-	// Direction gravityDirection = pangolinWorld.getGravity().getDirection();
-	// if (gravityDirection != direction)
-	// return null;
-	//
-	// if (!countDown.isStarted()) {
-	// pangolin.disableController();
-	// countDown.start();
-	// return null;
-	// }
-	// FadeOut fadeOutAction = FadeOut.$(2f);
-	// pangolin.action(fadeOutAction);
-	// // if (!countDown.waitForIt())
-	// // return null;
-	//
-	// GravityPangolinGame.getInstance().youWin();
-	// return null;
-	// }
 
 	public void setDirection(Direction direction) {
 		this.direction = direction;

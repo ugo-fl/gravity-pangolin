@@ -1,4 +1,4 @@
-PANGOLINDIR=0
+PANGOLINDIR=1
 EXITDIR=UP
 MAPSIZE=20;14
 /////////////       
@@ -6,12 +6,12 @@ XXXXXXXXXXXXXXXXXXXX
 XXXXXXXXXXXXXXXX E X
 X          XXXXX   X
 X          XXXXX   X 
-X        XXXXXXX   X
-X    O   XXXXXXX   X
-X        XXXXXXX   X
+X   O    XXXXXXX   X
 X        XXXXXXX   X
 X        XXXXXXX   X
-X   S              X 
+X   S    XXXXXXX   X
+X        XXXXXXX   X
+X                  X 
 X                  X
 XXXXXXXXXXXXXXXXXXXX
 XXXXXXXXXXXXXXXXXXXX

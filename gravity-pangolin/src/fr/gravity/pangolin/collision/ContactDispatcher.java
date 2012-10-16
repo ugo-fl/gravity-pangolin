@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import fr.gravity.pangolin.entity.Entity;
+import fr.gravity.pangolin.entity.block.GravityChangerBlock;
 
 public class ContactDispatcher implements ContactListener {
 
@@ -33,7 +34,11 @@ public class ContactDispatcher implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		
+//		Object userDataA = contact.getFixtureA().getUserData();
+//		Object userDataB = contact.getFixtureB().getUserData();
+//		
+//		if (userDataA instanceof GravityChangerBlock || userDataB instanceof GravityChangerBlock)
+//			contact.setEnabled(false);
 	}
 
 	@Override

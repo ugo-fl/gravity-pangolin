@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import fr.gravity.pangolin.constant.FilterMask;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.GravityChangerBlockGraphic;
 import fr.gravity.pangolin.util.CountDown;
@@ -16,28 +17,14 @@ import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class GravityChangerBlock extends Entity {
 
+	// This countdown prevents from multiple gravity changes at a time
+	// when the player crosses it
 	private static final int DEACTIVATED_PERIOD = 1000;
 	private CountDown countDown = new CountDown(DEACTIVATED_PERIOD);
 	
-//	private long timestamp;
-
 	public GravityChangerBlock(World world, float x, float y) {
 		super(world, x, y, 1);
 	}
-
-	/**
-	 * Change the gravity on collision. On the first collision the
-	 * GravityChanger is deactivated for DEACTIVATED_PERIOD milliseconds.
-	 */
-//	@Override
-//	public Rectangle getBoundingRectangle() {
-//		final float width = entityGraphic.width / 5;
-//		final float height = entityGraphic.height / 5;
-//		final float x = entityGraphic.x + (entityGraphic.width / 2) - (width / 2);
-//		final float y = entityGraphic.y + (entityGraphic.height / 2) - (height / 2);
-//
-//		return new Rectangle(x, y, width, height);
-//	}
 
 	@Override
 	public void createGraphic(float x, float y) {
@@ -47,7 +34,7 @@ public class GravityChangerBlock extends Entity {
 	@Override
 	protected void createBody(World world, float x, float y) {
 		CircleShape circleShape = new CircleShape();
-		circleShape.setRadius(1);
+		circleShape.setRadius(0.25F);
 		
 	    BodyDef bd = new BodyDef();
 	    bd.position.set(x, y);
@@ -55,16 +42,20 @@ public class GravityChangerBlock extends Entity {
 	    
 	    FixtureDef def = new FixtureDef();
 	    def.shape = circleShape;
-	    def.density = 0;
-	    def.friction = 0;
-	    def.restitution = 0;
+//	    def.density = 0;
+//	    def.friction = 0;
+//	    def.restitution = 0;
 	    def.isSensor = true;
+	    
+	    // Filtering
+//	    def.filter.categoryBits = FilterMask.GRAVITY_CHANGER;
+//	    def.filter.maskBits = FilterMask.PANGOLIN;
 	    
 	    body = world.createBody(bd);
 	    Fixture fixture = body.createFixture(def);
 	    fixture.setUserData(this);
 	    
-	    origin = new Vector2(0, 0);
+	    origin = new Vector2(0.5F, 0.5F);
 	}
 	
 	@Override
