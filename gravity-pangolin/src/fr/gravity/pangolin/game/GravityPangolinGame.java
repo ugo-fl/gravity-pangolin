@@ -98,7 +98,8 @@ public class GravityPangolinGame extends Game {
 		this.packId = packId;
 		this.levelId = levelId;
 
-		pangolinWorld = GravityPangolinWorld.getInstance(getLevelMap(packId, levelId));
+//		GravityPangolinWorld pangolinWorld = GravityPangolinWorld.getInstance(getLevelMap(packId, levelId));
+		GravityPangolinWorld pangolinWorld = new GravityPangolinWorld(getLevelMap(packId, levelId));
 		gravityPangolinScreen = new GravityPangolinScreen(this, pangolinWorld);
 
 		fadeInScreen(gravityPangolinScreen);
@@ -181,10 +182,6 @@ public class GravityPangolinGame extends Game {
 	/**
 	 * GETTERS
 	 */
-
-	public GravityPangolinWorld getPangolinWorld() {
-		return pangolinWorld;
-	}
 
 	public Pack[] getPacks() {
 		return packs;

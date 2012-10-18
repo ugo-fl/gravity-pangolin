@@ -1,27 +1,20 @@
 package fr.gravity.pangolin.entity;
 
-import test.BodyEditorLoader;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import fr.gravity.pangolin.entity.graphic.EntityGraphic;
-import fr.gravity.pangolin.entity.graphic.pangolin.PangolinGraphic;
-import fr.gravity.pangolin.screen.TestBox2DScreen;
 import fr.gravity.pangolin.util.SpriteUtil;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public abstract class Entity extends Group {
 
-	protected World world;
+	protected GravityPangolinWorld gravityPangolinWorld;
 	
 	// The graphic part of the entity
 	protected EntityGraphic entityGraphic;
@@ -35,24 +28,30 @@ public abstract class Entity extends Group {
 	// The origin to draw the sprite correctly
 	protected Vector2 origin;
 	
-	public Entity(World world, float x, float y, float scale) {
-		this.world = world;
+	public Entity(GravityPangolinWorld gravityPangolinWorld, float scale) {
+		this.gravityPangolinWorld = gravityPangolinWorld;
 		this.scale = scale;
 		
-		createGraphic(x, y);
-		createBody(world, x, y);
 //		if (body == null)
 //			throw new NullPointerException("The " + getName() + "'s body cannot be null.");
 //		if (origin == null)
 //			throw new NullPointerException("The " + getName() + "'s origin cannot be null.");
 	}
 	
-	public abstract void createGraphic(float x, float y);
+//	public void init(float x, float y) {
+//		createGraphic(x, y);
+//		createBody(gravityPangolinWorld.getWorld(), x, y);
+//	}
 	
-	protected abstract void createBody(World world, float x, float y);
+//	public abstract void createGraphic(float x, float y);
+//	
+//	protected abstract void createBody(World world, float x, float y);
 	
 	@Override
 	public void draw (SpriteBatch batch, float parentAlpha) {
+		if (entityGraphic == null)
+			return ;
+		
 		Vector2 bodyPos = body.getPosition().sub(origin);
 
 		entityGraphic.setPosition(bodyPos.x, bodyPos.y);

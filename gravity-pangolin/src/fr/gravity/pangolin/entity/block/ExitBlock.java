@@ -20,24 +20,20 @@ import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class ExitBlock extends Entity {
 
-	private static final int STOP_PERIOD = 1000;
-	private CountDown countDown = new CountDown(STOP_PERIOD);
-
-	private GravityPangolinWorld pangolinWorld;
 	private Direction direction = Direction.DOWN;
 
-	public ExitBlock(GravityPangolinWorld pangolinWorld, float x, float y, Direction direction) {
-		super(pangolinWorld.getWorld(), x, y, 1);
-		this.pangolinWorld = pangolinWorld;
+	public ExitBlock(GravityPangolinWorld gravityPangolinWorld, float x, float y, Direction direction) {
+		super(gravityPangolinWorld, 1);
+		this.direction = direction;
+		
+		createGraphic(x, y);
+		createBody(gravityPangolinWorld.getWorld(), x, y);
 	}
 
-	@Override
 	public void createGraphic(float x, float y) {
-		direction = GravityPangolinWorld.getInstance().getExitDirection();
 		entityGraphic = new ExitBlockGraphic(x, y, direction);
 	}
 
-	@Override
 	protected void createBody(World world, float x, float y) {
 		EdgeShape edgeShape = new EdgeShape();
 		BodyDef bd = new BodyDef();

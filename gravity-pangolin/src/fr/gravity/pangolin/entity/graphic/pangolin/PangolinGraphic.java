@@ -17,18 +17,20 @@ import fr.gravity.pangolin.world.GravityPangolinWorld;
 public class PangolinGraphic extends EntityGraphic {
 
 	protected Pangolin pangolin;
+	private GravityPangolinWorld gravityPangolinWorld;
 	private boolean idle = false;
 
 	private TextureRegion[] textureRegions = TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN);
 	protected Animation animation = new Animation(0.25F, textureRegions);
 
-	public PangolinGraphic(Pangolin pangolin, float x, float y) {
+	public PangolinGraphic(Pangolin pangolin, GravityPangolinWorld gravityPangolinWorld, float x, float y) {
 		super(TextureHelper.getInstance().getTextureRegions(TextureId.PANGOLIN)[0], x, y);
 		this.pangolin = pangolin;
+		this.gravityPangolinWorld = gravityPangolinWorld;
 	}
 
 	protected Sprite getFrame(float stateTime) {
-		Direction direction = GravityPangolinWorld.getInstance().getGravity().direction;
+		Direction direction = gravityPangolinWorld.getGravity().direction;
 		if (animation != null) {
 			Sprite sprite = new Sprite(animation.getKeyFrame(stateTime, true));
 			adjustSpriteSide(sprite, direction, pangolin.getDirection());

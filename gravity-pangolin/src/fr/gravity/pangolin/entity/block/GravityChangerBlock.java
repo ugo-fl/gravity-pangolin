@@ -22,16 +22,17 @@ public class GravityChangerBlock extends Entity {
 	private static final int DEACTIVATED_PERIOD = 1000;
 	private CountDown countDown = new CountDown(DEACTIVATED_PERIOD);
 	
-	public GravityChangerBlock(World world, float x, float y) {
-		super(world, x, y, 1);
+	public GravityChangerBlock(GravityPangolinWorld gravityPangolinWorld, float x, float y) {
+		super(gravityPangolinWorld, 1);
+		
+		createGraphic(x, y);
+		createBody(gravityPangolinWorld.getWorld(), x, y);
 	}
 
-	@Override
 	public void createGraphic(float x, float y) {
 		entityGraphic = new GravityChangerBlockGraphic(x, y);
 	}
 
-	@Override
 	protected void createBody(World world, float x, float y) {
 		CircleShape circleShape = new CircleShape();
 		circleShape.setRadius(0.25F);
@@ -99,7 +100,7 @@ public class GravityChangerBlock extends Entity {
 			return ;
 		countDown.start();
 
-		GravityPangolinWorld.getInstance().nextGravity();
+		gravityPangolinWorld.nextGravity();
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import fr.gravity.pangolin.collision.ContactDispatcher;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
+import fr.gravity.pangolin.entity.block.HarmfulBlock;
 import fr.gravity.pangolin.entity.block.WallBlock;
 import fr.gravity.pangolin.entity.graphic.WallBlockGraphic.BranchFramePosition;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
@@ -85,10 +86,10 @@ public class GravityPangolinWorld {
 	 * @return
 	 * @throws InvalidMapException
 	 */
-	public static GravityPangolinWorld getInstance(FileHandle pangolinMap) {
-		instance = new GravityPangolinWorld(pangolinMap);
-		return instance;
-	}
+//	public static GravityPangolinWorld getInstance(FileHandle pangolinMap) {
+//		instance = new GravityPangolinWorld(pangolinMap);
+//		return instance;
+//	}
 
 	/**
 	 * Singleton accessor. Do not call this method before
@@ -96,11 +97,11 @@ public class GravityPangolinWorld {
 	 * 
 	 * @return
 	 */
-	public static GravityPangolinWorld getInstance() {
-		if (instance == null)
-			throw new NullPointerException("The Pangolin World has not been initiated yet.");
-		return instance;
-	}
+//	public static GravityPangolinWorld getInstance() {
+//		if (instance == null)
+//			throw new NullPointerException("The Pangolin World has not been initiated yet.");
+//		return instance;
+//	}
 
 	public GravityPangolinWorld(FileHandle pangolinMap) {
 		readOptions(pangolinMap);
@@ -174,13 +175,13 @@ public class GravityPangolinWorld {
 					String sym = String.valueOf(line.charAt(x));
 
 					if (SYM_BLOCK.equalsIgnoreCase(sym)) {
-						WallBlock branchBlock = new WallBlock(world, x, y);
+						WallBlock branchBlock = new WallBlock(this, x, y);
 						addEntity(stage, branchBlock);
 					} else if (SYM_START.equalsIgnoreCase(sym)) {
-						pangolin = new Pangolin(world, x, y);
+						pangolin = new Pangolin(this, x, y);
 						addEntity(stage, pangolin);
 					} else if (SYM_GRAVITY_CHANGER.equalsIgnoreCase(sym)) {
-						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(world, x, y);
+						GravityChangerBlock gravityChangerBlock = new GravityChangerBlock(this, x, y);
 						addEntity(stage, gravityChangerBlock);
 					} else if (SYM_EXIT.equalsIgnoreCase(sym)) {
 						exitBlock = new ExitBlock(this, x, y, exitDirection);
@@ -191,6 +192,10 @@ public class GravityPangolinWorld {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//TEST
+		addEntity(stage, new HarmfulBlock(this, 1, 5));
+		
 		// We add the Exit and the Pangolin at the end
 		// in order to put their graphics above the rest
 		// addEntity(stage, exitBlock);

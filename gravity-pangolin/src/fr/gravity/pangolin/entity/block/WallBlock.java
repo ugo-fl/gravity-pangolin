@@ -10,14 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.WallBlockGraphic;
+import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class WallBlock extends Entity {
 
-	public WallBlock(World world, float x, float y) {
-		super(world, x, y, 1);
+	public WallBlock(GravityPangolinWorld gravityPangolinWorld, float x, float y) {
+		super(gravityPangolinWorld, 1);
+		
+		createGraphic(x, y);
+		createBody(gravityPangolinWorld.getWorld(), x, y);
 	}
 
-	@Override
 	protected void createBody(World world, float x, float y) {
 		EdgeShape edgeShape = new EdgeShape();
 	    BodyDef bd = new BodyDef();
@@ -27,6 +30,7 @@ public class WallBlock extends Entity {
 	    FixtureDef def = new FixtureDef();
 	    def.shape = edgeShape;
 	    def.density = 1;
+	    def.friction = 0;
 	    
 	    body = world.createBody(bd);
 	    
@@ -46,7 +50,6 @@ public class WallBlock extends Entity {
 	    origin = new Vector2(0, 0);
 	}
 	
-	@Override
 	public void createGraphic(float x, float y) {
 		entityGraphic = new WallBlockGraphic(x, y);
 	}

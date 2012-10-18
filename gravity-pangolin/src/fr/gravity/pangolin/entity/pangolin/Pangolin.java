@@ -81,12 +81,14 @@ public class Pangolin extends Entity {
 
 	private Fixture feetSensorFixture;
 
-	public Pangolin(World world, float x, float y) {
-		super(world, x, y, 2);
+	public Pangolin(GravityPangolinWorld gravityPangolinWorld, float x, float y) {
+		super(gravityPangolinWorld, 2);
+		
+		createGraphic(x, y);
+		createBody(gravityPangolinWorld.getWorld(), x, y);
 		createFeetSensor();
 	}
 
-	@Override
 	protected void createBody(World world, float x, float y) {
 		BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("data/body.json"));
 
@@ -105,8 +107,7 @@ public class Pangolin extends Entity {
 		origin = loader.getOrigin("pangolin", scale).add(body.getLocalCenter()).cpy();
 
 		body.setFixedRotation(true);
-		body.setUserData(this);
-		
+
 		body.setTransform(body.getPosition().add(origin), body.getAngle());
 	}
 
@@ -130,10 +131,9 @@ public class Pangolin extends Entity {
 		feetSensorFixture.setUserData(this);
 	}
 
-	@Override
 	public void createGraphic(float x, float y) {
-		entityGraphic = new PangolinGraphic(this, x, y);
-		controller = new Controller(GravityPangolinWorld.getInstance(), this);
+		entityGraphic = new PangolinGraphic(this, gravityPangolinWorld,  x, y);
+		controller = new Controller(gravityPangolinWorld, this);
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class Pangolin extends Entity {
 		clear();
 		((PangolinGraphic) entityGraphic).updateFrame();
 
-		Direction gravityDirection = GravityPangolinWorld.getInstance().getGravity().direction;
+		Direction gravityDirection = gravityPangolinWorld.getGravity().direction;
 		if ((int) gravityDirection.angle != (int) Math.toDegrees(body.getAngle())) {
 			rotate(gravityDirection);
 		}
@@ -168,6 +168,20 @@ public class Pangolin extends Entity {
 
 	private final static float FALLING_IMPULSE = 1;
 
+	private void move(Direction direction, boolean falling) {
+		Vector2 movement = null;
+		Vector2 velocity = body.getLinearVelocity();
+		float speed = (pangolinState == PangolinState.FALLING ? FALLING_SPEED : SPEED);
+		if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+			speed *= (Math.abs(MAX_VELOCITY) - Math.abs(velocity.x));
+			movement = new Vector2(direction == Direction.LEFT ? -speed : speed, 0);
+		} else if (direction == Direction.UP || direction == Direction.DOWN) {
+			speed *= (Math.abs(MAX_VELOCITY) - Math.abs(velocity.y));
+			movement = new Vector2(0, direction == Direction.DOWN ? -speed : speed);
+		}
+		body.applyLinearImpulse(movement, body.getWorldCenter());
+	}
+
 	public void fall(Direction direction) {
 		pangolinState = PangolinState.FALLING;
 
@@ -186,18 +200,8 @@ public class Pangolin extends Entity {
 		body.applyForce(new Vector2(forceX, forceY), body.getPosition().add(body.getLocalCenter()));
 	}
 
-	private void move(Direction direction, boolean falling) {
-		Vector2 movement = null;
-		Vector2 velocity = body.getLinearVelocity();
-		float speed = (pangolinState == PangolinState.FALLING ? FALLING_SPEED : SPEED);
-		if (direction == Direction.LEFT || direction == Direction.RIGHT) {
-			speed *= (Math.abs(MAX_VELOCITY) - Math.abs(velocity.x));
-			movement = new Vector2(direction == Direction.LEFT ? -speed : speed, 0);
-		} else if (direction == Direction.UP || direction == Direction.DOWN) {
-			speed *= (Math.abs(MAX_VELOCITY) - Math.abs(velocity.y));
-			movement = new Vector2(0, direction == Direction.DOWN ? -speed : speed);
-		}
-		body.applyLinearImpulse(movement, body.getWorldCenter());
+	public void die() {
+		GravityPangolinGame.getInstance().restart();
 	}
 
 	@Override

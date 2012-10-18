@@ -55,105 +55,12 @@ public class Controller {
 	/** The main update method **/
 	public void update(float delta) {
 		processInput();
-		// if (!isBlocked())
-		// controlPangolinMovement(delta);
 	}
 
 	/**
-	 * Checks if the pangolin is actually blocked. If it is, the velocity is set
-	 * so the pangolin gets out.
-	 * 
-	 * @return true if the pangolin is actually blocked, otherwise returns
-	 *         false.
+	 * Avoid multiple key touch for gravity invertion
 	 */
-	// private boolean isBlocked() {
-	// Entity collidedEntity = CollisionHelper.collidesAny(pangolin,
-	// pangolinWorld.getBlocks());
-	// final float GET_ME_OUT_RATE = 25F;
-	//
-	// boolean isBlocked = false;
-	// if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().x = GET_ME_OUT_RATE;
-	// isBlocked = true;
-	// } else if (CollisionHelper.collidesRight(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().x = -GET_ME_OUT_RATE;
-	// isBlocked = true;
-	// }
-	//
-	// if (CollisionHelper.collidesUp(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().y = GET_ME_OUT_RATE;
-	// isBlocked = true;
-	// } else if (CollisionHelper.collidesDown(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().y = -GET_ME_OUT_RATE;
-	// isBlocked = true;
-	// }
-	// return isBlocked;
-	// }
-	//
-	// private void controlPangolinMovement(float delta) {
-	//
-	// if (GameUtil.isOutOfScreen(pangolin.getBoundingRectangle()))
-	// GravityPangolinGame.getInstance().gameOver();
-	//
-	// pangolin.setLanded(false);
-	//
-	// Direction gravityDirection = pangolinWorld.getGravity().direction;
-	// // Control for the X axis
-	// controlXMovement(delta, gravityDirection);
-	// // Control for the Y axis
-	// controlYMovement(delta, gravityDirection);
-	// }
-	//
-	// private void controlXMovement(float delta, Direction gravityDirection) {
-	// Vector2 positionCpy = pangolin.getPosition();
-	// Vector2 velocityCpy = pangolin.getVelocity().cpy();
-	//
-	// velocityCpy.set(pangolin.getVelocity().x, 0);
-	// pangolin.translate(velocityCpy.tmp().mul(delta));
-	//
-	// Entity collidedEntity = CollisionHelper.collidesAny(pangolin,
-	// pangolinWorld.getBlocks());
-	// if (collidedEntity != null)
-	// if (CollisionHelper.collidesLeft(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().set(0, pangolin.getVelocity().y);
-	// positionCpy.x = collidedEntity.getX() + collidedEntity.getWidth();
-	// if (gravityDirection == Direction.LEFT) {
-	// pangolin.setLanded(true);
-	// }
-	// } else if (CollisionHelper.collidesRight(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().set(0, pangolin.getVelocity().y);
-	// positionCpy.x = collidedEntity.getX() - pangolin.getWidth();
-	// if (gravityDirection == Direction.RIGHT)
-	// pangolin.setLanded(true);
-	// }
-	// pangolin.setPosition(positionCpy);
-	// }
-	//
-	// private void controlYMovement(float delta, Direction gravityDirection) {
-	// Vector2 positionCpy = pangolin.getPosition().cpy();
-	// Vector2 velocityCpy = pangolin.getVelocity().cpy();
-	//
-	// velocityCpy.set(0, pangolin.getVelocity().y);
-	// pangolin.translate(velocityCpy.tmp().mul(delta));
-	//
-	// Entity collidedEntity = CollisionHelper.collidesAny(pangolin,
-	// pangolinWorld.getBlocks());
-	// if (collidedEntity != null)
-	// if (CollisionHelper.collidesDown(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
-	// positionCpy.y = collidedEntity.getY() + collidedEntity.getHeight();
-	// if (gravityDirection == Direction.DOWN)
-	// pangolin.setLanded(true);
-	// } else if (CollisionHelper.collidesUp(pangolin, collidedEntity)) {
-	// pangolin.getVelocity().set(pangolin.getVelocity().x, 0);
-	// positionCpy.y = collidedEntity.getY() - pangolin.getHeight();
-	// if (gravityDirection == Direction.UP)
-	// pangolin.setLanded(true);
-	// }
-	// pangolin.setPosition(positionCpy);
-	// }
-
-	private CountDown cd = new CountDown(1000);
+	private CountDown gravityInvertionCountDown = new CountDown(500);
 	
 	/** Change Pangolin's state and parameters based on input controls **/
 	private void processInput() {
@@ -163,10 +70,10 @@ public class Controller {
 
 		if (pangolin.isLanded()) {
 			if (keys.get(Keys.SPACE)) {
-				if (!cd.isFinished())
+				if (!gravityInvertionCountDown.isFinished())
 					return;
 
-				cd.start();
+				gravityInvertionCountDown.start();
 				pangolinWorld.invertGravity();
 			}
 			else
