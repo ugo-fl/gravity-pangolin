@@ -18,10 +18,10 @@ public class FadeOutTransition extends Transition {
 	}
 
 	@Override
-	public void render(IScreen current, IScreen next) {
+	public IScreen render(IScreen current, IScreen next) {
 		if (current == null) {
 			countDownHelper.finish();
-			return ;
+			return null;
 		}
 		current.render(Gdx.graphics.getDeltaTime());
 		color.set(0f, 0f, 0f, 1F - ((1F / countDownHelper.getDuration()) * countDownHelper.getTimeRemaining()));
@@ -34,6 +34,7 @@ public class FadeOutTransition extends Transition {
 		shapeRenderer.filledRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		shapeRenderer.end();
 		Gdx.gl20.glDisable(GL20.GL_BLEND);
+		return current;
 	}
 
 }

@@ -20,12 +20,14 @@ public abstract class Transition {
 	}
 
 	/**
+	 * 
 	 * @param current
 	 *            The current game state.
 	 * @param next
 	 *            The next game state.
+	 * @return the current screen
 	 */
-	public abstract void render(IScreen current, IScreen next);
+	public abstract IScreen render(IScreen current, IScreen next);
 
 	public boolean isFinished() {
 		return countDownHelper.isFinished();

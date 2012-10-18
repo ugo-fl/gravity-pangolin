@@ -84,7 +84,6 @@ public class HarmfulBlock extends Entity {
 		entityGraphic.setOrigin(origin.x, origin.y);
 		// entityGraphic.setRotation(body.getAngle() *
 		// MathUtils.radiansToDegrees);
-		System.out.println("HUH: " + (scale - currentWidth));
 //		entityGraphic.setSize(scale, scale * entityGraphic.getHeight() / entityGraphic.getWidth());
 		
 		entityGraphic.setBounds(bodyPos.x, bodyPos.y, currentWidth, HEIGHT);
