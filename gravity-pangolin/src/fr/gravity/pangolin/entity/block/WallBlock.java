@@ -65,11 +65,6 @@ public class WallBlock extends Entity {
 	}
 
 	@Override
-	public Actor hit(float x, float y) {
-		return null;
-	}
-
-	@Override
 	public void beginContact(Object entity, Fixture fixture) {
 		
 	}

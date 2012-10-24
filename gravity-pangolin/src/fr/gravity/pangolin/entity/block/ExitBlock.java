@@ -75,11 +75,6 @@ public class ExitBlock extends Entity {
 	public void touchUp() {
 	}
 
-	@Override
-	public Actor hit(float x, float y) {
-		return null;
-	}
-
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}

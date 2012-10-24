@@ -26,6 +26,8 @@ public class MapEditorScreen extends GravityPangolinScreen {
 	}
 
 	private Entity touchedEntity;
+	private float shiftX;
+	private float shiftY;
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
@@ -33,6 +35,9 @@ public class MapEditorScreen extends GravityPangolinScreen {
 		for (Entity entity : pangolinWorld.getEntities()) {
 			if (entity.touchDown(x, y)) {
 				touchedEntity = entity;
+				// TODO There's a little bug when an entity is dragged (quick shift to the pointer position, not good looking)
+//				shiftX = (x * (getWidth() / Gdx.graphics.getWidth())) - entity.getEntityGraphic().getX();
+//				shiftY = entity.getEntityGraphic().getY() - (getHeight() - (y * (getHeight() / Gdx.graphics.getHeight())));
 				break;
 			}
 		}

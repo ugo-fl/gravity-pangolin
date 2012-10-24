@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -11,19 +12,17 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.collision.BodyEditorLoader;
 import fr.gravity.pangolin.constant.FilterMask;
 import fr.gravity.pangolin.entity.Entity;
-import fr.gravity.pangolin.entity.block.GravityChangerBlock;
 import fr.gravity.pangolin.entity.graphic.pangolin.PangolinGraphic;
 import fr.gravity.pangolin.game.Controller;
 import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
 
-public class Pangolin extends Entity {
+public class Pangolin extends Entity implements InputProcessor {
 
 	public static final float SPEED = 0.8F; // unit per second
 	public static final float FALLING_SPEED = SPEED / 1.8F; // unit per second
@@ -67,6 +66,7 @@ public class Pangolin extends Entity {
 		createGraphic(x, y);
 		createBody(gravityPangolinWorld.getWorld(), x, y);
 		createFeetSensor();
+		controller = new Controller(gravityPangolinWorld, this);
 	}
 
 	protected void createBody(World world, float x, float y) {
@@ -117,7 +117,6 @@ public class Pangolin extends Entity {
 
 	public void createGraphic(float x, float y) {
 		entityGraphic = new PangolinGraphic(this, gravityPangolinWorld,  x, y);
-		controller = new Controller(gravityPangolinWorld, this);
 	}
 
 	@Override
@@ -215,11 +214,6 @@ public class Pangolin extends Entity {
 	/** EVENTS **/
 
 	@Override
-	public Actor hit(float x, float y) {
-		return null;
-	}
-
-	@Override
 	public boolean keyDown(int keycode) {
 		controller.keyDown(keycode);
 		return true;
@@ -231,6 +225,7 @@ public class Pangolin extends Entity {
 		return true;
 	}
 
+	
 	@Override
 	public void touchDown() {
 	}
@@ -268,6 +263,42 @@ public class Pangolin extends Entity {
 
 	public Direction getDirection() {
 		return direction;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

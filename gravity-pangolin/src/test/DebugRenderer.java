@@ -204,7 +204,7 @@ public class DebugRenderer {
 		pangolinSprite.setPosition(bottlePos.x, bottlePos.y);
 		pangolinSprite.setOrigin(pangolinBodyOrigin.x, pangolinBodyOrigin.y);
 		pangolinSprite.setRotation(pangolinBody.getAngle() * MathUtils.radiansToDegrees);
-		pangolinSprite.setSize(TestBox2DScreen.PANGOLIN_WIDTH, TestBox2DScreen.PANGOLIN_WIDTH * pangolinSprite.getHeight() / pangolinSprite.getWidth());
+		pangolinSprite.setSize(pangolinSprite.getWidth(), pangolinSprite.getWidth() * pangolinSprite.getHeight() / pangolinSprite.getWidth());
 
 		batch.begin();
 		pangolinSprite.draw(batch);

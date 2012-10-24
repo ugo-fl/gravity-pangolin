@@ -22,8 +22,8 @@ public class StarFish extends Entity {
 	
 	public StarFish(GravityPangolinWorld gravityPangolinWorld, float x, float y) {
 		super(gravityPangolinWorld, 1);
-		this.x = x;
-		this.y = y;
+		this.setX(x);
+		this.setY(y);
 		createBody(gravityPangolinWorld.getWorld(), x, y);
 		createGraphic(x, y);
 		shootCountDown.start();
@@ -60,7 +60,7 @@ public class StarFish extends Entity {
 		if (!shootCountDown.isFinished())
 			return ;
 		shootCountDown.start();
-		gravityPangolinWorld.addEntity(new Projectile(gravityPangolinWorld, x, y));
+		gravityPangolinWorld.addEntity(new Projectile(gravityPangolinWorld, getX(), getY()));
 	}
 	
 	@Override

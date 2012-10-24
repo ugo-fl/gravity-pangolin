@@ -1,13 +1,8 @@
 package fr.gravity.pangolin.entity.graphic;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.actions.RotateBy;
-import com.badlogic.gdx.scenes.scene2d.actions.RotateTo;
-
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.helper.TextureHelper.TextureId;
-import fr.gravity.pangolin.util.ImageUtil;
 
 public class ExitBlockGraphic extends EntityGraphic {
 

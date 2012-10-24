@@ -77,10 +77,10 @@ public class GravityPangolinGame extends Game {
 		loadLevels();
 
 		// Loads all the screens
-		loadScreens();
+//		loadScreens();
 
-		setScreen(new MapEditorScreen(this, getLevelWorld(0, 0)));
-//		 start(0, 0);
+//		setScreen(new MapEditorScreen(this, getLevelWorld(0, 0)));
+		 start(0, 2);
 		// setScreen(mainMenuScreen);
 	}
 

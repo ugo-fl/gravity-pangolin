@@ -245,7 +245,7 @@ public class GravityPangolinWorld {
 	HashSet<Body> bodiesToDestroy = new HashSet<Body>();
 
 	public void remove(Entity entity) {
-		stage.removeActor(entity);
+		stage.getActors().removeValue(entity, true);
 		bodiesToDestroy.add(entity.getBody());
 		entities.removeValue(entity, true);
 	}

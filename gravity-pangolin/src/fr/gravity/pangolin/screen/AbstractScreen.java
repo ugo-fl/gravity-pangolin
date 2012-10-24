@@ -20,10 +20,10 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import fr.gravity.pangolin.game.CustomStage;
@@ -87,7 +87,7 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 	public void show() {
 		Gdx.app.log(GravityPangolinGame.LOG, "Showing screen: " + getName());
 		// set the stage as the input processor
-		Gdx.input.setInputProcessor(stage);
+//		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -133,7 +133,8 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 		// pangolinSprite);
 
 		batch.begin();
-		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond() + ", update: " + updateTime + ", render: " + renderTime, 0, 20);
+		font.draw(batch, "fps:" + Gdx.graphics.getFramesPerSecond() + ", update: " + updateTime + ", render: "
+				+ renderTime, 0, 20);
 		batch.end();
 	}
 
@@ -282,13 +283,12 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 	}
 
 	protected void loadBackButton(ClickListener clickListener) {
-		TextButton backButton = new TextButton(getSkin());
-		backButton.setText("Back");
-		backButton.x = 400;
-		backButton.y = height - 60;
-		backButton.width = 50;
-		backButton.height = 50;
-		backButton.setClickListener(clickListener);
+		TextButton backButton = new TextButton("Back", getSkin());
+		backButton.setX(400);
+		backButton.setY(height - 60);
+		backButton.setWidth(50);
+		backButton.setHeight(50);
+		backButton.addListener(clickListener);
 		stage.addActor(backButton);
 	}
 
@@ -340,7 +340,8 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 		// ask the world which bodies are within the given
 		// bounding box around the mouse pointer
 		hitBody = null;
-		world.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f, testPoint.x + 0.0001f, testPoint.y + 0.0001f);
+		world.QueryAABB(callback, testPoint.x - 0.0001f, testPoint.y - 0.0001f, testPoint.x + 0.0001f,
+				testPoint.y + 0.0001f);
 
 		if (hitBody == groundBody)
 			hitBody = null;
@@ -391,6 +392,12 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 	}
 
 	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
 		return false;
@@ -404,12 +411,6 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchMoved(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

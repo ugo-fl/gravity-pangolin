@@ -36,10 +36,10 @@ public class ButtonsSlider extends Group implements InputProcessor {
 
 	public ButtonsSlider(List<TextButton> buttons, Stage stage, IScreen screen) {
 		this.buttons = buttons;
-		this.stage = stage;
+		setStage(stage);
 
-		this.width = screen.getWidth();
-		this.height = screen.getHeight();
+		setWidth(screen.getWidth());
+		setHeight(screen.getHeight());
 		 
 		this.middleScreen = screen.getWidth() / 2;
 		this.selectedX = middleScreen - (FOCUSED_BUTTON_WIDTH / 2);
@@ -62,15 +62,17 @@ public class ButtonsSlider extends Group implements InputProcessor {
 		for (int i = 0; i < buttons.size(); i++) {
 			TextButton textButton = buttons.get(i);
 
-			textButton.x = startX + (i * (PADDING + FOCUSED_BUTTON_WIDTH));
-			textButton.y = selectedY;
+			textButton.setX(startX + (i * (PADDING + FOCUSED_BUTTON_WIDTH)));
+			textButton.setY(selectedY);
 
-			textButton.width = NumbersUtil.limit(FOCUSED_BUTTON_WIDTH - Math.abs(middleScreen - (textButton.x + textButton.width / 2)) * FOCUS_RATE,
-					FOCUSED_BUTTON_WIDTH, BUTTON_WIDTH);
-			textButton.height = NumbersUtil.limit(FOCUSED_BUTTON_HEIGHT - Math.abs(middleScreen - (textButton.x + textButton.width / 2)) * FOCUS_RATE,
-					FOCUSED_BUTTON_HEIGHT, BUTTON_HEIGHT);
+			float width = textButton.getWidth();
+			float x = textButton.getX();
+			textButton.setWidth(NumbersUtil.limit(FOCUSED_BUTTON_WIDTH - Math.abs(middleScreen - (x + width / 2)) * FOCUS_RATE,
+					FOCUSED_BUTTON_WIDTH, BUTTON_WIDTH));
+			textButton.setHeight(NumbersUtil.limit(FOCUSED_BUTTON_HEIGHT - Math.abs(middleScreen - (x + width / 2)) * FOCUS_RATE,
+					FOCUSED_BUTTON_HEIGHT, BUTTON_HEIGHT));
 
-			textButton.x += (FOCUSED_BUTTON_WIDTH - textButton.width) / 2;
+			textButton.setX(x + (FOCUSED_BUTTON_WIDTH - width) / 2);
 		}
 	}
 
@@ -88,7 +90,7 @@ public class ButtonsSlider extends Group implements InputProcessor {
 		shift = Float.MAX_VALUE;
 		for (int i = 0; i < buttons.size(); i++) {
 			TextButton textButton = buttons.get(i);
-			float tmpShift = middleScreen - (textButton.x + textButton.width / 2);
+			float tmpShift = middleScreen - (textButton.getX() + textButton.getWidth() / 2);
 			if (tmpShift == 0)
 				return;
 			if (Math.abs(tmpShift) < Math.abs(shift)) {
@@ -148,16 +150,16 @@ public class ButtonsSlider extends Group implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		super.touchDown(x, y, pointer);
+//		super.touchDown(x, y, pointer);
 		touchDownX = x;
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		super.touchUp(x, y, pointer);
-		for (Actor child : children)
-			child.touchUp(x - child.x, y - child.y, pointer);
+//		super.touchUp(x, y, pointer);
+//		for (Actor child : getChildren())
+//			child.touchUp(x - child.getX(), y - child.getY(), pointer);
 		System.out.println("UP " + x);
 		startX -= (touchDownX - x);
 		// Trigger magnetizing
@@ -167,14 +169,39 @@ public class ButtonsSlider extends Group implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		super.touchDragged(x, y, pointer);
+//		super.touchDragged(x, y, pointer);
 		System.out.println("DRAGGED " + x);
 		placeButtons(startX - (touchDownX - x));
 		return false;
 	}
 
 	@Override
-	public boolean touchMoved(int x, int y) {
+	public boolean keyDown(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
