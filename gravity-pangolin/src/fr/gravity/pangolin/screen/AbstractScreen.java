@@ -79,8 +79,6 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 		if (pangolinWorld != null)
 			world = pangolinWorld.getWorld();
 
-		// set the stage as the input processor
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	// Screen implementation
@@ -88,6 +86,8 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 	@Override
 	public void show() {
 		Gdx.app.log(GravityPangolinGame.LOG, "Showing screen: " + getName());
+		// set the stage as the input processor
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 		// update the world with a fixed time step
 		long startTime = TimeUtils.nanoTime();
 		if (pangolinWorld != null)
-			pangolinWorld.step(Gdx.app.getGraphics().getDeltaTime(), 3, 3);
+			pangolinWorld.step(Gdx.app.getGraphics().getDeltaTime(), 12, 12);
 		stage.act(delta);
 		float updateTime = (TimeUtils.nanoTime() - startTime) / 1000000000.0f;
 
@@ -301,17 +301,11 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 	}
 
 	public float getPpuX() {
-		// if (pangolinWorld == null)
-		// return 1;
-		// float sizeX = pangolinWorld.getSizeX();
-		return Gdx.graphics.getPpcX();
+		return Gdx.graphics.getWidth() / width;
 	}
 
 	public float getPpuY() {
-		if (pangolinWorld == null)
-			return 1;
-		float sizeY = pangolinWorld.getSizeY();
-		return height / sizeY;
+		return Gdx.graphics.getHeight() / height;
 	}
 
 	// TEST

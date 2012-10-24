@@ -1,0 +1,187 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x1c675368, pid=5220, tid=5312
+#
+# JRE version: 6.0_25-b06
+# Java VM: Java HotSpot(TM) Client VM (20.0-b11 mixed mode windows-x86 )
+# Problematic frame:
+# C  0x1c675368
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x16f40800):  JavaThread "LWJGL Application" [_thread_in_native, id=5312, stack(0x180f0000,0x18140000)]
+
+siginfo: ExceptionCode=0xc0000005, writing address 0x6753481c
+
+Registers:
+EAX=0x1e6100e4, EBX=0x1c675348, ECX=0x1c651414, EDX=0x1c675388
+ESP=0x1813f7f4, EBP=0x1c675388, ESI=0x16f40023, EDI=0x18130023
+EIP=0x1c675368, EFLAGS=0x00010296
+
+Top of Stack: (sp=0x1813f7f4)
+0x1813f7f4:   1c670023 1c675348 1e610023 16f40800
+0x1813f804:   1813f81c 1813f828 0198ae92 16f40800
+0x1813f814:   1c651408 1e61d670 bffa3c44 c05851ea
+0x1813f824:   00000000 00000000 00000000 00000000
+0x1813f834:   1c637968 00000000 1e61d670 00000000
+0x1813f844:   00000000 00000000 00000000 00000000
+0x1813f854:   00000000 00000000 1c67e700 1c675348
+0x1813f864:   1c650b40 1813f8a8 6909c55a 1c675348 
+
+Instructions: (pc=0x1c675368)
+0x1c675348:   48 53 67 1c 26 00 00 00 00 00 00 00 d0 d5 61 1e
+0x1c675358:   70 d6 61 1e 48 53 67 1c 00 00 00 00 f0 d5 61 1e
+0x1c675368:   08 14 65 1c 48 53 67 1c 00 00 00 00 00 00 00 00
+0x1c675378:   40 54 65 1c e8 d9 66 1c 00 00 00 00 00 00 00 00 
+
+
+Register to memory mapping:
+
+EAX=0x1e6100e4 is an unknown value
+EBX=0x1c675348 is an unknown value
+ECX=0x1c651414 is an unknown value
+EDX=0x1c675388 is an unknown value
+ESP=0x1813f7f4 is pointing into the stack for thread: 0x16f40800
+EBP=0x1c675388 is an unknown value
+ESI=0x16f40023 is an unknown value
+EDI=0x18130023 is pointing into the stack for thread: 0x16f40800
+
+
+Stack: [0x180f0000,0x18140000],  sp=0x1813f7f4,  free space=317k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  0x1c675368
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  com.badlogic.gdx.physics.box2d.World.jniStep(JFII)V+0
+j  com.badlogic.gdx.physics.box2d.World.step(FII)V+8
+j  fr.gravity.pangolin.world.GravityPangolinWorld.step(FII)V+7
+j  fr.gravity.pangolin.screen.AbstractScreen.render(F)V+30
+j  com.badlogic.gdx.Game.render()V+19
+j  com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop()V+469
+j  com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run()V+27
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x003c8000 JavaThread "DestroyJavaVM" [_thread_blocked, id=5172, stack(0x008c0000,0x00910000)]
+=>0x16f40800 JavaThread "LWJGL Application" [_thread_in_native, id=5312, stack(0x180f0000,0x18140000)]
+  0x16b72400 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=5156, stack(0x16dc0000,0x16e10000)]
+  0x16b6cc00 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=5160, stack(0x16d70000,0x16dc0000)]
+  0x16b6b400 JavaThread "Attach Listener" daemon [_thread_blocked, id=5148, stack(0x16d20000,0x16d70000)]
+  0x16b69c00 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=5224, stack(0x16cd0000,0x16d20000)]
+  0x16b5b800 JavaThread "Finalizer" daemon [_thread_blocked, id=5152, stack(0x16c80000,0x16cd0000)]
+  0x16b56c00 JavaThread "Reference Handler" daemon [_thread_blocked, id=5164, stack(0x16c30000,0x16c80000)]
+
+Other Threads:
+  0x16b53000 VMThread [stack: 0x16be0000,0x16c30000] [id=5168]
+  0x16b85c00 WatcherThread [stack: 0x16e10000,0x16e60000] [id=5292]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ def new generation   total 4928K, used 2073K [0x029a0000, 0x02ef0000, 0x07ef0000)
+  eden space 4416K,  41% used [0x029a0000, 0x02b6b660, 0x02df0000)
+  from space 512K,  46% used [0x02e70000, 0x02eab040, 0x02ef0000)
+  to   space 512K,   0% used [0x02df0000, 0x02df0000, 0x02e70000)
+ tenured generation   total 10944K, used 1726K [0x07ef0000, 0x089a0000, 0x129a0000)
+   the space 10944K,  15% used [0x07ef0000, 0x0809f950, 0x0809fa00, 0x089a0000)
+ compacting perm gen  total 12288K, used 6691K [0x129a0000, 0x135a0000, 0x169a0000)
+   the space 12288K,  54% used [0x129a0000, 0x13028f28, 0x13029000, 0x135a0000)
+No shared spaces configured.
+
+Code Cache  [0x00920000, 0x00a50000, 0x02920000)
+ total_blobs=638 nmethods=386 adapters=188 free_code_cache=32325568 largest_free_block=384
+
+Dynamic libraries:
+0x00400000 - 0x00424000 	C:\Documents and Settings\A47054\SFBOX\eclipse\eclipse-jee-indigo-1.0\ext\java\jdk1.6.0_25\bin\javaw.exe
+0x7c910000 - 0x7c9c6000 	C:\WINDOWS\system32\ntdll.dll
+0x7c800000 - 0x7c906000 	C:\WINDOWS\system32\kernel32.dll
+0x77da0000 - 0x77e4c000 	C:\WINDOWS\system32\ADVAPI32.dll
+0x77e50000 - 0x77ee2000 	C:\WINDOWS\system32\RPCRT4.dll
+0x77fc0000 - 0x77fd1000 	C:\WINDOWS\system32\Secur32.dll
+0x7e390000 - 0x7e421000 	C:\WINDOWS\system32\USER32.dll
+0x77ef0000 - 0x77f39000 	C:\WINDOWS\system32\GDI32.dll
+0x76320000 - 0x7633d000 	C:\WINDOWS\system32\IMM32.DLL
+0x6fa00000 - 0x6fa3c000 	C:\PROGRA~1\Sophos\SOPHOS~1\SOPHOS~1.DLL
+0x76ba0000 - 0x76bab000 	C:\WINDOWS\system32\PSAPI.DLL
+0x7c340000 - 0x7c396000 	C:\Documents and Settings\A47054\SFBOX\eclipse\eclipse-jee-indigo-1.0\ext\java\jdk1.6.0_25\jre\bin\msvcr71.dll
+0x6d8a0000 - 0x6db4f000 	C:\Documents and Settings\A47054\SFBOX\eclipse\eclipse-jee-indigo-1.0\ext\java\jdk1.6.0_25\jre\bin\client\jvm.dll
+0x76ae0000 - 0x76b0f000 	C:\WINDOWS\system32\WINMM.dll
+0x6d850000 - 0x6d85c000 	C:\Documents and Settings\A47054\SFBOX\eclipse\eclipse-jee-indigo-1.0\ext\java\jdk1.6.0_25\jre\bin\verify.dll
+0x6d3d0000 - 0x6d3ef000 	C:\Documents and Settings\A47054\SFBOX\eclipse\eclipse-jee-indigo-1.0\ext\java\jdk1.6.0_25\jre\bin\java.dll
+0x6d890000 - 0x6d89f000 	C:\Documents and Settings\A47054\SFBOX\eclipse\eclipse-jee-indigo-1.0\ext\java\jdk1.6.0_25\jre\bin\zip.dll
+0x69080000 - 0x690e3000 	C:\Documents and Settings\A47054\Local Settings\Temp\libgdxA47054\553733341\gdx.dll
+0x77be0000 - 0x77c38000 	C:\WINDOWS\system32\msvcrt.dll
+0x17070000 - 0x170e3000 	C:\Documents and Settings\A47054\Local Settings\Temp\libgdxA47054\553733341\lwjgl.dll
+0x77390000 - 0x77493000 	C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.5512_x-ww_35d4ce83\COMCTL32.dll
+0x77f40000 - 0x77fb6000 	C:\WINDOWS\system32\SHLWAPI.dll
+0x5f070000 - 0x5f13c000 	C:\WINDOWS\system32\OPENGL32.dll
+0x6cef0000 - 0x6cf11000 	C:\WINDOWS\system32\GLU32.dll
+0x736b0000 - 0x736fb000 	C:\WINDOWS\system32\DDRAW.dll
+0x73b10000 - 0x73b16000 	C:\WINDOWS\system32\DCIMAN32.dll
+0x77bd0000 - 0x77bd8000 	C:\WINDOWS\system32\VERSION.dll
+0x17b10000 - 0x17b71000 	C:\DOCUME~1\A47054\LOCALS~1\Temp\libgdxA47054\553733341\OpenAL32.dll
+0x774a0000 - 0x775dd000 	C:\WINDOWS\system32\ole32.dll
+0x7c9d0000 - 0x7d1f5000 	C:\WINDOWS\system32\SHELL32.dll
+0x5b090000 - 0x5b0c8000 	C:\WINDOWS\system32\uxtheme.dll
+0x74690000 - 0x746dc000 	C:\WINDOWS\system32\MSCTF.dll
+0x76f80000 - 0x76fff000 	C:\WINDOWS\system32\CLBCATQ.DLL
+0x77000000 - 0x770d4000 	C:\WINDOWS\system32\COMRes.dll
+0x770e0000 - 0x7716b000 	C:\WINDOWS\system32\OLEAUT32.dll
+0x73e60000 - 0x73ebc000 	C:\WINDOWS\system32\dsound.dll
+0x72c70000 - 0x72c79000 	C:\WINDOWS\system32\wdmaud.drv
+0x76be0000 - 0x76c0e000 	C:\WINDOWS\system32\WINTRUST.dll
+0x779e0000 - 0x77a77000 	C:\WINDOWS\system32\CRYPT32.dll
+0x77a80000 - 0x77a92000 	C:\WINDOWS\system32\MSASN1.dll
+0x76c40000 - 0x76c68000 	C:\WINDOWS\system32\IMAGEHLP.dll
+0x72c60000 - 0x72c68000 	C:\WINDOWS\system32\msacm32.drv
+0x77bb0000 - 0x77bc5000 	C:\WINDOWS\system32\MSACM32.dll
+0x77ba0000 - 0x77ba7000 	C:\WINDOWS\system32\midimap.dll
+0x73e30000 - 0x73e34000 	C:\WINDOWS\system32\KsUser.dll
+0x75140000 - 0x7516e000 	C:\WINDOWS\system32\msctfime.ime
+0x183c0000 - 0x1937f000 	C:\WINDOWS\system32\atioglxx.dll
+0x719f0000 - 0x71a07000 	C:\WINDOWS\system32\WS2_32.dll
+0x719e0000 - 0x719e8000 	C:\WINDOWS\system32\WS2HELP.dll
+0x182a0000 - 0x182cf000 	C:\WINDOWS\system32\atiadlxx.dll
+0x778e0000 - 0x779d8000 	C:\WINDOWS\system32\SETUPAPI.dll
+0x78130000 - 0x781cb000 	C:\WINDOWS\WinSxS\x86_Microsoft.VC80.CRT_1fc8b3b9a1e18e3b_8.0.50727.6195_x-ww_44262b86\MSVCR80.dll
+0x73a80000 - 0x73a95000 	C:\WINDOWS\system32\mscms.dll
+0x72f50000 - 0x72f76000 	C:\WINDOWS\system32\WINSPOOL.DRV
+0x58a10000 - 0x58a51000 	C:\WINDOWS\system32\icm32.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1252 
+java_command: fr.gravity.pangolin.Main
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\Program Files\CA\SC\CAWIN\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\CA\SC\CBB\;C:\Program Files\CA\DSM\bin;C:\PROGRA~1\CA\SC\CAM\bin;C:\Program Files\CA\SC\Csam\SockAdapter\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\Git\bin;C:\Documents and Settings\A47054\SFBOX\eclipse\eclipse-jee-indigo-1.0\ext\SVNCollabNet
+USERNAME=A47054
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows XP Build 2600 Service Pack 3
+
+CPU:total 4 (4 cores per cpu, 1 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt
+
+Memory: 4k page, physical 3396536k(2147600k free), swap 5326052k(4027016k free)
+
+vm_info: Java HotSpot(TM) Client VM (20.0-b11) for windows-x86 JRE (1.6.0_25-b06), built on Apr 14 2011 01:04:32 by "java_re" with MS VC++ 7.1 (VS2003)
+
+time: Tue Oct 23 09:57:15 2012
+elapsed time: 4 seconds
+

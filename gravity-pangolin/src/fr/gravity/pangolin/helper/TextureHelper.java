@@ -22,13 +22,16 @@ public class TextureHelper {
 		PANGOLIN(new Texture(DirectoryConstant.IMAGE_DIR + "sprite_pangolin.png"), 1, 2),
 		BACKGROUND(new Texture(DirectoryConstant.IMAGE_DIR + "background.png"), 1, 1),
 		BUTTONS(new Texture(DirectoryConstant.IMAGE_DIR + "buttons_sprite.png"), 1, 2), 
-		BRANCH(new Texture(DirectoryConstant.IMAGE_DIR + "wall_block.png"), 1, 1),
+		WALL_BLOCK(new Texture(DirectoryConstant.IMAGE_DIR + "wall_block.png"), 1, 1),
 		GRAVITY_CHANGER(new Texture(DirectoryConstant.IMAGE_DIR + "gravity_changer.png"), 1, 1),
 		PANGOLIN_BALLMODE(new Texture(DirectoryConstant.IMAGE_DIR + "sprite_pangolin_ballmode.png"), 1, 4),
 		EXIT(new Texture(DirectoryConstant.IMAGE_DIR + "exit.png"), 1, 1),
 		YOU_WIN(new Texture(DirectoryConstant.IMAGE_DIR + "you_win.png"), 1, 1),
 		GAME_OVER(new Texture(DirectoryConstant.IMAGE_DIR + "game_over.png"), 1, 1), 
-		HARMFUL_BLOCK(new Texture(DirectoryConstant.IMAGE_DIR + "harmful_block.png"), 1, 1);
+		HARMFUL_BLOCK(new Texture(DirectoryConstant.IMAGE_DIR + "harmful_block.png"), 1, 1), 
+		STAR_FISH(new Texture(DirectoryConstant.IMAGE_DIR + "star_fish.png"), 1, 1),
+		PROJECTILE(new Texture(DirectoryConstant.IMAGE_DIR + "projectile.png"), 1, 1), 
+		SPADES_BLOCK(new Texture(DirectoryConstant.IMAGE_DIR + "spades.png"), 1, 1);
 
 		private final Texture texture;
 		private final int frameRows;

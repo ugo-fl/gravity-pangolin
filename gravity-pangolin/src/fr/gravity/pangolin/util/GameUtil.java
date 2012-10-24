@@ -1,5 +1,7 @@
 package fr.gravity.pangolin.util;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Rectangle;
 
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
@@ -10,49 +12,26 @@ import fr.gravity.pangolin.screen.IScreen;
 public class GameUtil {
 
 	public static IScreen getScreen() {
-		return (IScreen) GravityPangolinGame.getInstance().getScreen();
+		Screen screen = GravityPangolinGame.getInstance().getScreen();
+		if (screen instanceof IScreen)
+			return (IScreen) screen;
+		return null;
 	}
 
 	public static float projectCoordinateX(float x) {
-		return x * ((AbstractScreen) getScreen()).getPpuX();
+		return x * (1 / ((AbstractScreen) getScreen()).getPpuX());
 	}
 
 	public static float projectCoordinateY(float y) {
-		return y * ((AbstractScreen) getScreen()).getPpuY();
+		AbstractScreen screen = (AbstractScreen) getScreen();
+		return screen.getHeight() - (y * (1 / screen.getPpuY()));
 	}
 
-	public static boolean isOutOfScreen(Rectangle rectangle) {
-		// AbstractScreen screen = GameUtil.getScreen();
-		//
-		// final float DEEP_SPACE_MARGIN = screen.getWidth() / 20;
-		//
-		// float x = rectangle.getX();
-		// float y = rectangle.getY();
-		// float width = rectangle.getWidth();
-		// float height = rectangle.getHeight();
-		//
-		// if (x < -width - DEEP_SPACE_MARGIN || x > screen.getWidth() +
-		// DEEP_SPACE_MARGIN)
-		// return true;
-		// if (y < -height - DEEP_SPACE_MARGIN || y > screen.getHeight() +
-		// DEEP_SPACE_MARGIN)
-		// return true;
-
+	private final static float DEEP_SPACE_MARGIN = 3;
+	public static boolean isOutOfScreen(float x, float y) {
+		if (x < -DEEP_SPACE_MARGIN || y < -DEEP_SPACE_MARGIN)
+			return true;
 		return false;
-	}
-
-	public static float directionToAngle(Direction direction) {
-		switch (direction) {
-		case DOWN:
-			return 0;
-		case LEFT:
-			return 90;
-		case UP:
-			return 180;
-		case RIGHT:
-			return 270;
-		}
-		return 0;
 	}
 
 	public static boolean isOppositeDirection(Direction direction1, Direction direction2) {

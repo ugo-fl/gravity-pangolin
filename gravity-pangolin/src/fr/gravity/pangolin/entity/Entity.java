@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
@@ -67,19 +68,19 @@ public abstract class Entity extends Group {
 	}
 
 	public float getX() {
-		return entityGraphic.getX();
+		return body.getPosition().x;
 	}
 
 	public void setX(float x) {
-		entityGraphic.setX(x);
+		body.setTransform(x, body.getPosition().y, body.getAngle());
 	}
 
 	public float getY() {
-		return entityGraphic.getY();
+		return body.getPosition().y;
 	}
 
 	public void setY(float y) {
-		entityGraphic.setY(y);
+		body.setTransform(body.getPosition().x, y, body.getAngle());
 	}
 
 	public float getWidth() {
@@ -95,6 +96,7 @@ public abstract class Entity extends Group {
 	}
 
 	public void setPosition(Vector2 position) {
+		System.out.println("MOVED TO " + position);
 		setX(position.x);
 		setY(position.y);
 	}
@@ -107,30 +109,35 @@ public abstract class Entity extends Group {
 		return entityGraphic;
 	}
 
-	public abstract void beginContact(Object entity);
-	public abstract void endContact(Object entity);
+	public abstract void beginContact(Object entity, Fixture fixture);
+	public abstract void endContact(Object entity, Fixture fixture);
 	
 	/* TOUCH EVENTS */
 
 	protected boolean touchedDown;
 
-	public void touchDown(float x, float y) {
+	public boolean touchDown(float x, float y) {
 		if (SpriteUtil.isTouched(entityGraphic, x, y)) {
+			System.out.println("TOUCHED DOWN " + this);
 			touchDown();
 			entityGraphic.touchDown();
 			touchedDown = true;
+			return true;
 		} else {
 			touchedDown = false;
 			entityGraphic.touchDownOut();
 		}
+		return false;
 	}
 
-	public void touchUp(float x, float y) {
+	public boolean touchUp(float x, float y) {
 		if (touchedDown && SpriteUtil.isTouched(entityGraphic, x, y)) {
 			touchUp();
 			entityGraphic.touchUp();
+			return true;
 		} else
 			entityGraphic.touchUpOut();
+		return false;
 	}
 
 	public abstract void touchDown();

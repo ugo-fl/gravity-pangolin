@@ -41,9 +41,11 @@ public class Controller {
 	}
 
 	public void keyUp(int keycode) {
-		if (keycode == Keys.BACKSPACE)
-			((AbstractScreen) GameUtil.getScreen()).switchDebug();
-		else if (keycode == Keys.PLUS)
+		if (keycode == Keys.BACKSPACE) {
+			AbstractScreen scr = ((AbstractScreen) GameUtil.getScreen());
+			if (scr != null)
+				scr.switchDebug();
+		} else if (keycode == Keys.PLUS)
 			GravityPangolinGame.getInstance().nextStage();
 		else if (keycode == Keys.MINUS)
 			GravityPangolinGame.getInstance().previousStage();
@@ -58,10 +60,10 @@ public class Controller {
 	}
 
 	/**
-	 * Avoid multiple key touch for gravity invertion
+	 * Avoid multiple key touch for gravity inversion
 	 */
 	private CountDown gravityInvertionCountDown = new CountDown(500);
-	
+
 	/** Change Pangolin's state and parameters based on input controls **/
 	private void processInput() {
 
@@ -75,8 +77,7 @@ public class Controller {
 
 				gravityInvertionCountDown.start();
 				pangolinWorld.invertGravity();
-			}
-			else
+			} else
 				pangolin.idle();
 		}
 

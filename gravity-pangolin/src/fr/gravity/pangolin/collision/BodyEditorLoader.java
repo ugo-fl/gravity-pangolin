@@ -1,4 +1,4 @@
-package test;
+package fr.gravity.pangolin.collision;
 
 import java.util.ArrayList;
 import java.util.HashMap;

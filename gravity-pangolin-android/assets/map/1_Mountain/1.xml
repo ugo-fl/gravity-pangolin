@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<map x="20" y="14">
+	<pangolin x="3" y="7" />
+	<exit direction="UP" x="18" y="1" />
+	<harmfulBlock direction="DOWN" x="15" y="9" />
+	<spadesBlock x="2" y="1.20" direction="UP" />
+	<spadesBlock x="3.5" y="1.20" direction="UP" />
+	<spadesBlock x="5" y="1.20" direction="UP" />
+	<spadesBlock x="6.5" y="1.20" direction="UP" />
+	<spadesBlock x="8" y="1.20" direction="UP" />
+	<spadesBlock x="9.5" y="1.20" direction="UP" />
+	
+	<spadesBlock x="1.20" y="8" direction="LEFT" />
+	<spadesBlock x="1.20" y="6.5" direction="LEFT" />
+	<spadesBlock x="1.20" y="5" direction="LEFT" />
+	<spadesBlock x="1.20" y="3.5" direction="LEFT" />
+	<wallBlock x="0" y="0" />
+	<wallBlock x="1" y="0" />
+	<wallBlock x="2" y="0" />
+	<wallBlock x="3" y="0" />
+	<wallBlock x="4" y="0" />
+	<wallBlock x="5" y="0" />
+	<wallBlock x="6" y="0" />
+	<wallBlock x="7" y="0" />
+	<wallBlock x="8" y="0" />
+	<wallBlock x="9" y="0" />
+	<wallBlock x="10" y="0" />
+	<wallBlock x="11" y="0" />
+	<wallBlock x="12" y="0" />
+	<wallBlock x="13" y="0" />
+	<wallBlock x="14" y="0" />
+	<wallBlock x="15" y="0" />
+	<wallBlock x="16" y="0" />
+	<wallBlock x="17" y="0" />
+	<wallBlock x="18" y="0" />
+	<wallBlock x="19" y="0" />
+	<wallBlock x="0" y="1" />
+	<wallBlock x="1" y="1" />
+	<wallBlock x="2" y="1" />
+	<wallBlock x="3" y="1" />
+	<wallBlock x="4" y="1" />
+	<wallBlock x="5" y="1" />
+	<wallBlock x="6" y="1" />
+	<wallBlock x="7" y="1" />
+	<wallBlock x="8" y="1" />
+	<wallBlock x="9" y="1" />
+	<wallBlock x="10" y="1" />
+	<wallBlock x="11" y="1" />
+	<wallBlock x="12" y="1" />
+	<wallBlock x="13" y="1" />
+	<wallBlock x="14" y="1" />
+	<wallBlock x="15" y="1" />
+	<wallBlock x="19" y="1" />
+	<wallBlock x="0" y="2" />
+	<wallBlock x="11" y="2" />
+	<wallBlock x="12" y="2" />
+	<wallBlock x="13" y="2" />
+	<wallBlock x="14" y="2" />
+	<wallBlock x="15" y="2" />
+	<wallBlock x="19" y="2" />
+	<wallBlock x="0" y="3" />
+	<wallBlock x="11" y="3" />
+	<wallBlock x="12" y="3" />
+	<wallBlock x="13" y="3" />
+	<wallBlock x="14" y="3" />
+	<wallBlock x="15" y="3" />
+	<wallBlock x="19" y="3" />
+	<wallBlock x="0" y="4" />
+	<wallBlock x="9" y="4" />
+	<wallBlock x="10" y="4" />
+	<wallBlock x="11" y="4" />
+	<wallBlock x="12" y="4" />
+	<wallBlock x="13" y="4" />
+	<wallBlock x="14" y="4" />
+	<wallBlock x="15" y="4" />
+	<wallBlock x="19" y="4" />
+	<wallBlock x="0" y="5" />
+	<wallBlock x="9" y="5" />
+	<wallBlock x="10" y="5" />
+	<wallBlock x="11" y="5" />
+	<wallBlock x="12" y="5" />
+	<wallBlock x="13" y="5" />
+	<wallBlock x="14" y="5" />
+	<wallBlock x="15" y="5" />
+	<wallBlock x="19" y="5" />
+	<wallBlock x="0" y="6" />
+	<wallBlock x="9" y="6" />
+	<wallBlock x="10" y="6" />
+	<wallBlock x="11" y="6" />
+	<wallBlock x="12" y="6" />
+	<wallBlock x="13" y="6" />
+	<wallBlock x="14" y="6" />
+	<wallBlock x="15" y="6" />
+	<wallBlock x="19" y="6" />
+	<wallBlock x="0" y="7" />
+	<wallBlock x="9" y="7" />
+	<wallBlock x="10" y="7" />
+	<wallBlock x="11" y="7" />
+	<wallBlock x="12" y="7" />
+	<wallBlock x="13" y="7" />
+	<wallBlock x="14" y="7" />
+	<wallBlock x="15" y="7" />
+	<wallBlock x="19" y="7" />
+	<wallBlock x="0" y="8" />
+	<wallBlock x="9" y="8" />
+	<wallBlock x="10" y="8" />
+	<wallBlock x="11" y="8" />
+	<wallBlock x="12" y="8" />
+	<wallBlock x="13" y="8" />
+	<wallBlock x="14" y="8" />
+	<wallBlock x="15" y="8" />
+	<wallBlock x="19" y="8" />
+	<wallBlock x="0" y="9" />
+	<wallBlock x="19" y="9" />
+	<wallBlock x="0" y="10" />
+	<wallBlock x="19" y="10" />
+	<wallBlock x="0" y="11" />
+	<wallBlock x="1" y="11" />
+	<wallBlock x="2" y="11" />
+	<wallBlock x="3" y="11" />
+	<wallBlock x="4" y="11" />
+	<wallBlock x="5" y="11" />
+	<wallBlock x="6" y="11" />
+	<wallBlock x="7" y="11" />
+	<wallBlock x="8" y="11" />
+	<wallBlock x="9" y="11" />
+	<wallBlock x="10" y="11" />
+	<wallBlock x="11" y="11" />
+	<wallBlock x="14" y="11" />
+	<wallBlock x="15" y="11" />
+	<wallBlock x="16" y="11" />
+	<wallBlock x="17" y="11" />
+	<wallBlock x="18" y="11" />
+	<wallBlock x="19" y="11" />
+	<wallBlock x="0" y="12" />
+	<wallBlock x="1" y="12" />
+	<wallBlock x="2" y="12" />
+	<wallBlock x="3" y="12" />
+	<wallBlock x="4" y="12" />
+	<wallBlock x="5" y="12" />
+	<wallBlock x="6" y="12" />
+	<wallBlock x="7" y="12" />
+	<wallBlock x="8" y="12" />
+	<wallBlock x="9" y="12" />
+	<wallBlock x="10" y="12" />
+	<wallBlock x="11" y="12" />
+	<wallBlock x="14" y="12" />
+	<wallBlock x="15" y="12" />
+	<wallBlock x="16" y="12" />
+	<wallBlock x="17" y="12" />
+	<wallBlock x="18" y="12" />
+	<wallBlock x="19" y="12" />
+	<wallBlock x="0" y="13" />
+	<wallBlock x="1" y="13" />
+	<wallBlock x="2" y="13" />
+	<wallBlock x="3" y="13" />
+	<wallBlock x="4" y="13" />
+	<wallBlock x="5" y="13" />
+	<wallBlock x="6" y="13" />
+	<wallBlock x="7" y="13" />
+	<wallBlock x="8" y="13" />
+	<wallBlock x="9" y="13" />
+	<wallBlock x="10" y="13" />
+	<wallBlock x="11" y="13" />
+	<wallBlock x="14" y="13" />
+	<wallBlock x="15" y="13" />
+	<wallBlock x="16" y="13" />
+	<wallBlock x="17" y="13" />
+	<wallBlock x="18" y="13" />
+	<wallBlock x="19" y="13" />
+</map>

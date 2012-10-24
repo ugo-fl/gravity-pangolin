@@ -1,7 +1,5 @@
-package fr.gravity.pangolin.screen;
+package test;
 
-import test.BodyEditorLoader;
-import test.DebugRenderer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -27,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import fr.gravity.pangolin.collision.BodyEditorLoader;
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.helper.TextureHelper.TextureId;
 

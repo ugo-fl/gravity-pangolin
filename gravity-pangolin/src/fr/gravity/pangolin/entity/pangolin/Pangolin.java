@@ -3,30 +3,23 @@ package fr.gravity.pangolin.entity.pangolin;
 import java.util.ArrayList;
 import java.util.List;
 
-import test.BodyEditorLoader;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import fr.gravity.pangolin.collision.BodyEditorLoader;
+import fr.gravity.pangolin.constant.FilterMask;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.GravityChangerBlock;
 import fr.gravity.pangolin.entity.graphic.pangolin.PangolinGraphic;
-import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.game.Controller;
 import fr.gravity.pangolin.game.GravityPangolinGame;
-import fr.gravity.pangolin.util.CountDown;
 import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
 
@@ -45,7 +38,7 @@ public class Pangolin extends Entity {
 		LEFT(270), UP(180), RIGHT(90), DOWN(0);
 
 		// The corresponding angle
-		float angle;
+		public float angle;
 
 		private Direction(float angle) {
 			this.angle = angle;
@@ -58,17 +51,6 @@ public class Pangolin extends Entity {
 
 	private enum PangolinState {
 		IDLE, WALKING, FALLING, DYING;
-
-		private PangolinGraphic pangolinGraphic;
-
-		public void setPangolinGraphic(PangolinGraphic graphic) {
-			this.pangolinGraphic = graphic;
-		}
-
-		public void setPosition(float x, float y) {
-			pangolinGraphic.setX(x);
-			pangolinGraphic.setY(y);
-		}
 	}
 
 	private PangolinState pangolinState;
@@ -78,8 +60,6 @@ public class Pangolin extends Entity {
 	private Vector2 acceleration = new Vector2();
 	private Vector2 velocity = new Vector2();
 	private boolean controllerEnabled = true;
-
-	private Fixture feetSensorFixture;
 
 	public Pangolin(GravityPangolinWorld gravityPangolinWorld, float x, float y) {
 		super(gravityPangolinWorld, 2);
@@ -105,16 +85,16 @@ public class Pangolin extends Entity {
 
 		loader.attachFixture(body, "pangolin", bodyFixtureDef, scale);
 		origin = loader.getOrigin("pangolin", scale).add(body.getLocalCenter()).cpy();
-
+		
+		for (Fixture fixture : body.getFixtureList())
+			fixture.setUserData(this);
 		body.setFixedRotation(true);
-
 		body.setTransform(body.getPosition().add(origin), body.getAngle());
 	}
 
-	private RevoluteJoint rj;
-
 	// The fixtures that come in contact with the feet
 	private List<Entity> inContactEntities = new ArrayList<Entity>();
+	private FeetSensor feetSensor;
 
 	/**
 	 * Initiate the feet sensor
@@ -124,11 +104,15 @@ public class Pangolin extends Entity {
 		FixtureDef myFixtureDef = new FixtureDef();
 		myFixtureDef.shape = polygonShape;
 		myFixtureDef.density = 1;
+		myFixtureDef.filter.categoryBits = FilterMask.FEET_SENSOR;
+		myFixtureDef.filter.maskBits = (short) (FilterMask.EVERYONE & ~FilterMask.STAR_FISH);
 
-		polygonShape.setAsBox(0.8f, 0.2f, body.getLocalCenter().add(new Vector2(-0.1F, -0.3F)), 0);
+		polygonShape.setAsBox(0.8f, 0.05f, body.getLocalCenter().add(new Vector2(-0.1F, -0.3F)), 0);
 		myFixtureDef.isSensor = true;
-		feetSensorFixture = body.createFixture(myFixtureDef);
-		feetSensorFixture.setUserData(this);
+		
+		Fixture feetSensorFixture = body.createFixture(myFixtureDef);
+		feetSensor = new FeetSensor(gravityPangolinWorld, this);
+		feetSensorFixture.setUserData(feetSensor);
 	}
 
 	public void createGraphic(float x, float y) {
@@ -139,11 +123,21 @@ public class Pangolin extends Entity {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		
+//		if (pangolinState == PangolinState.DYING) {
+//			body.setLinearVelocity(new Vector2(0, 0));
+//			return ;
+//		}
+		
 		if (controllerEnabled)
 			controller.update(delta);
 		clear();
 		((PangolinGraphic) entityGraphic).updateFrame();
 
+		// Check if the Pangolin is out of screen
+		if (GameUtil.isOutOfScreen(getX(), getY()))
+			die();
+		
 		Direction gravityDirection = gravityPangolinWorld.getGravity().direction;
 		if ((int) gravityDirection.angle != (int) Math.toDegrees(body.getAngle())) {
 			rotate(gravityDirection);
@@ -201,19 +195,21 @@ public class Pangolin extends Entity {
 	}
 
 	public void die() {
+		System.out.println("<(-.-)> ... The Pangolin's dead ... <(-.-)>");
+		pangolinState = PangolinState.DYING;
 		GravityPangolinGame.getInstance().restart();
 	}
 
 	@Override
-	public void beginContact(Object entity) {
-		if (entity instanceof GravityChangerBlock)
-			return;
-		inContactEntities.add((Entity) entity);
+	public void beginContact(Object entity, Fixture fixture) {
+//		if (entity instanceof GravityChangerBlock)
+//			return;
+//		inContactEntities.add((Entity) entity);
 	}
 
 	@Override
-	public void endContact(Object entity) {
-		inContactEntities.remove((Entity) entity);
+	public void endContact(Object entity, Fixture fixture) {
+//		inContactEntities.remove((Entity) entity);
 	}
 
 	/** EVENTS **/
@@ -258,7 +254,8 @@ public class Pangolin extends Entity {
 	}
 
 	public boolean isLanded() {
-		return inContactEntities.size() > 0;
+		return feetSensor.isInContact();
+//		return inContactEntities.size() > 0;
 	}
 
 	public void setDirection(Direction direction) {
@@ -266,7 +263,6 @@ public class Pangolin extends Entity {
 	}
 
 	public void rotate(Direction direction) {
-		System.out.println("ROTATE " + direction.angle);
 		body.setTransform(body.getPosition(), (float) Math.toRadians(direction.angle));
 	}
 

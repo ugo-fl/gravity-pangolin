@@ -1,18 +1,15 @@
-PANGOLINDIR=1
-EXITDIR=UP
-MAPSIZE=20;14
-/////////////       
+..\gravity-pangolin-android\assets\map\1_Mountain\1.xml
 XXXXXXXXXXXXXXXXXXXX              
-XXXXXXXXXXXXXXXX E X
+XXXXXXXXXXXXXXXX   X
 X          XXXXX   X
 X          XXXXX   X 
-X   O    XXXXXXX   X
 X        XXXXXXX   X
 X        XXXXXXX   X
-X   S    XXXXXXX   X
+X        XXXXXXX   X
+X        XXXXXXX   X
 X        XXXXXXX   X
 X                  X 
 X                  X
-XXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXX  XXXXXX
+XXXXXXXXXXXX  XXXXXX
+XXXXXXXXXXXX  XXXXXX

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 
+import fr.gravity.pangolin.constant.DirectoryConstant;
 import fr.gravity.pangolin.game.GameProgress;
 import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.util.GameUtil;
@@ -39,7 +40,8 @@ public class SelectLevelScreen extends MenuScreen {
 
 //		Gdx.input.setInputProcessor(stage);
 		
-		FileHandle[] maps = game.getPacks()[packId].getMaps();
+//		FileHandle[] maps = game.getPacks()[packId].getMaps();
+		int packSize = game.getPacks()[packId].size();
 
 		Table table = super.getTable();
 		table.add("Select level").spaceBottom(50);
@@ -49,7 +51,7 @@ public class SelectLevelScreen extends MenuScreen {
 		Skin skin = getSkin();
 		for (int i = 0; i < MAX_ROW; i++) {
 			for (int j = 0; j < MAX_COL; j++) {
-				if (i * MAX_COL + j >= maps.length)
+				if (i * MAX_COL + j >= packSize)
 					break;
 
 				TextButton textButton = new TextButton(skin);
@@ -57,7 +59,7 @@ public class SelectLevelScreen extends MenuScreen {
 				final int packId = i;
 				final boolean isLocked = levelId > progressLevelId;
 
-				textButton.setText(maps[i * MAX_COL + j].nameWithoutExtension());
+				textButton.setText(String.valueOf(i * MAX_COL + j + 1));
 				textButton.setClickListener(new ClickListener() {
 					@Override
 					public void click(Actor actor, float x, float y) {
@@ -66,7 +68,7 @@ public class SelectLevelScreen extends MenuScreen {
 					}
 				});
 				if (isLocked) {
-					Image lockImage = new Image(new Texture(Gdx.files.internal("images/lock_min.png")));
+					Image lockImage = new Image(new Texture(Gdx.files.internal(DirectoryConstant.IMAGE_DIR + "lock_min.png")));
 					lockImage.setFillParent(true);
 					textButton.addActor(lockImage);
 				}

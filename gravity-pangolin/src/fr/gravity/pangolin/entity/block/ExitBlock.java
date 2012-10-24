@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -13,19 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.graphic.ExitBlockGraphic;
+import fr.gravity.pangolin.entity.pangolin.Pangolin;
 import fr.gravity.pangolin.entity.pangolin.Pangolin.Direction;
 import fr.gravity.pangolin.game.GravityPangolinGame;
-import fr.gravity.pangolin.util.CountDown;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class ExitBlock extends Entity {
 
 	private Direction direction = Direction.DOWN;
-
+	
 	public ExitBlock(GravityPangolinWorld gravityPangolinWorld, float x, float y, Direction direction) {
 		super(gravityPangolinWorld, 1);
 		this.direction = direction;
-		
+
 		createGraphic(x, y);
 		createBody(gravityPangolinWorld.getWorld(), x, y);
 	}
@@ -86,12 +85,15 @@ public class ExitBlock extends Entity {
 	}
 
 	@Override
-	public void beginContact(Object entity) {
-		GravityPangolinGame.getInstance().nextStage();
+	public void beginContact(Object entity, Fixture fixture) {
+		if (entity instanceof Pangolin) {
+			if (direction == gravityPangolinWorld.getGravity().direction)
+				GravityPangolinGame.getInstance().nextStage();
+		}
 	}
 
 	@Override
-	public void endContact(Object entity) {
+	public void endContact(Object entity, Fixture fixture) {
 		// TODO Auto-generated method stub
 
 	}

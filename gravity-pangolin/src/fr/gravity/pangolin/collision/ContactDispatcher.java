@@ -16,9 +16,9 @@ public class ContactDispatcher implements ContactListener {
 		Object userDataB = contact.getFixtureB().getUserData();
 		
 		if (userDataA instanceof Entity)
-			((Entity) userDataA).beginContact(userDataB);
+			((Entity) userDataA).beginContact(userDataB, contact.getFixtureB());
 		if (userDataB instanceof Entity)
-			((Entity) userDataB).beginContact(userDataA);
+			((Entity) userDataB).beginContact(userDataA, contact.getFixtureA());
 	}
 
 	@Override
@@ -27,18 +27,13 @@ public class ContactDispatcher implements ContactListener {
 		Object userDataB = contact.getFixtureB().getUserData();
 		
 		if (userDataA instanceof Entity)
-			((Entity) userDataA).endContact(userDataB);
+			((Entity) userDataA).endContact(userDataB, contact.getFixtureA());
 		if (userDataB instanceof Entity)
-			((Entity) userDataB).endContact(userDataA);
+			((Entity) userDataB).endContact(userDataA, contact.getFixtureB());
 	}
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-//		Object userDataA = contact.getFixtureA().getUserData();
-//		Object userDataB = contact.getFixtureB().getUserData();
-//		
-//		if (userDataA instanceof GravityChangerBlock || userDataB instanceof GravityChangerBlock)
-//			contact.setEnabled(false);
 	}
 
 	@Override

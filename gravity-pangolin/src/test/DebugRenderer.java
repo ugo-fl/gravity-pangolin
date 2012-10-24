@@ -29,7 +29,6 @@ import com.badlogic.gdx.physics.box2d.joints.PulleyJoint;
 
 import fr.gravity.pangolin.helper.TextureHelper;
 import fr.gravity.pangolin.helper.TextureHelper.TextureId;
-import fr.gravity.pangolin.screen.TestBox2DScreen;
 
 public class DebugRenderer {
 
@@ -44,7 +43,7 @@ public class DebugRenderer {
 	/** vertices for polygon rendering **/
 	private static Vector2[] vertices = new Vector2[1000];
 
-	private TextureRegion region = TextureHelper.getInstance().getTextureRegions(TextureId.BRANCH)[0];
+	private TextureRegion region = TextureHelper.getInstance().getTextureRegions(TextureId.WALL_BLOCK)[0];
 
 	public DebugRenderer() {
 		this.batch = new SpriteBatch();

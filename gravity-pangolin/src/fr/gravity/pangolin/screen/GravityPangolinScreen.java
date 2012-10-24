@@ -1,6 +1,7 @@
 package fr.gravity.pangolin.screen;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -11,14 +12,15 @@ import fr.gravity.pangolin.world.GravityPangolinWorld;
 
 public class GravityPangolinScreen extends AbstractScreen {
 
-	private GravityPangolinWorld pangolinWorld;
+	protected GravityPangolinWorld pangolinWorld;
 
 	public GravityPangolinScreen(GravityPangolinGame gravityPangolinGame, GravityPangolinWorld pangolinWorld) {
 		super(gravityPangolinGame, pangolinWorld, pangolinWorld.getSizeX(), pangolinWorld.getSizeY());
 		this.pangolinWorld = pangolinWorld;
 		
-//		loadBackground();
-		pangolinWorld.init(stage);
+		loadBackground();
+		pangolinWorld.addActorsToStage(stage);
+//		pangolinWorld.addAll(stage);
 		
 		loadBackButton(new ClickListener() {
 			@Override

@@ -4,11 +4,16 @@
 
 
 --------- FIRST THINGS FIRST ----------
-[X] Fix the gravity changer's bugs
+
 --------- ////////////////// ----------
 
-[X] Implement the mobs
+[XXXX] Implement the mobs
+[XXXX] Make the dying animation
+[XXXX] Make the winning animation
+[XXXX] Create graphics
 
+[DONE] Implement harmful blocks
+[DONE] Fix the gravity changer's bugs
 [DONE] All pangolin sprite need to have the same size
 [DONE] Should I use Scene2D with Stages and Actors instead of Entities ? (http://www.netthreads.co.uk/2012/01/31/libgdx-example-of-using-scene2d-actions-and-event-handling/)
 [DONE] Use the SpriteLoader everywhere it's needed
