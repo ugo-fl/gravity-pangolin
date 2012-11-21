@@ -11,10 +11,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.ExitBlock;
@@ -99,13 +99,12 @@ public abstract class AbstractScreenMenu implements IScreen {
 	}
 
 	protected void loadBackButton(ClickListener clickListener) {
-		TextButton backButton = new TextButton(getSkin());
-		backButton.setText("Back");
-		backButton.x = 400;
-		backButton.y = height - 60;
-		backButton.width = 50;
-		backButton.height = 50;
-		backButton.setClickListener(clickListener);
+		TextButton backButton = new TextButton("Back", getSkin());
+		backButton.setX(400);
+		backButton.setY(height - 60);
+		backButton.setWidth(50);
+		backButton.setHeight(50);
+		backButton.addListener(clickListener);
 		stage.addActor(backButton);
 	}
 

@@ -1,8 +1,9 @@
 package fr.gravity.pangolin.screen.menu;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import fr.gravity.pangolin.game.GravityPangolinGame;
 
@@ -16,12 +17,11 @@ public class MainMenuScreen extends MenuScreen {
 
 	private void loadButtons() {
 		startButton = new TextButton("Go !", getSkin());
-		startButton.x = 100;
-		startButton.y = 200;
+		startButton.setX(100);
+		startButton.setY(200);
 
-		startButton.setClickListener(new ClickListener() {
-			@Override
-			public void click(Actor actor, float x, float y) {
+		startButton.addListener(new ClickListener() {
+			public void clicked (InputEvent event, float x, float y) {
 				GravityPangolinGame.getInstance().showSelectPackScreen();
 			}
 		});

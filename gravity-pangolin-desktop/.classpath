@@ -12,6 +12,5 @@
 	<classpathentry kind="lib" path="libs/tween-engine-api-sources.jar"/>
 	<classpathentry kind="lib" path="libs/tween-engine-api.jar"/>
 	<classpathentry kind="lib" path="/gravity-pangolin/libs/gdx.jar" sourcepath="/gravity-pangolin/libs/gdx-sources.jar"/>
-	<classpathentry kind="src" path="/gdx-tests"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

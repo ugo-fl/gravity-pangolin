@@ -1,13 +1,9 @@
 package fr.gravity.pangolin.game;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.SAXException;
+import java.util.Arrays;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -26,7 +22,6 @@ import fr.gravity.pangolin.transition.FadeInTransition;
 import fr.gravity.pangolin.transition.FadeOutTransition;
 import fr.gravity.pangolin.transition.Transition;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
-import fr.gravity.pangolin.world.MapSaxHandler;
 
 public class GravityPangolinGame extends Game {
 
@@ -54,7 +49,7 @@ public class GravityPangolinGame extends Game {
 	 */
 	// public static final String MAP_DIRECTORY = "map";
 
-	private Pack[] packs;
+	private ArrayList<Pack> packs;
 
 	private int packId;
 	private int levelId;
@@ -77,10 +72,10 @@ public class GravityPangolinGame extends Game {
 		loadLevels();
 
 		// Loads all the screens
-//		loadScreens();
+		loadScreens();
 
-//		setScreen(new MapEditorScreen(this, getLevelWorld(0, 0)));
-		 start(0, 2);
+		setScreen(new MapEditorScreen(this, getLevelWorld(0, 0)));
+		// start(0, 2);
 		// setScreen(mainMenuScreen);
 	}
 
@@ -92,12 +87,34 @@ public class GravityPangolinGame extends Game {
 	}
 
 	private void loadLevels() {
-		FileHandle[] packDirectories = Gdx.files.internal(MAP_DIRECTORY).list();
-		packs = new Pack[packDirectories.length];
+		// FileHandle[] packDirectories =
+		// Gdx.files.internal(MAP_DIRECTORY).list();
+		// packs = new Pack[packDirectories.length];
+		//
+		// int index = 0;
+		// for (FileHandle packDirectory : packDirectories) {
+		// packs[index++] = new
+		// Pack(packDirectory.nameWithoutExtension().substring(2).replace(' ',
+		// '\n'), packDirectory);
+		// }
+
+		packs = new ArrayList<Pack>();
+
+		File mapDirectory = Gdx.files.internal(MAP_DIRECTORY).file();
+		File[] packDirectories = mapDirectory.listFiles(new FileFilter() {
+			@Override
+			public boolean accept(File pathname) {
+				return pathname.isDirectory()
+						&& pathname.getName().matches("^[0-9]_.*");
+			}
+		});
+		Arrays.sort(packDirectories);
 
 		int index = 0;
-		for (FileHandle packDirectory : packDirectories) {
-			packs[index++] = new Pack(packDirectory.nameWithoutExtension().substring(2).replace(' ', '\n'), packDirectory);
+		for (File packDirectory : packDirectories) {
+			if (packDirectory.isDirectory())
+				packs.add(new Pack(packDirectory.getName().substring(2)
+						.replace(' ', '\n'), new FileHandle(packDirectory)));
 		}
 	}
 
@@ -108,7 +125,8 @@ public class GravityPangolinGame extends Game {
 		// GravityPangolinWorld pangolinWorld =
 		// GravityPangolinWorld.getInstance(getLevelMap(packId, levelId));
 
-		gravityPangolinScreen = new GravityPangolinScreen(this, getLevelWorld(packId, levelId));
+		gravityPangolinScreen = new GravityPangolinScreen(this, getLevelWorld(
+				packId, levelId));
 
 		fadeInScreen(gravityPangolinScreen);
 
@@ -116,7 +134,7 @@ public class GravityPangolinGame extends Game {
 	}
 
 	private GravityPangolinWorld getLevelWorld(int packId, int levelId) {
-		return packs[packId].getWorld(levelId);
+		return packs.get(packId).getWorld(levelId);
 	}
 
 	public void restart() {
@@ -129,7 +147,7 @@ public class GravityPangolinGame extends Game {
 			return;
 
 		levelId++;
-		if (levelId >= packs[packId].size()) {
+		if (levelId >= packs.get(packId).size()) {
 			levelId = 0;
 			showSelectLevelScreen();
 		} else
@@ -182,7 +200,8 @@ public class GravityPangolinGame extends Game {
 		transitionEffects.add(new FadeOutTransition(1000));
 		transitionEffects.add(new FadeInTransition(1000));
 
-		TransitionScreen transitionScreen = new TransitionScreen(this, (IScreen) getScreen(), (IScreen) screen, transitionEffects);
+		TransitionScreen transitionScreen = new TransitionScreen(this,
+				(IScreen) getScreen(), (IScreen) screen, transitionEffects);
 		super.setScreen(transitionScreen);
 	}
 
@@ -190,7 +209,7 @@ public class GravityPangolinGame extends Game {
 	 * GETTERS
 	 */
 
-	public Pack[] getPacks() {
+	public ArrayList<Pack> getPacks() {
 		return packs;
 	}
 

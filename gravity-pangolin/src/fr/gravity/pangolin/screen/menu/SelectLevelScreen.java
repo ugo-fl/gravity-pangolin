@@ -1,19 +1,18 @@
 package fr.gravity.pangolin.screen.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import fr.gravity.pangolin.constant.DirectoryConstant;
 import fr.gravity.pangolin.game.GameProgress;
 import fr.gravity.pangolin.game.GravityPangolinGame;
-import fr.gravity.pangolin.util.GameUtil;
 
 public class SelectLevelScreen extends MenuScreen {
 
@@ -27,7 +26,7 @@ public class SelectLevelScreen extends MenuScreen {
 		this.packId = packId;
 		loadBackButton(new ClickListener() {
 			@Override
-			public void click(Actor actor, float x, float y) {
+			public void clicked (InputEvent event, float x, float y) {
 				GravityPangolinGame.getInstance().showSelectPackScreen();
 			}
 		});
@@ -41,7 +40,7 @@ public class SelectLevelScreen extends MenuScreen {
 //		Gdx.input.setInputProcessor(stage);
 		
 //		FileHandle[] maps = game.getPacks()[packId].getMaps();
-		int packSize = game.getPacks()[packId].size();
+		int packSize = game.getPacks().get(packId).size();
 
 		Table table = super.getTable();
 		table.add("Select level").spaceBottom(50);
@@ -54,15 +53,15 @@ public class SelectLevelScreen extends MenuScreen {
 				if (i * MAX_COL + j >= packSize)
 					break;
 
-				TextButton textButton = new TextButton(skin);
 				final int levelId = i * MAX_COL + j;
 				final int packId = i;
 				final boolean isLocked = levelId > progressLevelId;
 
-				textButton.setText(String.valueOf(i * MAX_COL + j + 1));
-				textButton.setClickListener(new ClickListener() {
+				TextButton textButton = new TextButton(String.valueOf(i * MAX_COL + j + 1), skin);
+//				textButton.setText(String.valueOf(i * MAX_COL + j + 1));
+				textButton.addListener(new ClickListener() {
 					@Override
-					public void click(Actor actor, float x, float y) {
+					public void clicked (InputEvent event, float x, float y) {
 						if (!isLocked)
 							GravityPangolinGame.getInstance().start(packId, levelId);
 					}

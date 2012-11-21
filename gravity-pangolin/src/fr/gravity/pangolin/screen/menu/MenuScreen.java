@@ -13,16 +13,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import fr.gravity.pangolin.constant.DirectoryConstant;
 import fr.gravity.pangolin.game.GravityPangolinGame;
-import fr.gravity.pangolin.screen.AbstractScreen;
 import fr.gravity.pangolin.tween.SpriteAccessor;
-import fr.gravity.pangolin.util.GameUtil;
 import fr.gravity.pangolin.util.SpriteUtil;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
 
