@@ -75,7 +75,7 @@ public class GravityPangolinGame extends Game {
 		loadScreens();
 
 		setScreen(new MapEditorScreen(this, getLevelWorld(0, 0)));
-		// start(0, 2);
+//		 start(0, 0);
 		// setScreen(mainMenuScreen);
 	}
 
