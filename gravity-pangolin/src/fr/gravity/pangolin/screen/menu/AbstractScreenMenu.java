@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import fr.gravity.pangolin.entity.Entity;
 import fr.gravity.pangolin.entity.block.ExitBlock;
 import fr.gravity.pangolin.entity.pangolin.Pangolin;
-import fr.gravity.pangolin.game.CustomStage;
 import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.screen.IScreen;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
@@ -32,7 +32,7 @@ public abstract class AbstractScreenMenu implements IScreen {
 
 	protected final GravityPangolinGame game;
 	protected final GravityPangolinWorld pangolinWorld;
-	protected final CustomStage stage;
+	protected final Stage stage;
 
 	private BitmapFont font;
 	private SpriteBatch batch;
@@ -51,7 +51,7 @@ public abstract class AbstractScreenMenu implements IScreen {
 		// width = (isGameScreen() ? GAME_VIEWPORT_WIDTH : MENU_VIEWPORT_WIDTH);
 		// height = (isGameScreen() ? GAME_VIEWPORT_HEIGHT :
 		// MENU_VIEWPORT_HEIGHT);
-		this.stage = new CustomStage(game, width, height, true);
+		this.stage = new Stage(width, height, true);
 		// set the stage as the input processor
 		Gdx.input.setInputProcessor(stage);
 	}

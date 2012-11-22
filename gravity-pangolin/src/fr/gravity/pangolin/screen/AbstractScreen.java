@@ -20,13 +20,13 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import fr.gravity.pangolin.game.CustomStage;
 import fr.gravity.pangolin.game.GravityPangolinGame;
 import fr.gravity.pangolin.world.GravityPangolinWorld;
 
@@ -39,7 +39,7 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 	// Game logic
 	protected final GravityPangolinGame game;
 	protected final GravityPangolinWorld pangolinWorld;
-	protected CustomStage stage;
+	protected Stage stage;
 	protected OrthographicCamera camera;
 
 	// Display
@@ -65,11 +65,11 @@ public abstract class AbstractScreen implements IScreen, InputProcessor {
 		// 48 meters in width and 32 meters in height.
 		camera = new OrthographicCamera(width, height);
 		camera.setToOrtho(false, width, height);
-		// camera.position.set(0, 5, 0);
 
 		batch = new SpriteBatch();
-		stage = new CustomStage(game, width, height, true);
+		stage = new Stage(width, height, true);
 		stage.setCamera(camera);
+		
 		font = new BitmapFont(Gdx.files.internal("data/arial-15.fnt"), false);
 		font.setColor(new Color(1, 1, 0, 1));
 

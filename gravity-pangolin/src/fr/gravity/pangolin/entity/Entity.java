@@ -96,7 +96,6 @@ public abstract class Entity extends Group {
 	}
 
 	public void setPosition(Vector2 position) {
-		System.out.println("MOVED TO " + position);
 		setX(position.x);
 		setY(position.y);
 	}
